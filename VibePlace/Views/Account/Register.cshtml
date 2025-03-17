@@ -1,0 +1,70 @@
+﻿@{
+    Layout = "_LayoutwithoutFooter";
+}
+
+@model RegisterModel
+
+    @* <script src="https://unpkg.com/@@tailwindcss/browser@4"></script> *@
+
+@section Style{
+    <style>
+        @@keyframes appear-sl {
+            from {
+                opacity: 0;
+                scale: 0.7;
+            }
+
+            to {
+                opacity: 1;
+                scale: 1;
+            }
+        }
+
+        .div-sl {
+            animation: appear-sl 0.8s linear;
+        }
+
+        /* @@font -face { */
+        /*     font-family: Outfit-Regular; */
+        /*     src: url(~/fonts/Outfit-Regular.ttf); */
+        /* } */
+
+        body {
+            font-family: Outfit-Regular;
+        }
+    </style>
+
+}
+    
+
+<body class="font-inter overflow-hidden">
+    <section class="flex justify-center relative">
+        <img src="https://pagedone.io/asset/uploads/1702362010.png" alt="gradient background image" class="w-full h-full object-cover fixed">
+        <div class="mx-auto max-w-lg px-6 lg:px-8 absolute py-20 ">
+            <h1 class="mx-auto lg:mb-11 mb-8 text-center text-6xl font-extrabold">VibePlace</h1>
+            <div class="rounded-2xl bg-white shadow-xl div-sl">
+                <form asp-action="Register" asp-controller="Account"  class="lg:p-11 p-7 mx-auto">
+                    <div class="mb-11">
+                        <h1 class="text-gray-900 text-center font-manrope text-3xl font-bold leading-10 mb-2">Welcome</h1>
+                    </div>
+                    <input asp-for="Email" type="email" class="w-full h-12 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-full border-gray-300 border shadow-sm focus:outline-none px-4 mb-1" placeholder="Email" required>
+                    <div class="flex gap-1">
+                        <input type="text" class="w-full h-12 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-full border-gray-300 border shadow-sm focus:outline-none px-4 mb-1" placeholder="Enter Code">
+                        <button class="w-full h-12 text-white text-center text-base font-semibold leading-6 rounded-full hover:bg-indigo-800 transition-all duration-700 bg-indigo-600 shadow-sm mb-1">Send Code</button>
+                    </div>
+                    <input asp-for="Name" type="text" class="w-full h-12 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-full border-gray-300 border shadow-sm focus:outline-none px-4 mb-1" placeholder="Name">
+                    <input asp-for="Password" type="password" class="w-full h-12 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-full border-gray-300 border shadow-sm focus:outline-none px-4 mb-6" placeholder="Create Password">
+                    <input asp-for="ConfirmPassword" type="text" class="w-full h-12 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-full border-gray-300 border shadow-sm focus:outline-none px-4 mb-1" placeholder="Confirm Password">
+                    <button class="w-full h-12 text-white text-center text-base font-semibold leading-6 rounded-full hover:bg-indigo-800 transition-all duration-700 bg-indigo-600 shadow-sm mb-11">Sign Up</button>
+                    <a href="login.html" class="flex justify-center text-gray-900 text-base font-medium leading-6">
+                        Alerady have an account? <span class="text-indigo-600 font-semibold pl-3"> Login</span>
+                    </a>
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
+
+@section Script{
+    <script src="https://unpkg.com/@@tailwindcss/browser@4"></script>
+}

@@ -1,0 +1,49 @@
+﻿@model VibePlace.Data.Models.Places
+
+<h2>Добавить новое место</h2>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div>
+        <label>Название</label>
+        <input asp-for="Name" required />
+    </div>
+
+    <div>
+        <label>Адрес</label>
+        <input asp-for="Address" required />
+    </div>
+
+    <div>
+        <label>Описание</label>
+        <textarea asp-for="Description"></textarea>
+    </div>
+
+    <div>
+        <label>Изображение</label>
+        <input  type="file" name="Image" /> 
+    </div>
+
+    <div>
+        <label>Рейтинг</label>
+        <input asp-for="Rating" />
+    </div>
+
+    <div>
+        <label>Цена</label>
+        <input asp-for="Price" />
+    </div>
+
+    <div>
+        <label>Номер телефона</label>
+        <input asp-for="PhoneNumber" />
+    </div>
+
+    <div>
+        <label>Категория</label>
+        <select asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.Categories, "id", "categoryName"))">
+            <option value="">Выберите категорию</option>
+        </select>
+    </div>
+
+    <button type="submit">Добавить</button>
+</form>

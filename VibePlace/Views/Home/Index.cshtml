@@ -1,0 +1,434 @@
+﻿@using VibePlace.Data
+@using VibePlace.Data.Models
+@model PlacesCategoryModel
+
+
+
+
+@{
+
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+<!-- Main Start -->
+<main class="max-w-7xl mx-auto pb-6">
+    <nav class="flex mt-3 mb-6 px-2 md:px-0" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 md:space-x-3">
+            <li class="inline-flex items-center">
+                <a href="javascript:;" class="inline-flex items-center text-base font-medium text-gray-900 hover:text-indigo-800">Home</a>
+            </li>
+            <li aria-current="page">
+                <div class="flex items-center">
+                    <svg class="mx-1 w-5 h-5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.5 15L11.0858 11.4142C11.7525 10.7475 12.0858 10.4142 12.0858 10C12.0858 9.58579 11.7525 9.25245 11.0858 8.58579L7.5 5" stroke="#E5E7EB" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <span class="ml-1 text-base font-medium text-indigo-600 md:ml-2 ">Тойхана</span>
+                </div>
+            </li>
+
+        </ol>
+    </nav>
+
+    <!--FILTER -->
+    <div class="filter-contents-home w-full flex gap-2 whitespace-nowrap overflow-auto mb-6 px-2 md:px-0" style="scrollbar-width: none; -ms-overflow-style: none;">
+
+        @foreach (Category category in Model.Categories)
+        {
+
+            <div class="block">
+                <input type="radio" name="radio-in-form" class="relative hidden checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100" id="radio-in-form-@category.id" checked>
+                <label for="radio-in-form-@category.id" class="h-full flex p-3 block w-full bg-white border border-gray-200 rounded-md text-sm pointer">
+                    <span class="border border-gray-300  rounded-full mr-2 w-4 h-4 mt-0.5"></span>
+                    <h5 class="text-sm text-gray-500 no-copy">@category.categoryName</h5>
+                </label>
+            </div>
+
+        }
+    </div>
+
+    <!--FILTER End-->
+
+
+    <!--Carts-->
+    <div class="w-full relative flex items-center justify-center h-auto mb-3">
+        <div class="grid grid-cols-1 px-2 md:px-0 md:grid-cols-4 gap-5" id="grid-container-home">
+
+            @* Item_Cats *@
+
+            @foreach (Places place in Model. )
+            {
+                <div class="rounded-xl bg-white shadow-lg shadow-gray-300 overflow-hidden relative grid-item-home">
+                    <a href="product.html" class="absolute opacity-0 h-full w-full rounded-xl"></a>
+                    <img src="@Url.Content(place.Image)" alt="image">
+                    <div class="flex items-center absolute gap-2 top-2 right-3">
+                        <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_13866_9712)">
+                                <path d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z" fill="#F3F4F6"></path>
+                                <g clip-path="url(#clip1_13866_9712)">
+                                    <path d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z" fill="#FBBF24"></path>
+                                </g>
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_13866_9712">
+                                    <rect width="30" height="30" fill="white"></rect>
+                                </clipPath>
+                                <clipPath id="clip1_13866_9712">
+                                    <rect width="30" height="30" fill="white"></rect>
+                                </clipPath>
+                            </defs>
+                        </svg>
+                        <span class="text-sm font-medium text-white">@place.Rating</span>
+                    </div>
+                    <div class="w-full p-6 ">
+                        <h5 class="text-xl font-semibold font-manrope text-gray-900 mb-4">@place.Name</h5>
+                        <p class="text-sm font-medium text-gray-600">@place.Description</p>
+                    </div>
+                </div>
+
+            }
+
+
+     
+            <div class="rounded-xl bg-white shadow-lg shadow-gray-300 overflow-hidden relative grid-item-home">
+                <img src="https://pagedone.io/asset/uploads/1688029344.png" alt="image">
+                <div class="flex items-center absolute gap-2 top-2 right-3">
+                    <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_13866_9712)">
+                            <path d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z" fill="#F3F4F6"></path>
+                            <g clip-path="url(#clip1_13866_9712)">
+                                <path d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z" fill="#FBBF24"></path>
+                            </g>
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_13866_9712">
+                                <rect width="30" height="30" fill="white"></rect>
+                            </clipPath>
+                            <clipPath id="clip1_13866_9712">
+                                <rect width="30" height="30" fill="white"></rect>
+                            </clipPath>
+                        </defs>
+                    </svg>
+                    <span class="text-sm font-medium text-white">5.0</span>
+                </div>
+                <div class="w-full p-6 ">
+                    <h5 class="text-xl font-semibold font-manrope text-gray-900 mb-4">Sport bicycle</h5>
+                    <p class="text-sm font-medium text-gray-600"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus eveniet ipsa maiores dolores corporis adipisci labore accusamus dicta quasi unde! </p>
+                </div>
+            </div>
+
+
+            <div class="rounded-xl bg-white shadow-lg shadow-gray-300 overflow-hidden relative grid-item-home">
+                <img src="https://pagedone.io/asset/uploads/1688029370.png" alt="image">
+                <div class="flex items-center absolute gap-2 top-2 right-3">
+                    <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_13866_9712)">
+                            <path d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z" fill="#F3F4F6"></path>
+                            <g clip-path="url(#clip1_13866_9712)">
+                                <path d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z" fill="#FBBF24"></path>
+                            </g>
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_13866_9712">
+                                <rect width="30" height="30" fill="white"></rect>
+                            </clipPath>
+                            <clipPath id="clip1_13866_9712">
+                                <rect width="30" height="30" fill="white"></rect>
+                            </clipPath>
+                        </defs>
+                    </svg>
+                    <span class="text-sm font-medium text-white">5.0</span>
+                </div>
+                <div class="w-full p-6 ">
+                    <h5 class="text-xl font-semibold font-manrope text-gray-900 mb-4">Leather Bag</h5>
+                    <p class="text-sm font-medium text-gray-600"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus eveniet ipsa maiores dolores corporis adipisci labore accusamus dicta quasi unde! </p>
+                </div>
+            </div>
+            <div class="rounded-xl bg-white shadow-lg shadow-gray-300 overflow-hidden relative grid-item-home">
+                <img src="https://pagedone.io/asset/uploads/1688029384.png" alt="image">
+                <div class="flex items-center absolute gap-2 top-2 right-3">
+                    <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_13866_9712)">
+                            <path d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z" fill="#F3F4F6"></path>
+                            <g clip-path="url(#clip1_13866_9712)">
+                                <path d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z" fill="#FBBF24"></path>
+                            </g>
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_13866_9712">
+                                <rect width="30" height="30" fill="white"></rect>
+                            </clipPath>
+                            <clipPath id="clip1_13866_9712">
+                                <rect width="30" height="30" fill="white"></rect>
+                            </clipPath>
+                        </defs>
+                    </svg>
+                    <span class="text-sm font-medium text-white">5.0</span>
+                </div>
+                <div class="w-full p-6 ">
+                    <h5 class="text-xl font-semibold font-manrope text-gray-900 mb-4">Sport shoes</h5>
+                    <p class="text-sm font-medium text-gray-600"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus eveniet ipsa maiores dolores corporis adipisci labore accusamus dicta quasi unde! </p>
+                </div>
+            </div>
+
+            <div class="rounded-xl bg-white shadow-lg shadow-gray-300 overflow-hidden relative grid-item-home">
+                <img src="https://pagedone.io/asset/uploads/1688029344.png" alt="image">
+                <div class="flex items-center absolute gap-2 top-2 right-3">
+                    <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_13866_9712)">
+                            <path d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z" fill="#F3F4F6"></path>
+                            <g clip-path="url(#clip1_13866_9712)">
+                                <path d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z" fill="#FBBF24"></path>
+                            </g>
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_13866_9712">
+                                <rect width="30" height="30" fill="white"></rect>
+                            </clipPath>
+                            <clipPath id="clip1_13866_9712">
+                                <rect width="30" height="30" fill="white"></rect>
+                            </clipPath>
+                        </defs>
+                    </svg>
+                    <span class="text-sm font-medium text-white">5.0</span>
+                </div>
+                <div class="w-full p-6 ">
+                    <h5 class="text-xl font-semibold font-manrope text-gray-900 mb-4">Sport bicycle</h5>
+                    <p class="text-sm font-medium text-gray-600"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus eveniet ipsa maiores dolores corporis adipisci labore accusamus dicta quasi unde! </p>
+                </div>
+            </div>
+            <div class="rounded-xl bg-white shadow-lg shadow-gray-300 overflow-hidden relative grid-item-home">
+                <img src="https://pagedone.io/asset/uploads/1688029370.png" alt="image">
+                <div class="flex items-center absolute gap-2 top-2 right-3">
+                    <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_13866_9712)">
+                            <path d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z" fill="#F3F4F6"></path>
+                            <g clip-path="url(#clip1_13866_9712)">
+                                <path d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z" fill="#FBBF24"></path>
+                            </g>
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_13866_9712">
+                                <rect width="30" height="30" fill="white"></rect>
+                            </clipPath>
+                            <clipPath id="clip1_13866_9712">
+                                <rect width="30" height="30" fill="white"></rect>
+                            </clipPath>
+                        </defs>
+                    </svg>
+                    <span class="text-sm font-medium text-white">5.0</span>
+                </div>
+                <div class="w-full p-6 ">
+                    <h5 class="text-xl font-semibold font-manrope text-gray-900 mb-4">Leather Bag</h5>
+                    <p class="text-sm font-medium text-gray-600"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus eveniet ipsa maiores dolores corporis adipisci labore accusamus dicta quasi unde! </p>
+                </div>
+            </div>
+            <div class="rounded-xl bg-white shadow-lg shadow-gray-300 overflow-hidden relative grid-item-home">
+                <img src="https://pagedone.io/asset/uploads/1688029384.png" alt="image">
+                <div class="flex items-center absolute gap-2 top-2 right-3">
+                    <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_13866_9712)">
+                            <path d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z" fill="#F3F4F6"></path>
+                            <g clip-path="url(#clip1_13866_9712)">
+                                <path d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z" fill="#FBBF24"></path>
+                            </g>
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_13866_9712">
+                                <rect width="30" height="30" fill="white"></rect>
+                            </clipPath>
+                            <clipPath id="clip1_13866_9712">
+                                <rect width="30" height="30" fill="white"></rect>
+                            </clipPath>
+                        </defs>
+                    </svg>
+                    <span class="text-sm font-medium text-white">5.0</span>
+                </div>
+                <div class="w-full p-6 ">
+                    <h5 class="text-xl font-semibold font-manrope text-gray-900 mb-4">Sport shoes</h5>
+                    <p class="text-sm font-medium text-gray-600"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus eveniet ipsa maiores dolores corporis adipisci labore accusamus dicta quasi unde! </p>
+                </div>
+            </div>
+            <div class="rounded-xl bg-white shadow-lg shadow-gray-300 overflow-hidden relative grid-item-home">
+                <img src="https://pagedone.io/asset/uploads/1688029344.png" alt="image">
+                <div class="flex items-center absolute gap-2 top-2 right-3">
+                    <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_13866_9712)">
+                            <path d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z" fill="#F3F4F6"></path>
+                            <g clip-path="url(#clip1_13866_9712)">
+                                <path d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z" fill="#FBBF24"></path>
+                            </g>
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_13866_9712">
+                                <rect width="30" height="30" fill="white"></rect>
+                            </clipPath>
+                            <clipPath id="clip1_13866_9712">
+                                <rect width="30" height="30" fill="white"></rect>
+                            </clipPath>
+                        </defs>
+                    </svg>
+                    <span class="text-sm font-medium text-white">5.0</span>
+                </div>
+                <div class="w-full p-6 ">
+                    <h5 class="text-xl font-semibold font-manrope text-gray-900 mb-4">Sport bicycle</h5>
+                    <p class="text-sm font-medium text-gray-600"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus eveniet ipsa maiores dolores corporis adipisci labore accusamus dicta quasi unde! </p>
+                </div>
+            </div>
+            <div class="rounded-xl bg-white shadow-lg shadow-gray-300 overflow-hidden relative grid-item-home">
+                <img src="https://pagedone.io/asset/uploads/1688029370.png" alt="image">
+                <div class="flex items-center absolute gap-2 top-2 right-3">
+                    <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_13866_9712)">
+                            <path d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z" fill="#F3F4F6"></path>
+                            <g clip-path="url(#clip1_13866_9712)">
+                                <path d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z" fill="#FBBF24"></path>
+                            </g>
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_13866_9712">
+                                <rect width="30" height="30" fill="white"></rect>
+                            </clipPath>
+                            <clipPath id="clip1_13866_9712">
+                                <rect width="30" height="30" fill="white"></rect>
+                            </clipPath>
+                        </defs>
+                    </svg>
+                    <span class="text-sm font-medium text-white">5.0</span>
+                </div>
+                <div class="w-full p-6 ">
+                    <h5 class="text-xl font-semibold font-manrope text-gray-900 mb-4">Leather Bag</h5>
+                    <p class="text-sm font-medium text-gray-600"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus eveniet ipsa maiores dolores corporis adipisci labore accusamus dicta quasi unde! </p>
+                </div>
+            </div>
+            <div class="rounded-xl bg-white shadow-lg shadow-gray-300 overflow-hidden relative grid-item-home">
+                <img src="https://pagedone.io/asset/uploads/1688029384.png" alt="image">
+                <div class="flex items-center absolute gap-2 top-2 right-3">
+                    <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_13866_9712)">
+                            <path d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z" fill="#F3F4F6"></path>
+                            <g clip-path="url(#clip1_13866_9712)">
+                                <path d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z" fill="#FBBF24"></path>
+                            </g>
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_13866_9712">
+                                <rect width="30" height="30" fill="white"></rect>
+                            </clipPath>
+                            <clipPath id="clip1_13866_9712">
+                                <rect width="30" height="30" fill="white"></rect>
+                            </clipPath>
+                        </defs>
+                    </svg>
+                    <span class="text-sm font-medium text-white">5.0</span>
+                </div>
+                <div class="w-full p-6 ">
+                    <h5 class="text-xl font-semibold font-manrope text-gray-900 mb-4">Sport shoes</h5>
+                    <p class="text-sm font-medium text-gray-600"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus eveniet ipsa maiores dolores corporis adipisci labore accusamus dicta quasi unde! </p>
+                </div>
+            </div>
+            <div class="rounded-xl bg-white shadow-lg shadow-gray-300 overflow-hidden relative grid-item-home">
+                <img src="https://pagedone.io/asset/uploads/1688029344.png" alt="image">
+                <div class="flex items-center absolute gap-2 top-2 right-3">
+                    <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_13866_9712)">
+                            <path d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z" fill="#F3F4F6"></path>
+                            <g clip-path="url(#clip1_13866_9712)">
+                                <path d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z" fill="#FBBF24"></path>
+                            </g>
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_13866_9712">
+                                <rect width="30" height="30" fill="white"></rect>
+                            </clipPath>
+                            <clipPath id="clip1_13866_9712">
+                                <rect width="30" height="30" fill="white"></rect>
+                            </clipPath>
+                        </defs>
+                    </svg>
+                    <span class="text-sm font-medium text-white">5.0</span>
+                </div>
+                <div class="w-full p-6 ">
+                    <h5 class="text-xl font-semibold font-manrope text-gray-900 mb-4">Sport bicycle</h5>
+                    <p class="text-sm font-medium text-gray-600"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus eveniet ipsa maiores dolores corporis adipisci labore accusamus dicta quasi unde! </p>
+                </div>
+            </div>
+            <div class="rounded-xl bg-white shadow-lg shadow-gray-300 overflow-hidden relative grid-item-home">
+                <img src="https://pagedone.io/asset/uploads/1688029370.png" alt="image">
+                <div class="flex items-center absolute gap-2 top-2 right-3">
+                    <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_13866_9712)">
+                            <path d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z" fill="#F3F4F6"></path>
+                            <g clip-path="url(#clip1_13866_9712)">
+                                <path d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z" fill="#FBBF24"></path>
+                            </g>
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_13866_9712">
+                                <rect width="30" height="30" fill="white"></rect>
+                            </clipPath>
+                            <clipPath id="clip1_13866_9712">
+                                <rect width="30" height="30" fill="white"></rect>
+                            </clipPath>
+                        </defs>
+                    </svg>
+                    <span class="text-sm font-medium text-white">5.0</span>
+                </div>
+                <div class="w-full p-6 ">
+                    <h5 class="text-xl font-semibold font-manrope text-gray-900 mb-4">Leather Bag</h5>
+                    <p class="text-sm font-medium text-gray-600"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus eveniet ipsa maiores dolores corporis adipisci labore accusamus dicta quasi unde! </p>
+                </div>
+            </div>
+            <div class="rounded-xl bg-white shadow-lg shadow-gray-300 overflow-hidden relative grid-item-home">
+                <img src="https://pagedone.io/asset/uploads/1688029384.png" alt="image">
+                <div class="flex items-center absolute gap-2 top-2 right-3">
+                    <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_13866_9712)">
+                            <path d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z" fill="#F3F4F6"></path>
+                            <g clip-path="url(#clip1_13866_9712)">
+                                <path d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z" fill="#FBBF24"></path>
+                            </g>
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_13866_9712">
+                                <rect width="30" height="30" fill="white"></rect>
+                            </clipPath>
+                            <clipPath id="clip1_13866_9712">
+                                <rect width="30" height="30" fill="white"></rect>
+                            </clipPath>
+                        </defs>
+                    </svg>
+                    <span class="text-sm font-medium text-white">5.0</span>
+                </div>
+                <div class="w-full p-6 ">
+                    <h5 class="text-xl font-semibold font-manrope text-gray-900 mb-4">Sport shoes</h5>
+                    <p class="text-sm font-medium text-gray-600"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus eveniet ipsa maiores dolores corporis adipisci labore accusamus dicta quasi unde! </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Carts End-->
+
+    <nav class="flex items-center md:gap-x-4 gap-x-2 min-w-max justify-center pagination-home">
+        <a class="text-gray-500 hover:text-gray-900 p-4 inline-flex items-center md:mr-8 mr-1" href="javascript:;" id="prev-btn">
+            <svg class="w-1.5 h-3 mr-3" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.5 1L1.91421 4.58578C1.24755 5.25245 0.914213 5.58579 0.914213 6C0.914213 6.41421 1.24755 6.74755 1.91421 7.41421L5.5 11" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span>Back</span>
+        </a>
+
+        <a class="page-btn w-10 h-10 text-gray-500 p-2 inline-flex items-center justify-center border border-gray-200 rounded-full transition-all duration-150 hover:text-indigo-900 hover:border-indigo-600 " href="javascript:;" data-page="1">1</a>
+        <a class="page-btn w-10 h-10 text-gray-500 p-2 inline-flex items-center justify-center border border-gray-200 rounded-full transition-all duration-150 hover:text-indigo-900 hover:border-indigo-600 " href="javascript:;" data-page="2">2</a>
+        <a class="page-btn w-10 h-10 text-gray-500 p-2 inline-flex items-center justify-center border border-gray-200 rounded-full transition-all duration-150 hover:text-indigo-900 hover:border-indigo-600 " href="javascript:;" data-page="3">3</a>
+        <a class="page-btn w-10 h-10 text-gray-500 p-2 inline-flex items-center justify-center border border-gray-200 rounded-full transition-all duration-150 hover:text-indigo-900 hover:border-indigo-600 " href="javascript:;" data-page="4">4</a>
+
+        <a class="text-gray-500 hover:text-gray-900 p-4 inline-flex items-center md:ml-8 ml-1" href="javascript:;" id="next-btn">
+            <span>Next</span>
+            <svg class="w-1.5 h-3 ml-3" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.5 11L5.08578 7.41421C5.75245 6.74755 6.08579 6.41421 6.08579 6C6.08579 5.58579 5.75245 5.25245 5.08579 4.58579L1.5 1" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </a>
+    </nav>
+</main>
+<!-- Main End -->
