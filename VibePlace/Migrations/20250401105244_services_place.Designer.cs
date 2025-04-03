@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VibePlace.Data;
 
@@ -11,9 +12,11 @@ using VibePlace.Data;
 namespace VibePlace.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    partial class AppIdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250401105244_services_place")]
+    partial class services_place
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -369,24 +372,14 @@ namespace VibePlace.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("services");
-                });
-
-            modelBuilder.Entity("VibePlace.Data.Models.ServiceToPlace", b =>
-                {
                     b.Property<int>("PlaceId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ServisId")
-                        .HasColumnType("int");
+                    b.HasKey("Id");
 
-                    b.HasKey("PlaceId", "ServisId");
+                    b.HasIndex("PlaceId");
 
-                    b.HasIndex("ServisId");
-
-                    b.ToTable("ServiceToPlace");
+                    b.ToTable("services");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -487,23 +480,15 @@ namespace VibePlace.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("VibePlace.Data.Models.ServiceToPlace", b =>
+            modelBuilder.Entity("VibePlace.Data.Models.Service", b =>
                 {
                     b.HasOne("VibePlace.Data.Models.Places", "Place")
-                        .WithMany("ServiceToPlaces")
+                        .WithMany("Services")
                         .HasForeignKey("PlaceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("VibePlace.Data.Models.Service", "Service")
-                        .WithMany("ServiceToPlaces")
-                        .HasForeignKey("ServisId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Place");
-
-                    b.Navigation("Service");
                 });
 
             modelBuilder.Entity("VibePlace.Data.Models.Category", b =>
@@ -517,12 +502,7 @@ namespace VibePlace.Migrations
 
                     b.Navigation("Reviews");
 
-                    b.Navigation("ServiceToPlaces");
-                });
-
-            modelBuilder.Entity("VibePlace.Data.Models.Service", b =>
-                {
-                    b.Navigation("ServiceToPlaces");
+                    b.Navigation("Services");
                 });
 #pragma warning restore 612, 618
         }

@@ -8,6 +8,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/pagedone@1.2.2/src/css/pagedone.css" rel="stylesheet" />
+    <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
     <title>VibePlace / Home</title>
     <style>
         .no-copy {
@@ -43,6 +44,9 @@
             animation-timeline: view();
             animation-range: entry 0% cover 40%;
         }
+
+
+        @RenderSection("Style",required:false)
     </style
 </head>
 <body>

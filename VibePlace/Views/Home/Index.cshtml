@@ -34,33 +34,49 @@
     <!--FILTER -->
     <div class="filter-contents-home w-full flex gap-2 whitespace-nowrap overflow-auto mb-6 px-2 md:px-0" style="scrollbar-width: none; -ms-overflow-style: none;">
 
+        <a href ="#">
+        <div class="block">
+            <input type="radio" name="radio-in-form" class="relative hidden checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100" id="radio-in-form-00" checked>
+            <label for="radio-in-form-00" class="h-full flex p-3 block w-full bg-white border border-gray-200 rounded-md text-sm pointer">
+                <span class="border border-gray-300  rounded-full mr-2 w-4 h-4 mt-0.5"></span>
+                <h5 class="text-sm text-gray-500 no-copy">All</h5>
+            </label>
+        </div>
+        </a>
+
+
         @foreach (Category category in Model.Categories)
         {
-
             <div class="block">
                 <input type="radio" name="radio-in-form" class="relative hidden checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100" id="radio-in-form-@category.id" checked>
                 <label for="radio-in-form-@category.id" class="h-full flex p-3 block w-full bg-white border border-gray-200 rounded-md text-sm pointer">
                     <span class="border border-gray-300  rounded-full mr-2 w-4 h-4 mt-0.5"></span>
+                    <a hx-get="/Home/FilterPlaces/@category.id"
+                       hx-target="#places-container"
+                       hx-trigger="change">
                     <h5 class="text-sm text-gray-500 no-copy">@category.categoryName</h5>
+                    </a>
                 </label>
             </div>
+         
 
         }
     </div>
 
     <!--FILTER End-->
-
-
+  
+   
     <!--Carts-->
     <div class="w-full relative flex items-center justify-center h-auto mb-3">
-        <div class="grid grid-cols-1 px-2 md:px-0 md:grid-cols-4 gap-5" id="grid-container-home">
+        <div id="places-container" class="grid grid-cols-1 px-2 md:px-0 md:grid-cols-4 gap-5" id="grid-container-home">
+
 
             @* Item_Cats *@
 
-            @foreach (Places place in Model. )
+            @foreach (Places place in Model.Places)
             {
                 <div class="rounded-xl bg-white shadow-lg shadow-gray-300 overflow-hidden relative grid-item-home">
-                    <a href="product.html" class="absolute opacity-0 h-full w-full rounded-xl"></a>
+                    <a href="@Url.Action("placeinfo","PlaceInfo", new { id = place.Id })" class="absolute opacity-0 h-full w-full rounded-xl"></a>
                     <img src="@Url.Content(place.Image)" alt="image">
                     <div class="flex items-center absolute gap-2 top-2 right-3">
                         <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -409,7 +425,6 @@
         </div>
     </div>
     <!--Carts End-->
-
     <nav class="flex items-center md:gap-x-4 gap-x-2 min-w-max justify-center pagination-home">
         <a class="text-gray-500 hover:text-gray-900 p-4 inline-flex items-center md:mr-8 mr-1" href="javascript:;" id="prev-btn">
             <svg class="w-1.5 h-3 mr-3" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">

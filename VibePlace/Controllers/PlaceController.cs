@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using VibePlace.Data;
 using VibePlace.Data.Models;
+using VibePlace.Migrations;
+using VibePlace.Models;
 
 
 namespace VibePlace.Controllers
@@ -22,13 +24,34 @@ namespace VibePlace.Controllers
 		public async  Task<IActionResult> Create()
 		{
 			ViewBag.Categories = await _context.categories.ToListAsync();
-			return View();
+			var services = await _context.services.ToListAsync();
+			var model = new PlaceToService
+			{
+				places = new Places(), 
+				services = services 
+			};
+
+
+			return View(model);
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Create(Places place, IFormFile image)
+		public async Task<IActionResult> Create(PlaceToService placeToService, IFormFile image, List<int> selectedServices)
 		//public async Task<IActionResult> Create(Places place)
 		{
+
+			if (selectedServices == null || selectedServices.Count == 0)
+			{
+				ModelState.AddModelError("", "Заполните все поля и выберите хотя бы один сервис.");
+				return View();
+			}
+			if (ModelState.ContainsKey("services"))
+			{
+				ModelState.Remove("services");  
+			}
+
+
+
 			var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 			if (ModelState.IsValid)
 			{
@@ -46,16 +69,29 @@ namespace VibePlace.Controllers
 					}
 
 
-					place.Image = Path.Combine("img", fileName); // Путь относительно wwwroot
+					placeToService.places.Image = Path.Combine("img", fileName); // Путь относительно wwwroot
 				}
-				place.UserId = userId;
-		
-				_context.places.Add(place); 
+				placeToService.places.UserId = userId;
+				_context.places.Add(placeToService.places);
+				await _context.SaveChangesAsync();
+
+				
+
+				foreach (var serviceId in selectedServices)
+				{
+					var serviceplace = new ServiceToPlace
+					{
+						PlaceId = placeToService.places.Id,
+						ServisId = serviceId
+					};
+					_context.serviceToPlace.Add(serviceplace);
+				}
+
 				await _context.SaveChangesAsync();
 				return RedirectToAction("Index", "Home"); 
 			}
 
-			return View(place);
+			return RedirectToAction("Index","Home");
 		}
 
 

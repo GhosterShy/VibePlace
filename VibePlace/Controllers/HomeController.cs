@@ -45,7 +45,7 @@ namespace VibePlace.Controllers
 		public async Task<IActionResult> GetPlaces()
 		{
 			var places = await _context.places.ToListAsync();
-			return Ok(places); // Вернёт JSON-ответ
+			return Ok(places); 
 		}
 
 		[HttpGet]
@@ -54,6 +54,20 @@ namespace VibePlace.Controllers
 			var categories = await _context.categories.ToListAsync();
 			return Ok(categories); 
 		}
+
+
+
+		[HttpGet]
+		[Route("/Home/FilterPlaces/{categoryId:int}")]
+		public async Task<IActionResult> FilterPlaces(int categoryId)
+		{
+			var filteredPlaces = await _context.places
+				.Where(p => p.CategoryId == categoryId)
+				.ToListAsync();
+
+			return PartialView("_PlacesPartial", filteredPlaces);
+		}
+
 
 
 

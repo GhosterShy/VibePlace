@@ -30,6 +30,21 @@ namespace VibePlace.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public IActionResult CreateService()
+        {
+            return View();
+        }
+
+
+		[HttpPost]
+        public async Task<IActionResult> CreateService(Service service)
+        {
+            _context.services.Add(service);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Home");
+
+        }
+
 
        
 

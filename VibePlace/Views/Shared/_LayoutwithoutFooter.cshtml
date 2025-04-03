@@ -1,116 +1,42 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=person" />
-
-    <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/pagedone@1.2.2/src/css/pagedone.css " rel="stylesheet" />
-    <title>VibePlace / Home</title>
+    <title>Sign Up</title>
+    <script src="https://unpkg.com/@@tailwindcss/browser@4"></script>
     <style>
-        .no-copy {
-            -webkit-user-select: none; /* Safari */
-            -moz-user-select: none; /* Firefox */
-            -ms-user-select: none; /* IE 10+ */
-            user-select: none; /* Standard syntax */
+        @@keyframes appear-sl {
+            from
+
+        {
+            opacity: 0;
+            scale: 0.7;
         }
 
-        .pointer {
-            cursor: pointer;
+        to {
+            opacity: 1;
+            scale: 1;
         }
 
-        @@keyframes appear {
-            from {
-                opacity: 0;
-                transform: translateX(-100px);
-                /* scale: 0.5; */
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0px);
-                /* scale: 1; */
-            }
         }
 
-        .grid-item-home, .pagination-home, .new-org-home, .footer-vibeplace, .footer-ul {
-            animation: appear linear;
-            animation-timeline: view();
-            animation-range: entry 0% cover 40%;
+        .div-sl {
+            animation: appear-sl 0.8s linear;
+        }
+        @@font -face {
+            font-family: Outfit-Regular;
+            src: url(./fonts/Outfit-Regular.ttf);
+        }
+
+        body {
+            font-family: Outfit-Regular;
         }
     </style>
-
-    @RenderSection("Style", required: false)
 </head>
-<body>
-    <!-- Header Start -->
-    <nav class="py-5  transition-all duration-500 w-full bg-white border-b border-solid border-gray-200">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="w-full flex  flex-col lg:flex-row lg:items-center lg:justify-between">
-                <div class=" flex justify-between  lg:flex-row">
-                    <a href="javascript:;" class="flex items-center font-extrabold text-2xl">VibePlace</a>
-                    <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 " aria-controls="navbar-default" aria-expanded="false">
-                        <span class="sr-only">Open main menu</span>
-                        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
-                        </svg>
-                    </button>
-                </div>
-                <div class="hidden w-full lg:flex lg:pl-11 " id="navbar-default">
-                    <ul class="lg:flex items-center flex-col mt-4 lg:mt-0 lg:flex-row lg:ml-auto">
-                        <li>
-                            <a href="index.html" class="nav-link mb-2 block lg:mr-6 md:mb-0 lg:text-left text-center">Главная<a>
-                        </li>
-                        <li>
-                            <a href="services.html" class="nav-link mb-2 block lg:mr-6 md:mb-0 lg:text-left text-center">Услуги</a>
-                        </li>
-                        <li>
-                            <a href="javascript:;" class="nav-link mb-2 block lg:mr-6 md:mb-0 lg:text-left text-center">Контакты<a>
-                        </li>
-                    </ul>
-                    <div class="flex items-center justify-center">
-                        <div class="dropdown relative inline-flex z-10">
-                            <button type="button" data-target="dropdown-with-divider" class="dropdown-toggle inline-flex justify-center items-center gap-2 py-3 px-6 text-sm bg-indigo-600 text-white rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 hover:bg-indigo-700 ">
-                                Default Name
-                            </button>
-                            <div id="dropdown-with-divider" class="dropdown-menu hidden bg-slate-400 rounded-xl shadow-lg  absolute right-0 top-full w-48 mt-2 divide-y divide-gray-200" aria-labelledby="dropdown-with-divider">
-                                <ul class="py-2">
-                                    <li>
-                                        @if (User.Identity.IsAuthenticated)
-                                        {
-                                            <a class="block px-6 py-2 hover:bg-gray-100 text-gray-900 font-medium" href="#">@User.Identity.Name</a>
-                                        }
-                                        else
-                                        {
-                                            <a class="block px-6 py-2 hover:bg-gray-100 text-gray-900 font-medium" href="@Url.Action("Register","Account")">Регистрация</a>
-                                            <a class="block px-6 py-2 hover:bg-gray-100 text-gray-900 font-medium" href="@Url.Action("Index","Account")">Авторизация</a>
-                                        }
 
-                                    </li>
-                                    <li>
-                                        <a class="block px-6 py-2 hover:bg-gray-100 text-gray-900 font-medium" href="javascript:;"> Сдать жилье на VibePlace </a>
-                                    </li>
-                                    <li>
-                                        <a class="block px-6 py-2 hover:bg-gray-100 text-gray-900 font-medium" href="javascript:;"> Центр помощи </a>
-                                    </li>
-                                </ul>
-                                <div class="py-2">
-                                    <a class="block px-6 py-2 hover:bg-gray-100 text-red-500 font-medium" href="javascript:;"> Log Out </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <!-- Header End -->
-    @RenderBody()
+@RenderBody()
 
 
-</body>
-@RenderSection("Script", required: false)
 <script src="https://cdn.jsdelivr.net/npm/pagedone@1.2.2/src/js/pagedone.js"></script>
-<script src="~/index.js"></script>
-</html> 
+</html>

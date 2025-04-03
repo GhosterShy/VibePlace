@@ -1,21 +1,21 @@
-﻿@model VibePlace.Data.Models.Places
+﻿@model VibePlace.Models.PlaceToService
 
 <h2>Добавить новое место</h2>
 
 <form asp-action="Create" method="post" enctype="multipart/form-data">
     <div>
         <label>Название</label>
-        <input asp-for="Name" required />
+        <input asp-for="@Model.places.Name" required />
     </div>
 
     <div>
         <label>Адрес</label>
-        <input asp-for="Address" required />
+        <input asp-for="@Model.places.Address" required />
     </div>
 
     <div>
         <label>Описание</label>
-        <textarea asp-for="Description"></textarea>
+        <textarea asp-for="@Model.places.Description"></textarea>
     </div>
 
     <div>
@@ -25,25 +25,41 @@
 
     <div>
         <label>Рейтинг</label>
-        <input asp-for="Rating" />
+        <input asp-for="@Model.places.Rating" />
     </div>
 
     <div>
         <label>Цена</label>
-        <input asp-for="Price" />
+        <input asp-for="@Model.places.Price" />
+    </div>
+
+    <div>
+        <label>Обьем</label>
+        <input asp-for="@Model.places.Capacity" />
     </div>
 
     <div>
         <label>Номер телефона</label>
-        <input asp-for="PhoneNumber" />
+        <input asp-for="@Model.places.PhoneNumber" />
     </div>
 
     <div>
         <label>Категория</label>
-        <select asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.Categories, "id", "categoryName"))">
+        <select asp-for="@Model.places.CategoryId" asp-items="@(new SelectList(ViewBag.Categories, "id", "categoryName"))">
             <option value="">Выберите категорию</option>
         </select>
     </div>
+
+
+    <h3>Выберите сервисы:</h3>
+    @foreach (var service in Model.services)
+    {
+        <div>
+            <input type="checkbox" name="selectedServices" value="@service.Id" />
+            <label>@service.Name</label>
+        </div>
+    }
+
 
     <button type="submit">Добавить</button>
 </form>
