@@ -1,11 +1,13 @@
 using System.Diagnostics;
+using System.Numerics;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using VibePlace.Data;
 using VibePlace.Data.Models;
 using VibePlace.Models;
-using static System.Formats.Asn1.AsnWriter;
+
 
 namespace VibePlace.Controllers
 {
@@ -26,8 +28,6 @@ namespace VibePlace.Controllers
 		}
 
 		
-
-
 
 
 		public async Task<IActionResult> Index()
@@ -56,20 +56,42 @@ namespace VibePlace.Controllers
 		}
 
 
-
 		[HttpGet]
 		[Route("/Home/FilterPlaces/{categoryId:int}")]
 		public async Task<IActionResult> FilterPlaces(int categoryId)
 		{
+			if(categoryId==0000)
+			{
+				var places = await _context.places.ToListAsync();
+
+
+				return PartialView("_PlacesPartial",places);
+			}
+
 			var filteredPlaces = await _context.places
 				.Where(p => p.CategoryId == categoryId)
 				.ToListAsync();
 
 			return PartialView("_PlacesPartial", filteredPlaces);
+
+
+			
+
 		}
 
 
 
+
+		[HttpPost]
+		public JsonResult ChangeCulture(string culture)
+		{
+			Response.Cookies.Append(
+				CookieRequestCultureProvider.DefaultCookieName,
+				CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+				new CookieOptions { Expires = DateTime.Now.AddMonths(1) });
+
+			return Json(culture);
+		}
 
 
 

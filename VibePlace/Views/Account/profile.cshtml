@@ -1,0 +1,85 @@
+﻿@using VibePlace.Data
+@model AppUser
+
+<!-- Main Start -->
+<main class="max-w-7xl mx-auto pb-6">
+    <section class="relative pt-40 pb-24">
+        <div class="w-full max-w-7xl mx-auto px-6 md:px-8">
+            <div class="flex items-center justify-center sm:justify-start relative z-10 mb-5 mt-5">
+                <img src="@Url.Content("~/"+Model?.UserImage)" alt="user-avatar-image" class="border-4 border-solid border-white rounded-full object-cover">
+            </div>
+            <div class="flex flex-col sm:flex-row max-sm:gap-5 items-center justify-between mb-5">
+                <div class="block">
+                    <h3 class="font-manrope font-bold text-4xl text-gray-900 mb-1">@User.Identity.Name</h3>
+                    <p class="font-normal text-base leading-7 text-gray-500">@Model.Email</p>
+                </div>
+                <button data-pd-overlay="#subscribe-form-modal" data-modal-target="subscribe-form-modal" data-modal-toggle="subscribe-form-modal" type="button"
+                        class="modal-button rounded-full py-3.5 px-5 bg-gray-100 flex items-center group transition-all duration-500 hover:bg-indigo-100 mt-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path class="stroke-gray-700 transition-all duration-500 group-hover:stroke-indigo-600"
+                              d="M14.1667 11.6666V13.3333C14.1667 14.9046 14.1667 15.6903 13.6785 16.1785C13.1904 16.6666 12.4047 16.6666 10.8333 16.6666H7.50001C5.92866 16.6666 5.14299 16.6666 4.65483 16.1785C4.16668 15.6903 4.16668 14.9047 4.16668 13.3333V11.6666M16.6667 9.16663V13.3333M11.0157 10.434L12.5064 9.44014C14.388 8.18578 15.3287 7.55861 15.3287 6.66663C15.3287 5.77466 14.388 5.14749 12.5064 3.89313L11.0157 2.8993C10.1194 2.3018 9.67131 2.00305 9.16668 2.00305C8.66205 2.00305 8.21393 2.3018 7.31768 2.8993L5.82693 3.89313C3.9454 5.14749 3.00464 5.77466 3.00464 6.66663C3.00464 7.55861 3.9454 8.18578 5.82693 9.44014L7.31768 10.434C8.21393 11.0315 8.66205 11.3302 9.16668 11.3302C9.67131 11.3302 10.1194 11.0315 11.0157 10.434Z"
+                              stroke="#374151" stroke-width="1.6" stroke-linecap="round" />
+                    </svg>
+                    <span class="px-2 font-medium text-base leading-7 text-gray-700 transition-all duration-500 group-hover:text-indigo-600">
+                        Обычный пользовател
+                    </span>
+                </button>
+            </div>
+            <div class="flex flex-col lg:flex-row max-lg:gap-5 items-center justify-between py-0.5">
+                <div class="flex items-center gap-4">
+                    <button class="py-3.5 px-5 rounded-full bg-indigo-600 text-white font-semibold text-base leading-7 shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-100 hover:bg-indigo-700">
+                        Edit
+                        Profile
+                    </button>
+                    <!-- <button
+                        class="py-3.5 px-5 rounded-full bg-indigo-50 text-indigo-600 font-semibold text-base leading-7 shadow-sm shadow-transparent transition-all duration-500 hover:bg-indigo-100">Settings</button> -->
+                </div>
+                 <div class="flex flex-col md:flex-row items-center gap-6 ">
+                    <p class="flex items-center gap-2 font-medium text-lg leading-8 text-gray-400 ">Skills
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M8.78135 5.55191C9.4453 3.5173 9.77728 2.5 10.3928 2.5C11.0083 2.5 11.3403 3.5173 12.0043 5.55191L12.2949 6.44244C12.4784 7.00479 12.5701 7.28596 12.7928 7.44706C13.0155 7.60816 13.3125 7.60816 13.9063 7.60816H14.8683C17.0355 7.60816 18.119 7.60816 18.3081 8.19335C18.4972 8.77854 17.6169 9.40763 15.8563 10.6658L15.0921 11.2118C14.6069 11.5586 14.3643 11.732 14.278 11.9937C14.1918 12.2554 14.2841 12.5382 14.4687 13.1038L14.7569 13.9872C15.4209 16.0218 15.7529 17.0391 15.2549 17.3993C14.7569 17.7595 13.8878 17.1308 12.1496 15.8733L11.3887 15.323C10.9083 14.9754 10.6681 14.8016 10.3928 14.8016C10.1175 14.8016 9.87731 14.9754 9.39687 15.323L8.63605 15.8733C6.89779 17.1308 6.02866 17.7595 5.5307 17.3993C5.03273 17.0391 5.36471 16.0218 6.02866 13.9872L6.31927 13.0966C6.50278 12.5343 6.59454 12.2531 6.50948 11.9924C6.42441 11.7318 6.18419 11.558 5.70375 11.2104L4.94293 10.6601C3.20467 9.40261 2.33555 8.77389 2.52575 8.19102C2.71596 7.60816 3.79026 7.60816 5.93886 7.60816H6.87929C7.47315 7.60816 7.77008 7.60816 7.99277 7.44706C8.21547 7.28596 8.30723 7.00479 8.49074 6.44244L8.78135 5.55191Z"
+                                stroke="#9CA3AF" stroke-width="1.6" />
+                        </svg>
+                    </p>
+                    <ul class="flex items-center max-sm:justify-center max-sm:flex-wrap gap-2.5">
+                        <li class="py-3.5 px-7 rounded-full bg-orange-50 font-semibold text-base leading-7 text-gray-700">HTML</li>
+                        <li class="py-3.5 px-7 rounded-full bg-orange-50 font-semibold text-base leading-7 text-gray-700">CSS</li>
+                        <li class="py-3.5 px-7 rounded-full bg-orange-50 font-semibold text-base leading-7 text-gray-700">Dart</li>
+                        <li class="py-3.5 px-7 rounded-full bg-orange-50 font-semibold text-base leading-7 text-gray-700">C++</li>
+                        <li class="py-3.5 px-7 rounded-full bg-orange-50 font-semibold text-base leading-7 text-gray-700">UI Design</li>
+                    </ul>
+                </div> 
+            </div>
+        </div>
+
+        <div class="w-full relative">
+            <div id="subscribe-form-modal" class="pd-overlay  hidden w-full h-full fixed top-0 left-0 z-[100] overflow-x-hidden overflow-y-auto ">
+                <div class=" opacity-0  ease-out  sm:max-w-lg sm:w-full m-5 sm:mx-auto modal-open:opacity-100 transition-all modal-open:duration-500 border border-solid rounded-2xl">
+                    <div class="flex flex-col bg-white rounded-2xl py-4 px-5">
+                        <div class="flex justify-between items-center pb-4 border-b border-gray-200">
+                            <h4 class="text-sm text-gray-900 font-medium">Стать сотрудником</h4>
+                            <button class="block cursor-pointer close-modal-button" data-pd-overlay="#subscribe-form-modal" data-modal-target="subscribe-form-modal">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7.75732 7.75739L16.2426 16.2427M16.2426 7.75739L7.75732 16.2427" stroke="black" stroke-width="1.6" stroke-linecap="round" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="overflow-y-auto py-4 min-h-[130px]">
+                            <div class="relative">
+                                <label class="flex  items-center mb-2 text-gray-600 text-sm font-medium">Email </label>
+                                <input type="text" id="default-search" class="block w-full h-11 px-5 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none " placeholder="Enter your email" required="">
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-end pt-4 border-t border-gray-200 space-x-4">
+                            <button type="button" class="py-2.5 px-5 text-xs bg-indigo-50 text-indigo-500 rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 hover:bg-indigo-100 close-modal-button" data-pd-overlay="#subscribe-form-modal" data-modal-target="subscribe-form-modal">Cancel</button>
+                            <button type="button" class="py-2.5 px-5 text-xs  bg-indigo-500 text-white rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 hover:bg-indigo-700 close-modal-button" data-pd-overlay="#subscribe-form-modal" data-modal-target="subscribe-form-modal">Okay, got it</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+<!-- Main End -->

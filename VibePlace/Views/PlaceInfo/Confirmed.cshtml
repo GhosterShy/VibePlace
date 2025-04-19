@@ -1,0 +1,67 @@
+﻿
+
+@section Style
+{
+    .order-coniform-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    .btn-back {
+            left: -40px;
+        }
+}
+<section class="flex justify-center relative h-screen">
+    <div class="mx-auto max-w-lg order-coniform-center relative ">
+        <h1 class="text-3xl font-manrope font-black text-indigo-600 text-center mb-3">Ресторан Тумар</h1>
+        <a href="product.html" class="absolute top-0 btn-back">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 9C3 6.17157 3 4.75736 3.87868 3.87868C4.75736 3 6.17157 3 9 3H15C17.8284 3 19.2426 3 20.1213 3.87868C21 4.75736 21 6.17157 21 9V15C21 17.8284 21 19.2426 20.1213 20.1213C19.2426 21 17.8284 21 15 21H9C6.17157 21 4.75736 21 3.87868 20.1213C3 19.2426 3 17.8284 3 15V9Z" stroke="black" stroke-width="1.7" class="my-path"></path>
+                <path d="M13.389 9L10 12.389L13.389 15.7781" stroke="black" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="my-path"></path>
+            </svg>
+        </a>
+        <form action="#" class="grid gap-2 w-full">
+            <div>
+                <label for="date" class="block mb-2 text-sm font-medium text-gray-600 w-full">На дату</label>
+                <input type="datetime-local" class="border border-indigo-500 p-2 rounded-xl w-full" required>
+            </div>
+
+            <div>
+                <label for="type" class="block mb-2 text-sm font-medium text-gray-600 w-full">Тип мероприятия</label>
+                <select name="type" id="" class="w-full border border-indigo-500 rounded-xl p-2">
+                    <option value="Wedding">Свадьба</option>
+                    <option value="Birthday">День рождения</option>
+                    <option value="Kudalyk">Кудалык</option>
+                    <option value="Outlet">Выпускной</option>
+                    <option value="Corporate">Корпоратив</option>
+                </select>
+            </div>
+            <div>
+                <label for="count" class="block mb-2 text-sm font-medium text-gray-600 w-full">Количество гостей</label>
+                <input type="number" name="count" class="border border-indigo-500 rounded-xl p-2 w-full" required>
+            </div>
+            <div>
+                <label for="services" class="block mb-2 text-sm font-medium text-gray-600 w-full">Услуги</label>
+                <div class="grid sm:grid-cols-2 gap-2">
+                    <label for="waiters" class="flex p-3 w-full cursor-pointer bg-white border border-gray-300 rounded-md text-sm ">
+                        <input type="checkbox" class="w-5 h-5 appearance-none cursor-pointer border border-gray-300  rounded-md mr-2 checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100" id="waiters">
+                        <span class="text-sm font-normal text-gray-600 ml-2">Официанты</span>
+                    </label>
+                    <label for="povar" class="flex p-3 cursor-pointer  w-full bg-white border border-gray-300 rounded-md text-sm ">
+                        <input type="checkbox" class="w-5 h-5 appearance-none cursor-pointer border border-gray-300  rounded-md mr-2 checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100" id="povar" checked>
+                        <span class="text-sm font-normal text-gray-600 ml-2">Повар</span>
+                    </label>
+                    <label for="dancer" class="flex p-3 cursor-pointer  w-full bg-white border border-gray-300 rounded-md text-sm ">
+                        <input type="checkbox" class="w-5 h-5 appearance-none cursor-pointer border border-gray-300  rounded-md mr-2 checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100" id="dancer">
+                        <span class="text-sm font-normal text-gray-600 ml-2">Танцоры</span>
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="bg-indigo-600 p-2 rounded-full text-white font-bold cursor-pointer text-center transition-all duration-500 hover:bg-indigo-900">Оплатить $220</button>
+
+
+        </form>
+    </div>
+</section>

@@ -33,6 +33,7 @@ namespace VibePlace.Controllers
 			{
 				return NotFound("Место с указанным ID не найдено.");
 			}
+			
 			var model = new PlaceToService
 			{
 				places = place,
@@ -56,21 +57,31 @@ namespace VibePlace.Controllers
 				{
 					return RedirectToAction("Register", "Account");
 				}
-				else
+
+				Review review = new Review
 				{
-					Review review = new Review
-					{
-						UserId = userId,
-						Comment = Comment,
-						PlaceId = PlaceId,
-						CreatedAt = DateTime.Now
-					};
-					_context.review.Add(review);
-					await _context.SaveChangesAsync();
-				}
+					UserId = userId,
+					Comment = Comment,
+					PlaceId = PlaceId,
+					CreatedAt = DateTime.Now
+				};
+				_context.review.Add(review);
+				await _context.SaveChangesAsync();
 			}
 
 			return RedirectToAction("placeinfo", "PlaceInfo", new { id = PlaceId });
+		}
+
+		
+
+
+
+
+
+
+		public IActionResult Confirmed()
+		{
+			return View();
 		}
 
 

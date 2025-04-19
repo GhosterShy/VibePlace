@@ -5,6 +5,9 @@
 
 @model RegisterModel
 
+
+
+
 <body class="font-inter overflow-hidden">
     <section class="flex justify-center relative">
         <img src="https://pagedone.io/asset/uploads/1702362010.png" alt="gradient background image" class="w-full h-full object-cover fixed">
@@ -23,11 +26,33 @@
                     <input asp-for="Name" type="text" class="w-full h-12 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-full border-gray-300 border shadow-sm focus:outline-none px-4 mb-1" placeholder="Name">
                     <input asp-for="Password" type="password" class="w-full h-12 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-full border-gray-300 border shadow-sm focus:outline-none px-4 mb-6" placeholder="Create Password">
                     <input asp-for="ConfirmPassword" type="password" class="w-full h-12 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-full border-gray-300 border shadow-sm focus:outline-none px-4 mb-6" placeholder="Confirm Password">
-                    <button class="w-full h-12 text-white text-center text-base font-semibold leading-6 rounded-full hover:bg-indigo-800 transition-all duration-700 bg-indigo-600 shadow-sm mb-11">Sign Up</button>
+
+                    <div class="grid sm:grid-cols-2 gap-2">
+                        <div class="block">
+                            <input type="radio" name="radio-in-form" class="hidden checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100" id="radio-in-form-1">
+                            <label for="radio-in-form-1" class="flex p-3 block w-full bg-white border border-gray-200 rounded-md text-sm ">
+                                <span class="border border-gray-300  rounded-full mr-2 w-4 h-4 mt-0.5"></span>
+                                <h5 class="text-sm text-gray-500">Default radio</h5>
+                            </label>
+                        </div>
+                        <div class="block">
+                            <input type="radio" name="radio-in-form" class="hidden checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100" id="radio-in-form-2" checked>
+                            <label for="radio-in-form-2" class="flex p-3 block w-full bg-white border border-gray-200 rounded-md text-sm ">
+                                <span class="border border-gray-300  rounded-full mr-2 w-4 h-4 mt-0.5"></span>
+                                <h5 class="text-sm text-gray-500">Checked radio</h5>
+                            </label>
+                        </div>
+                    </div>
+
+
+                    <br />
+
+                        <button class="w-full h-12 text-white text-center text-base font-semibold leading-6 rounded-full hover:bg-indigo-800 transition-all duration-700 bg-indigo-600 shadow-sm mb-11">Sign Up</button>
                     <a href="@Url.Action("Index","Account")" class="flex justify-center text-gray-900 text-base font-medium leading-6">
                         Уже есть аккаунт? <span class="text-indigo-600 font-semibold pl-3"> Login</span>
                     </a>
                 </form>
+                <a href="@Url.Action("Login","Account")" class="btn btn-primary">Войти через Google</a>
             </div>
         </div>
     </section>

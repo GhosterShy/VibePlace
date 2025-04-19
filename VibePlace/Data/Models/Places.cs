@@ -8,7 +8,7 @@
 		public string? AddressLink { get; set; }
 		public string Description { get; set; } 
 		public string PhoneNumber { get; set; }
-		public double Rating { get; set; }
+		public double? Rating { get; set; }
 		public double Price { get; set; }
 		public string? Image { get; set; }
 		public int? Capacity { get; set; }
@@ -24,8 +24,8 @@
 		public AppUser? User { get; set; }
 
 
-		public ICollection<Review?> Reviews { get; set; } = []; 
-		public ICollection<PlaceImage?> Images { get; set; } = [];
+		public ICollection<Review> Reviews { get; set; } = []; 
+		public ICollection<PlaceImage> Images { get; set; } = [];
 
 
 		public ICollection<ServiceToPlace?> ServiceToPlaces { get; set; } = [];

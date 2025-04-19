@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Drawing;
 using VibePlace.Data;
 using VibePlace.Data.Models;
 using VibePlace.Migrations;
@@ -16,7 +17,7 @@ namespace VibePlace.Services
 
 		public async Task<Places?> GetPlaceByIdAsync(int placeId)
 		{
-			return await _context.places
+			var place =  await _context.places
 				.Include(p => p.Images)  
 				.Include(p => p.Reviews)
 					.ThenInclude(r => r.User)
@@ -24,6 +25,9 @@ namespace VibePlace.Services
 				.Include(p => p.ServiceToPlaces)
 				.AsSplitQuery()
 				.FirstOrDefaultAsync(p => p.Id == placeId);
+
+			return place;
+
 		}
 
 		public async Task<List<Service?>> GetServiceByIdAsync(int placeId)

@@ -308,7 +308,7 @@ namespace VibePlace.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<double>("Rating")
+                    b.Property<double?>("Rating")
                         .HasColumnType("float");
 
                     b.Property<string>("UserId")
@@ -386,7 +386,7 @@ namespace VibePlace.Migrations
 
                     b.HasIndex("ServisId");
 
-                    b.ToTable("ServiceToPlace");
+                    b.ToTable("serviceToPlace");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -460,7 +460,7 @@ namespace VibePlace.Migrations
                         .IsRequired();
 
                     b.HasOne("VibePlace.Data.AppUser", "User")
-                        .WithMany()
+                        .WithMany("Places")
                         .HasForeignKey("UserId");
 
                     b.Navigation("Category");
@@ -504,6 +504,11 @@ namespace VibePlace.Migrations
                     b.Navigation("Place");
 
                     b.Navigation("Service");
+                });
+
+            modelBuilder.Entity("VibePlace.Data.AppUser", b =>
+                {
+                    b.Navigation("Places");
                 });
 
             modelBuilder.Entity("VibePlace.Data.Models.Category", b =>

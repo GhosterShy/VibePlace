@@ -36,7 +36,7 @@ namespace VibePlace.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Create(PlaceToService placeToService, IFormFile image, List<int> selectedServices)
+		public async Task<IActionResult> Create(PlaceToService placeToService, IFormFile image, List<int> selectedServices, List<IFormFile> photos)
 		//public async Task<IActionResult> Create(Places place)
 		{
 
@@ -69,13 +69,45 @@ namespace VibePlace.Controllers
 					}
 
 
-					placeToService.places.Image = Path.Combine("img", fileName); // Путь относительно wwwroot
+					placeToService.places.Image = Path.Combine("img", fileName); 
 				}
+
 				placeToService.places.UserId = userId;
+				placeToService.places.Rating = 4;
 				_context.places.Add(placeToService.places);
 				await _context.SaveChangesAsync();
 
+
+
+				///Photos
+				foreach (var photo in photos)
+				{
+					if (photo.Length > 0)
+					{
+						var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "Images_of_places", photo.FileName);
+
+						using (var stream = new FileStream(filePath, FileMode.Create))
+						{
+							await photo.CopyToAsync(stream);
+						}
+
+						var placeImage = new PlaceImage
+						{
+							PlaceId = placeToService.places.Id,
+							ImageUrl = Path.Combine("img", "Images_of_places", photo.FileName)
+
+						};
+
+						_context.placeimage.Add(placeImage);
+						await _context.SaveChangesAsync();
+					}
+				}
 				
+
+
+
+
+
 
 				foreach (var serviceId in selectedServices)
 				{
