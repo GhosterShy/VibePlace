@@ -15,6 +15,7 @@ namespace VibePlace.Data
 		public DbSet<Review> review { get; set; }
 		public DbSet<Service> services { get; set; }
 		public DbSet<ServiceToPlace> serviceToPlace { get; set; }
+		public DbSet<City> cities { get; set; }
 
 
 
@@ -25,6 +26,12 @@ namespace VibePlace.Data
 				.WithOne(p => p.Category)
 				.HasForeignKey(p => p.CategoryId)
 				.OnDelete(DeleteBehavior.Restrict); // Запрещаем каскадное удаление
+
+			modelBuilder.Entity<City>()
+				.HasMany(c => c.places)
+				.WithOne(p => p.City)
+				.HasForeignKey(p => p.CityId)
+				.OnDelete(DeleteBehavior.Cascade);
 
 			modelBuilder.Entity<Places>()
 				.HasMany(c => c.Reviews)
