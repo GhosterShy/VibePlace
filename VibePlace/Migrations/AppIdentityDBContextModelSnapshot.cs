@@ -307,7 +307,7 @@ namespace VibePlace.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CityId")
+                    b.Property<int>("CityId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -484,7 +484,8 @@ namespace VibePlace.Migrations
                     b.HasOne("VibePlace.Data.Models.City", "City")
                         .WithMany("places")
                         .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("VibePlace.Data.AppUser", "User")
                         .WithMany("Places")

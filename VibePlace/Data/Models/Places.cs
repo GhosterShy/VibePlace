@@ -23,8 +23,8 @@
 		public string? UserId { get; set; }
 		public AppUser? User { get; set; }
 
-		public int? CityId { get;set; }
-		public City? City { get; set; }
+		public int CityId { get;set; }
+		public City City { get; set; }
 
 
 		public ICollection<Review> Reviews { get; set; } = []; 
