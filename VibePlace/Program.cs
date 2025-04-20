@@ -11,22 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 
-#region Google
 
-builder.Services.AddAuthentication(options =>
-{
-	options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-	options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
-})
-.AddCookie()
-.AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
-{
-	options.ClientId = builder.Configuration["Authentication:ClientId"];
-	options.ClientSecret = builder.Configuration["Authentication:ClientSecret"];
-	options.SignInScheme = IdentityConstants.ExternalScheme;
-});
-
-#endregion
 
 
 
