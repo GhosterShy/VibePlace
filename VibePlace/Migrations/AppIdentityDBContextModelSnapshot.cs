@@ -244,24 +244,7 @@ namespace VibePlace.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("categories");
-                });
-
-            modelBuilder.Entity("VibePlace.Data.Models.City", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("cities");
+                    b.ToTable("categories", (string)null);
                 });
 
             modelBuilder.Entity("VibePlace.Data.Models.PlaceImage", b =>
@@ -283,7 +266,7 @@ namespace VibePlace.Migrations
 
                     b.HasIndex("PlaceId");
 
-                    b.ToTable("placeimage");
+                    b.ToTable("placeimage", (string)null);
                 });
 
             modelBuilder.Entity("VibePlace.Data.Models.Places", b =>
@@ -305,9 +288,6 @@ namespace VibePlace.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CityId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -338,11 +318,9 @@ namespace VibePlace.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("CityId");
-
                     b.HasIndex("UserId");
 
-                    b.ToTable("places");
+                    b.ToTable("places", (string)null);
                 });
 
             modelBuilder.Entity("VibePlace.Data.Models.Review", b =>
@@ -376,7 +354,7 @@ namespace VibePlace.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("review");
+                    b.ToTable("review", (string)null);
                 });
 
             modelBuilder.Entity("VibePlace.Data.Models.Service", b =>
@@ -393,7 +371,7 @@ namespace VibePlace.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("services");
+                    b.ToTable("services", (string)null);
                 });
 
             modelBuilder.Entity("VibePlace.Data.Models.ServiceToPlace", b =>
@@ -408,7 +386,7 @@ namespace VibePlace.Migrations
 
                     b.HasIndex("ServisId");
 
-                    b.ToTable("serviceToPlace");
+                    b.ToTable("serviceToPlace", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -481,18 +459,11 @@ namespace VibePlace.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("VibePlace.Data.Models.City", "City")
-                        .WithMany("places")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("VibePlace.Data.AppUser", "User")
                         .WithMany("Places")
                         .HasForeignKey("UserId");
 
                     b.Navigation("Category");
-
-                    b.Navigation("City");
 
                     b.Navigation("User");
                 });
@@ -541,11 +512,6 @@ namespace VibePlace.Migrations
                 });
 
             modelBuilder.Entity("VibePlace.Data.Models.Category", b =>
-                {
-                    b.Navigation("places");
-                });
-
-            modelBuilder.Entity("VibePlace.Data.Models.City", b =>
                 {
                     b.Navigation("places");
                 });
