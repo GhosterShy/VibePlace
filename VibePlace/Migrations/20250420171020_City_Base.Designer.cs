@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VibePlace.Data;
 
@@ -11,9 +12,11 @@ using VibePlace.Data;
 namespace VibePlace.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    partial class AppIdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250420171020_City_Base")]
+    partial class City_Base
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -244,7 +247,24 @@ namespace VibePlace.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("categories", (string)null);
+                    b.ToTable("categories");
+                });
+
+            modelBuilder.Entity("VibePlace.Data.Models.City", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("cities");
                 });
 
             modelBuilder.Entity("VibePlace.Data.Models.PlaceImage", b =>
@@ -266,7 +286,7 @@ namespace VibePlace.Migrations
 
                     b.HasIndex("PlaceId");
 
-                    b.ToTable("placeimage", (string)null);
+                    b.ToTable("placeimage");
                 });
 
             modelBuilder.Entity("VibePlace.Data.Models.Places", b =>
@@ -288,6 +308,9 @@ namespace VibePlace.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CityId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -318,9 +341,11 @@ namespace VibePlace.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("CityId");
+
                     b.HasIndex("UserId");
 
-                    b.ToTable("places", (string)null);
+                    b.ToTable("places");
                 });
 
             modelBuilder.Entity("VibePlace.Data.Models.Review", b =>
@@ -354,7 +379,7 @@ namespace VibePlace.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("review", (string)null);
+                    b.ToTable("review");
                 });
 
             modelBuilder.Entity("VibePlace.Data.Models.Service", b =>
@@ -371,7 +396,7 @@ namespace VibePlace.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("services", (string)null);
+                    b.ToTable("services");
                 });
 
             modelBuilder.Entity("VibePlace.Data.Models.ServiceToPlace", b =>
@@ -386,7 +411,7 @@ namespace VibePlace.Migrations
 
                     b.HasIndex("ServisId");
 
-                    b.ToTable("serviceToPlace", (string)null);
+                    b.ToTable("serviceToPlace");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -459,11 +484,18 @@ namespace VibePlace.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("VibePlace.Data.Models.City", "City")
+                        .WithMany("places")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("VibePlace.Data.AppUser", "User")
                         .WithMany("Places")
                         .HasForeignKey("UserId");
 
                     b.Navigation("Category");
+
+                    b.Navigation("City");
 
                     b.Navigation("User");
                 });
@@ -512,6 +544,11 @@ namespace VibePlace.Migrations
                 });
 
             modelBuilder.Entity("VibePlace.Data.Models.Category", b =>
+                {
+                    b.Navigation("places");
+                });
+
+            modelBuilder.Entity("VibePlace.Data.Models.City", b =>
                 {
                     b.Navigation("places");
                 });
