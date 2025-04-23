@@ -11,48 +11,49 @@
 <body class="font-inter overflow-hidden">
     <section class="flex justify-center relative">
         <img src="https://pagedone.io/asset/uploads/1702362010.png" alt="gradient background image" class="w-full h-full object-cover fixed">
-        <div class="mx-auto max-w-lg px-6 lg:px-8 absolute py-20 ">
+        <div class="mx-auto max-w-lg px-6 lg:px-8 absolute pt-20">
             <h1 class="mx-auto lg:mb-11 mb-8 text-center text-6xl font-extrabold">VibePlace</h1>
-            <div class="rounded-2xl bg-white shadow-xl div-sl">
-                <form asp-action="Register" asp-controller="Account"  class="lg:p-11 p-7 mx-auto">
-                    <div class="mb-11">
-                        <h1 class="text-gray-900 text-center font-manrope text-3xl font-bold leading-10 mb-2">Регистрация</h1>
+            <div class="rounded-2xl bg-white shadow-xl pb-10">
+                <form asp-action="Register" asp-controller="Account"  class="px-10 pt-10 pb-2 mx-auto">
+                    <div class="mb-10">
+                        <h1 class="text-gray-900 text-center font-manrope text-3xl font-bold leading-10">Регистрация</h1>
                     </div>
-                    <input asp-for="Email" type="email" class="w-full h-12 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-full border-gray-300 border shadow-sm focus:outline-none px-4 mb-1" placeholder="Email" required>
-                    <div class="flex gap-1">
-                        <input type="text" class="w-full h-12 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-full border-gray-300 border shadow-sm focus:outline-none px-4 mb-1" placeholder="Enter Code">
-                        <button class="w-full h-12 text-white text-center text-base font-semibold leading-6 rounded-full hover:bg-indigo-800 transition-all duration-700 bg-indigo-600 shadow-sm mb-1">Send Code</button>
-                    </div>
-                    <input asp-for="Name" type="text" class="w-full h-12 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-full border-gray-300 border shadow-sm focus:outline-none px-4 mb-1" placeholder="Name">
-                    <input asp-for="Password" type="password" class="w-full h-12 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-full border-gray-300 border shadow-sm focus:outline-none px-4 mb-6" placeholder="Create Password">
-                    <input asp-for="ConfirmPassword" type="password" class="w-full h-12 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-full border-gray-300 border shadow-sm focus:outline-none px-4 mb-6" placeholder="Confirm Password">
+                    <input asp-for="Email" type="email" class="w-full h-10 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-xl border-gray-300 border focus:outline-none px-4 mb-2" placeholder="Email" required>
+                    <input asp-for="Name" type="text" class="w-full h-10 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-xl border-gray-300 border focus:outline-none px-4 mb-2" placeholder="Имя пользователя">
+                    <input asp-for="Password" type="password" class="w-full h-10 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-xl border-gray-300 border focus:outline-none px-4 mb-2" placeholder="Пароль">
+                    <input asp-for="ConfirmPassword" type="password" class="w-full h-10 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-xl border-gray-300 border focus:outline-none px-4 mb-2" placeholder="Подтверждение пароля">
 
-                    <div class="grid sm:grid-cols-2 gap-2">
+                    <div class="grid sm:grid-cols-2 gap-2 mb-4">
                         <div class="block">
-                            <input type="radio" name="radio-in-form" class="hidden checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100" id="radio-in-form-1">
-                            <label for="radio-in-form-1" class="flex p-3 block w-full bg-white border border-gray-200 rounded-md text-sm ">
-                                <span class="border border-gray-300  rounded-full mr-2 w-4 h-4 mt-0.5"></span>
-                                <h5 class="text-sm text-gray-500">Default radio</h5>
+                            <input type="radio" name="radio-in-register" id="radio-in-register-1" class="hidden peer" checked>
+                            <label for="radio-in-register-1" class="flex px-4 py-1 w-full bg-white border border-gray-200 rounded-xl text-sm peer-checked:border-indigo-500 peer-checked:bg-indigo-100 peer-checked:text-gray-900">
+                                <h5 class="text-lg text-gray-500">Пользователь</h5>
                             </label>
                         </div>
                         <div class="block">
-                            <input type="radio" name="radio-in-form" class="hidden checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100" id="radio-in-form-2" checked>
-                            <label for="radio-in-form-2" class="flex p-3 block w-full bg-white border border-gray-200 rounded-md text-sm ">
-                                <span class="border border-gray-300  rounded-full mr-2 w-4 h-4 mt-0.5"></span>
-                                <h5 class="text-sm text-gray-500">Checked radio</h5>
+                            <input type="radio" name="radio-in-register" id="radio-in-register-2" class="hidden peer">
+                            <label for="radio-in-register-2" class="flex px-4 py-1 w-full bg-white border border-gray-200 rounded-xl text-sm peer-checked:border-indigo-500 peer-checked:bg-indigo-100 peer-checked:text-gray-900">
+                                <h5 class="text-lg text-gray-500">Организатор</h5>
                             </label>
                         </div>
                     </div>
 
 
-                    <br />
-
-                        <button class="w-full h-12 text-white text-center text-base font-semibold leading-6 rounded-full hover:bg-indigo-800 transition-all duration-700 bg-indigo-600 shadow-sm mb-11">Sign Up</button>
+                        <button class="w-full h-12 text-white text-center text-base font-semibold leading-6 rounded-xl hover:bg-indigo-800 transition-all duration-700 bg-indigo-600 mb-2">Sign Up</button>
                     <a href="@Url.Action("Index","Account")" class="flex justify-center text-gray-900 text-base font-medium leading-6">
-                        Уже есть аккаунт? <span class="text-indigo-600 font-semibold pl-3"> Login</span>
+                        Уже есть аккаунт? <span class="text-indigo-600 font-semibold pl-3">Login</span>
                     </a>
                 </form>
-                <a href="@Url.Action("Login","Account")" class="btn btn-primary">Войти через Google</a>
+                
+                <div class="flex items-center rounded-full mx-10 mb-2">
+                    <div class="flex-1 border-b border-gray-300"></div>
+                    <span class="text-black text-lg font-semibold px-2">Или</span>
+                    <div class="flex-1 border-b border-gray-300"></div>
+                </div>
+
+                <div class="px-10 mx-auto">
+                    <button href="@Url.Action("Login","Account")" class="w-full h-10 text-white text-center text-base font-semibold leading-6 rounded-xl hover:bg-indigo-800 transition-all duration-700 bg-indigo-600"><i class="fa-brands fa-google"></i>&nbsp; Войти через Google</button>
+                </div>
             </div>
         </div>
     </section>
