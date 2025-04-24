@@ -10,23 +10,30 @@
         <img src="https://pagedone.io/asset/uploads/1702362010.png" alt="gradient background image" class="w-full h-full object-cover fixed">
         <div class="mx-auto max-w-lg px-6 lg:px-8 absolute py-20">
             <h1 class="mx-auto lg:mb-11 mb-8 text-center text-6xl font-extrabold">VibePlace</h1>
-            <div class="rounded-2xl bg-white shadow-xl div-sl">
-                <form asp-action="Index" asp-controller="Account" method="POST" class="lg:p-11 p-7 mx-auto">
-                    <div class="mb-11">
+            <div class="rounded-2xl bg-white shadow-xl pb-10">
+                <form asp-action="Index" asp-controller="Account" method="POST" class="px-10 pt-10 pb-2 mx-auto">
+                    <div class="mb-10">
                         <h1 class="text-gray-900 text-center font-manrope text-3xl font-bold leading-10 mb-2">Welcome Back</h1>
-                        <!-- <p class="text-gray-500 text-center text-base font-medium leading-6">Let’s get started with your 30 days free trail</p> -->
                     </div>
-                    <input asp-for="Login" type="tel" class="w-full h-12 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-full border-gray-300 border shadow-sm focus:outline-none px-4 mb-6" placeholder="Email address">
-                    <input asp-for= "Password" type="text" class="w-full h-12 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-full border-gray-300 border shadow-sm focus:outline-none px-4 mb-1" placeholder="Password">
-                    <a href="forgot-passwd.html" class="flex justify-end mb-6">
+                    <input asp-for="Login" type="tel" class="w-full h-10 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-xl border-gray-300 border focus:outline-none px-4 mb-2" placeholder="Email">
+                    <input asp-for= "Password" type="text" class="w-full h-10 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-xl border-gray-300 border focus:outline-none px-4 mb-1" placeholder="Password">
+                    <a href="forgot-passwd.html" class="flex justify-end mb-4">
                         <span class="text-indigo-600 text-right text-base font-normal leading-6">Forgot Password?</span>
                     </a>
-                    <a href="@Url.Action("Login","Account")" class="text-center"><i class="fa-brands fa-google"></i></a>
-                    <button type="submit" class="w-full h-12 text-white text-center text-base font-semibold leading-6 rounded-full hover:bg-indigo-800 transition-all duration-700 bg-indigo-600 shadow-sm mb-11">Login</button>
+                    <button type="submit" class="w-full h-12 text-white text-center text-base font-semibold leading-6 rounded-xl hover:bg-indigo-800 transition-all duration-700 bg-indigo-600 mb-2">Login</button>
                     <a href="@Url.Action("Register","Account")" class="flex justify-center text-gray-900 text-base font-medium leading-6">
-                        у вас нет аккаунта? <span class="text-indigo-600 font-semibold pl-3"> Sign Up</span>
+                        Нет аккаунта? <span class="text-indigo-600 font-semibold pl-3"> Sign Up</span>
                     </a>
                 </form>
+                <div class="flex items-center rounded-full mx-10 mb-2">
+                    <div class="flex-1 border-b border-gray-300"></div>
+                    <span class="text-black text-lg font-semibold px-2">Или</span>
+                    <div class="flex-1 border-b border-gray-300"></div>
+                </div>
+
+                <div class="px-10 mx-auto">
+                    <button href="@Url.Action("Login","Account")" class="w-full h-10 text-white text-center text-base font-semibold leading-6 rounded-xl hover:bg-indigo-800 transition-all duration-700 bg-indigo-600"><i class="fa-brands fa-google"></i>&nbsp; Войти через Google</button>
+                </div>
                 
             </div>
         </div>
