@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VibePlace", "VibePlace\Vibe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VibePlace.WebApi", "VibePlace.WebApi\VibePlace.WebApi.csproj", "{1199B1E6-FA88-4DD8-A0F6-F31748B0BDA0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VibePlace.Admin", "VibePlace.Admin\VibePlace.Admin.csproj", "{6C51627C-FFF5-43F3-9786-22CF88F71A2F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{1199B1E6-FA88-4DD8-A0F6-F31748B0BDA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1199B1E6-FA88-4DD8-A0F6-F31748B0BDA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1199B1E6-FA88-4DD8-A0F6-F31748B0BDA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C51627C-FFF5-43F3-9786-22CF88F71A2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C51627C-FFF5-43F3-9786-22CF88F71A2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C51627C-FFF5-43F3-9786-22CF88F71A2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C51627C-FFF5-43F3-9786-22CF88F71A2F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
