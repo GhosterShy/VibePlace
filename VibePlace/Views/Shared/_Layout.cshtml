@@ -12,10 +12,16 @@
     <script src="https://api-maps.yandex.ru/2.1/?apikey=3cd5a066-de3d-4c35-862b-ab6b2fac082f&lang=ru_RU" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     @RenderSection("Map",required:false)
-  
+    
+
     
     <title>VibePlace / Home</title>
     <style>
+        @@import url('https://fonts.googleapis.com/css2?family=Geologica:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@100..900&display=swap');
+
+        body {
+            font-family: Geologica;
+        }
         .no-copy {
             -webkit-user-select: none; /* Safari */
             -moz-user-select: none; /* Firefox */
@@ -73,7 +79,7 @@
                 <div class="hidden w-full lg:flex lg:pl-11 " id="navbar-default">
                     <ul class="lg:flex items-center flex-col mt-4 lg:mt-0 lg:flex-row lg:ml-auto">
                         <li>
-                            <a href="index.html" class="nav-link mb-2 block lg:mr-6 md:mb-0 lg:text-left text-center">@localizer["Main"]<a>
+                            <a href="@Url.Action("Index","Home")" class="nav-link mb-2 block lg:mr-6 md:mb-0 lg:text-left text-center">@localizer["Main"]<a>
                         </li>
                         <li>
                             <a href="@Url.Action("Service","Service")" class="nav-link mb-2 block lg:mr-6 md:mb-0 lg:text-left text-center">@localizer["Services"]</a>
@@ -85,7 +91,12 @@
                     <div class="flex items-center justify-center">
                         <div class="dropdown relative inline-flex z-10">
                             <button type="button" data-target="dropdown-with-divider" class="dropdown-toggle inline-flex justify-center items-center gap-2 py-3 px-6 text-sm bg-indigo-600 text-white rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 hover:bg-indigo-700 ">
-                                Default Name
+                                @if (User.Identity.IsAuthenticated) {
+                                    <font>@User.Identity.Name</font>
+                                }
+                                else {
+                                    <font>Username</font>
+                                }
                             </button>
                             <div id="dropdown-with-divider" class="dropdown-menu hidden bg-slate-400 rounded-xl shadow-lg  absolute right-0 top-full w-48 mt-2 divide-y divide-gray-200" aria-labelledby="dropdown-with-divider">
                                 <ul class="py-2">
