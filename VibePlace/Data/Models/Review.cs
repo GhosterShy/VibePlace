@@ -14,6 +14,8 @@ namespace VibePlace.Data.Models
 		public string UserId { get; set; }
 		public AppUser User { get; set; }
 
+		public ICollection<ReviewLike?> ReviewLikes { get; set; }	
+
 		public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 	}
 }

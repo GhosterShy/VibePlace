@@ -91,7 +91,7 @@ namespace VibePlace.Controllers
 					UserId = userId,
 					Comment = Comment,
 					PlaceId = PlaceId,
-					CreatedAt = DateTime.Now
+					CreatedAt = DateTime.Now.Date
 				};
 				_context.review.Add(review);
 				await _context.SaveChangesAsync();
@@ -100,11 +100,23 @@ namespace VibePlace.Controllers
 			return RedirectToAction("placeinfo", "PlaceInfo", new { id = PlaceId });
 		}
 
-		
 
 
 
+		[Route("like/{id:int}")]
+		public async Task<IActionResult> PlusLike(int id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
 
+			var review =await _context.review.FindAsync(id);
+			review.Like += 1;
+
+			await _context.SaveChangesAsync();
+			return PartialView("_ReviewPartial", review);
+		}
 
 
 		public IActionResult Confirmed()

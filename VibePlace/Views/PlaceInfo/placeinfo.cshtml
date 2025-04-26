@@ -398,10 +398,10 @@ animation-range: entry 0% cover 30%;
 
             <div class="w-full max-w-7xl mx-auto">
                 <div class="w-full flex-col justify-start items-start lg:gap-14 gap-7 inline-flex">
-                    <div class="w-full flex-col justify-start items-start gap-8 flex">
+                    <div id="reviews" class="w-full flex-col justify-start items-start gap-8 flex">
                     @if (Model.places.Reviews != null)
                     {
-                            @foreach (var review in Model.places.Reviews)
+                        @foreach (var review in Model.places.Reviews)
                         {
                             <div class="w-full lg:p-8 p-5 bg-white rounded-3xl border border-gray-200 flex-col justify-start items-start flex animation-product">
                                 <div class="w-full flex-col justify-start items-start gap-3.5 flex">
@@ -418,7 +418,7 @@ animation-range: entry 0% cover 30%;
                                         </div>
                                         <div class="group justify-end items-center flex">
                                             <div class="px-5 py-2.5 rounded-xl shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] border border-gray-400 hover:border-green-600 transition-all duration-700 ease-in-out justify-center items-center flex">
-                                                <a href="" class="">
+                                                    <a hx-get="@Url.Action("PlusLike", "PlaceInfo", new {review.Id})" hx-target="#like" hx-swap="innerHTML" class="">
                                                     <svg class="group-hover:text-green-600 text-gray-400 group-hover:fill-green-600 fill-white transition-all duration-700 ease-in-out"
                                                     xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                     viewBox="0 0 20 20" fill="none">
@@ -427,7 +427,7 @@ animation-range: entry 0% cover 30%;
                                                     </svg>
                                                 </a>
                                                 <div class="px-2 justify-center items-center flex">
-                                                    <h5 class="group-hover:text-green-600 text-gray-400 transition-all duration-700 ease-in-out text-base font-semibold leading-relaxed">
+                                                    <h5 id="like" class="group-hover:text-green-600 text-gray-400 transition-all duration-700 ease-in-out text-base font-semibold leading-relaxed">
                                                            @review.Like
                                                     </h5>
                                                 </div>

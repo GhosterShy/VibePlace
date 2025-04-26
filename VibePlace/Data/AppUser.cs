@@ -9,5 +9,6 @@ namespace VibePlace.Data
 
 		public DateTime addDate { get; set; } = DateTime.UtcNow;
 		public ICollection<Places> Places { get; set; } = [];
+		public ICollection<ReviewLike?> ReviewLike { get; set; }
 	}
 }
