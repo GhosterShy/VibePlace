@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using VibePlace.Data;
@@ -26,21 +28,47 @@ namespace VibePlace.Controllers
 		[Route("place/{id:int}")]
 		public async Task<IActionResult> PlaceInfo(int id)
 		{
-			var place = await _placeService.GetPlaceByIdAsync(id);
-			var servise = await _placeService.GetServiceByIdAsync(id);
+			
 
-			if (place == null)
+			
+
+			var model = new PlaceToService();
+			
+
+			/////
+			using (var client = new HttpClient())
+			{
+				var token = Request.Cookies["token"];
+
+				client.DefaultRequestHeaders.Authorization =
+					new AuthenticationHeaderValue("Bearer", token);
+
+				
+
+
+				using (var serviceResponse = await client.GetAsync($"http://localhost:5292/api/Service/place_ser/{id}"))
+				{
+					var serviceResult = await serviceResponse.Content.ReadAsStringAsync();
+					model.services = JsonConvert.DeserializeObject<List<Service>>(serviceResult);
+				}
+
+			
+				using (var placesResponse = await client.GetAsync($"http://localhost:5292/api/Place/info/{id}"))
+				{
+					var placesResult = await placesResponse.Content.ReadAsStringAsync();
+					model.places = JsonConvert.DeserializeObject<Places>(placesResult);
+				}
+
+
+			}
+
+
+			if (model.places == null)
 			{
 				return NotFound("Место с указанным ID не найдено.");
 			}
-			
-			var model = new PlaceToService
-			{
-				places = place,
-				services = servise
-			};
 
-			Console.WriteLine($"Отзывы загружены: {place.Reviews?.Count ?? 0}");
+			Console.WriteLine($"Отзывы загружены: {model.places.Reviews?.Count ?? 0}");
 
 			return View(model);
         }

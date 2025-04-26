@@ -26,25 +26,73 @@ namespace VibePlace.WebApi.Controllers
 
 
 
+		[HttpGet]
+		[Route("places")] 
+		public async Task<ActionResult<Places>> GetPlacesWithCategories()
+		{
+
+			var places = await _context.places.ToListAsync();
+			
+
+			return Ok(places);
+		}
 
 
 
-		
-
-		[HttpGet("create-data")]
+		[HttpGet("place-info")]
 		public async Task<ActionResult<PlaceToService>> GetCreateData()
 		{
 			var services = await _context.services.ToListAsync();
 
 			var dto = new PlaceToService
 			{
-				places = new Places(), // пустая модель
+				places = new Places(), 
 				services = services,
 			
 			};
 
 			return Ok(dto);
 		}
+
+
+
+		[HttpGet]
+		[Route("info/{id:int}")]
+		public async Task<ActionResult<Places?>> GetPlaceByIdAsync(int id)
+		{
+			var place = await _context.places
+				.Include(p => p.Images)
+				.Include(r => r.Reviews)
+					.ThenInclude(u => u.User)
+				.Include(c => c.Category)
+				.Include(s => s.ServiceToPlaces)
+				.AsSplitQuery()
+				.FirstOrDefaultAsync(i => i.Id == id);
+
+			return Ok(place);
+
+		}
+
+
+		[HttpGet]
+		[Route("FilterPlace/{categoryId:int}")]
+		public async Task<ActionResult<Places>> FilterPlaces(int categoryId)
+		{
+			
+
+			var filteredPlaces = await _context.places
+				.Where(p => p.CategoryId == categoryId)
+				.ToListAsync();
+
+			return Ok(filteredPlaces);
+
+
+
+
+		}
+
+
+
 
 
 
@@ -55,7 +103,7 @@ namespace VibePlace.WebApi.Controllers
 		{
 			var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-			var place = JsonConvert.DeserializeObject<Places>(model.PlaceJson);
+			var place = JsonConvert.DeserializeObject<Places>(model.Name);
 
 			if (model.SelectedServices == null || model.SelectedServices.Count == 0)
 			{
@@ -117,6 +165,7 @@ namespace VibePlace.WebApi.Controllers
 					PlaceId = place.Id,
 					ServisId = serviceId
 				};
+
 				_context.serviceToPlace.Add(serviceplace);
 			}
 

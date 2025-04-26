@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using VibePlace.Data;
 using VibePlace.Data.Models;
@@ -24,16 +26,43 @@ namespace VibePlace.Controllers
 		public async  Task<IActionResult> Create()
 		{
 			ViewBag.Categories = await _context.categories.ToListAsync();
-			var services = await _context.services.ToListAsync();
-			var model = new PlaceToService
+			var model = new PlaceToService();
+
+
+
+			using (var client = new HttpClient())
 			{
-				places = new Places(), 
-				services = services 
-			};
+				var token = Request.Cookies["token"];
+
+				client.DefaultRequestHeaders.Authorization =
+					new AuthenticationHeaderValue("Bearer", token);
+
+				model.places = new Places();
+
+
+				using (var serviceResponse = await client.GetAsync("http://localhost:5292/api/Service/service"))
+				{
+					var serviceResult = await serviceResponse.Content.ReadAsStringAsync();
+					model.services = JsonConvert.DeserializeObject<List<Service>>(serviceResult);
+				}
+
+				// Загружаем Categories
+				using (var categoriesResponse = await client.GetAsync("http://localhost:5292/api/Category/category"))
+				{
+					var categoriesResult = await categoriesResponse.Content.ReadAsStringAsync();
+					ViewBag.Categories = JsonConvert.DeserializeObject<List<Category>>(categoriesResult);
+				}
+			}
+
+
 
 
 			return View(model);
 		}
+
+
+
+
 
 		[HttpPost]
 		public async Task<IActionResult> Create(PlaceToService placeToService, IFormFile image, List<int> selectedServices, List<IFormFile> photos)

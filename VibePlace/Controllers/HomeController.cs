@@ -1,12 +1,16 @@
 using System.Diagnostics;
+using System.Net.Http.Headers;
 using System.Numerics;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using VibePlace.Data;
 using VibePlace.Data.Models;
 using VibePlace.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 
 namespace VibePlace.Controllers
@@ -32,11 +36,28 @@ namespace VibePlace.Controllers
 
 		public async Task<IActionResult> Index()
 		{
-			var model = new PlacesCategoryModel
+			var model = new PlacesCategoryModel();
+
+			using (var client = new HttpClient())
 			{
-				Places = await _context.places.ToListAsync(),
-				Categories = await _context.categories.ToListAsync()
-			};
+				var token = Request.Cookies["token"];
+
+				client.DefaultRequestHeaders.Authorization =
+					new AuthenticationHeaderValue("Bearer", token);
+
+				using (var responce = await client.GetAsync("http://localhost:5292/api/Place/places"))
+				{
+					var result = await responce.Content.ReadAsStringAsync();
+					model.Places = JsonConvert.DeserializeObject <List<Places>>(result);
+				}
+
+				// Загружаем Categories
+				using (var categoriesResponse = await client.GetAsync("http://localhost:5292/api/Category/category"))
+				{
+					var categoriesResult = await categoriesResponse.Content.ReadAsStringAsync();
+					model.Categories = JsonConvert.DeserializeObject<List<Category>>(categoriesResult);
+				}
+			}
 
 			return View(model);
 		}
@@ -60,22 +81,40 @@ namespace VibePlace.Controllers
 		[Route("/Home/FilterPlaces/{categoryId:int}")]
 		public async Task<IActionResult> FilterPlaces(int categoryId)
 		{
-			if(categoryId==0000)
+
+
+			var places = new List<Places>();
+
+			using (var client = new HttpClient())
 			{
-				var places = await _context.places.ToListAsync();
+				var token = Request.Cookies["token"];
 
 
-				return PartialView("_PlacesPartial",places);
+
+				client.DefaultRequestHeaders.Authorization =
+					new AuthenticationHeaderValue("Bearer", token);
+
+
+				if (categoryId == 0000)
+				{
+					using (var responce = await client.GetAsync("http://localhost:5292/api/Place/places"))
+					{
+						var placeresult = await responce.Content.ReadAsStringAsync();
+						places = JsonConvert.DeserializeObject<List<Places>>(placeresult);
+						return PartialView("_PlacesPartial", places);
+					}
+				}
+
+				using (var responce = await client.GetAsync($"http://localhost:5292/api/Place/FilterPlace/{categoryId}"))
+				{
+					var result = await responce.Content.ReadAsStringAsync();
+					places = JsonConvert.DeserializeObject<List<Places>>(result);
+				}
+
+
 			}
 
-			var filteredPlaces = await _context.places
-				.Where(p => p.CategoryId == categoryId)
-				.ToListAsync();
-
-			return PartialView("_PlacesPartial", filteredPlaces);
-
-
-			
+			return PartialView("_PlacesPartial", places);
 
 		}
 
