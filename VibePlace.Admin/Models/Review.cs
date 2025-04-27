@@ -1,6 +1,4 @@
-﻿using VibePlace.Migrations;
-
-namespace VibePlace.Data.Models
+﻿namespace VibePlace.Admin.Models
 {
 	public class Review
 	{

@@ -13,10 +13,11 @@ namespace VibePlace.Data
 		public DbSet<Category> categories { get; set; }
 		public DbSet<PlaceImage> placeimage { get; set; }
 		public DbSet<Review> review { get; set; }
+		public DbSet<ReviewLike> reviewLike { get; set; }
 		public DbSet<Service> services { get; set; }
 		public DbSet<ServiceToPlace> serviceToPlace { get; set; }
 		public DbSet<City> cities { get; set; }
-		public DbSet<ReviewLike> reviewLike { get; set; }
+		
 
 
 
@@ -54,14 +55,14 @@ namespace VibePlace.Data
 				.HasOne(c => c.User)
 				.WithMany(p => p.ReviewLike)
 				.HasForeignKey(p => p.UserId)
-				.OnDelete(DeleteBehavior.Cascade);
+				.OnDelete(DeleteBehavior.Restrict);
 
 
 			modelBuilder.Entity<ReviewLike>()
 				.HasOne(c => c.Review)
 				.WithMany(p => p.ReviewLikes)
 				.HasForeignKey(p => p.ReviewId)
-				.OnDelete(DeleteBehavior.Cascade);
+				.OnDelete(DeleteBehavior.Restrict);
 
 
 			modelBuilder.Entity<ServiceToPlace>()

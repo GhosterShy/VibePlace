@@ -1,0 +1,38 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<Category>
+
+@{
+    ViewData["Title"] = "Справочник категорий";
+    ViewData["Description"] = "список категорий";
+}
+<table class="table table-striped table-bordered table-advance table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Category? item in Model)
+        {
+            <tr>
+                <td>@item.id</td>
+                <td>@item.categoryName</td>
+                <td>@item?.description</td>
+                <td>
+                    <a href="@Url.Action("EditPosition", "Home", new{id=item.id})">edit</a>
+                </td>
+                <td>
+                    <a href="@Url.Action("DeletePosition", "Home", new{id=item.id})">delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

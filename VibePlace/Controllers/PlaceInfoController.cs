@@ -106,15 +106,36 @@ namespace VibePlace.Controllers
 		[Route("like/{id:int}")]
 		public async Task<IActionResult> PlusLike(int id)
 		{
-			if (id == null)
+			var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+			if (id == null || userId == null)
 			{
-				return NotFound();
+				return RedirectToAction("Register","Account");
 			}
 
-			var review =await _context.review.FindAsync(id);
-			review.Like += 1;
+			
+			
+			var likereview = await _context.reviewLike
+				.FirstOrDefaultAsync(x => x.UserId == userId && x.ReviewId == id);
 
-			await _context.SaveChangesAsync();
+			var review = await _context.review.FindAsync(id);
+			if (likereview == null)
+			{
+				
+				review.Like += 1;
+				await _context.SaveChangesAsync();
+
+				var likereviewadd = new ReviewLike()
+				{
+					UserId = userId,
+					ReviewId = id,
+				};
+				await _context.reviewLike.AddAsync(likereviewadd);
+				await _context.SaveChangesAsync();
+				return PartialView("_ReviewPartial", review);
+			}
+
+
+
 			return PartialView("_ReviewPartial", review);
 		}
 
