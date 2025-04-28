@@ -1,4 +1,7 @@
-﻿
+﻿@using VibePlace.Data.Models
+@model List<Service>
+
+
 <main class="max-w-7xl mx-auto pb-6">
     <nav class="flex mt-3 mb-6 px-2 md:px-0" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
@@ -19,22 +22,16 @@
 
     <div class="tabs">
         <div class="flex ">
+
             <ul class="flex flex-wrap transition-all duration-300 overflow-hidden">
-                <li>
-                    <a href="javascript:void(0)" class="inline-block py-3 px-6 text-gray-500 hover:text-gray-800 font-medium  tab-active:bg-indigo-50 tab-active:text-indigo-600 tab-active:rounded-xl active tablink" data-tab="tabs-with-rounded-light-1" role="tab"> Тамады </a>
-                </li>
-                <li>
-                    <a href="javascript:void(1)" class="inline-block py-3 px-6 text-gray-500 hover:text-gray-800 font-medium  tab-active:bg-indigo-50 tab-active:text-indigo-600 tab-active:rounded-xl tablink" data-tab="tabs-with-rounded-light-2" role="tab"> Танцоры </a>
-                </li>
-                <li>
-                    <a href="javascript:void(0)" class="inline-block py-3 px-6 text-gray-500 hover:text-gray-800 font-medium  tab-active:bg-indigo-50 tab-active:text-indigo-600 tab-active:rounded-xl tablink" data-tab="tabs-with-rounded-light-3" role="tab"> Фотограв </a>
-                </li>
-                <li>
-                    <a href="javascript:void(1)" class="inline-block py-3 px-6 text-gray-500 hover:text-gray-800 font-medium  tab-active:bg-indigo-50 tab-active:text-indigo-600 tab-active:rounded-xl tablink" data-tab="tabs-with-rounded-light-4" role="tab"> Певец </a>
-                </li>
-                <li>
-                    <a href="javascript:void(0)" class="inline-block py-3 px-6 text-gray-500 hover:text-gray-800 font-medium  tab-active:bg-indigo-50 tab-active:text-indigo-600 tab-active:rounded-xl tablink" data-tab="tabs-with-rounded-light-5" role="tab"> Освещение </a>
-                </li>
+                @foreach(var item in Model)
+                {
+                    <li>
+                        <a href="javascript:void(0)" class="inline-block py-3 px-6 text-gray-500 hover:text-gray-800 font-medium  tab-active:bg-indigo-50 tab-active:text-indigo-600 tab-active:rounded-xl active tablink" data-tab="tabs-with-rounded-light-@item.Id" role="tab"> @item.Name </a>
+                    </li>
+                }
+                
+               
             </ul>
         </div>
         <div class="mt-3">

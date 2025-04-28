@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace VibePlace.Models
 {
@@ -19,5 +20,10 @@ namespace VibePlace.Models
 		[DataType(DataType.Password)]
 		[Compare("Password", ErrorMessage = "Пароли не совпадают.")]
 		public string ConfirmPassword { get; set; }
+
+	
+		public string SelectedRole { get; set; }
+
+		
 	}
 }

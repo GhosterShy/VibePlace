@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using VibePlace.Data;
 using VibePlace.Data.Models;
 
@@ -18,9 +20,26 @@ namespace VibePlace.Controllers
 
 
 		[Route("Services")]
-		public IActionResult Service()
+		public async Task<IActionResult> Service()
 		{
-			return View();
+
+			var services = new List<Service>();
+
+			using (var client = new HttpClient())
+			{
+				var token = Request.Cookies["token"];
+
+				client.DefaultRequestHeaders.Authorization =
+					new AuthenticationHeaderValue("Bearer", token);
+
+
+				using (var serviceResponse = await client.GetAsync("http://localhost:5292/api/Service/service"))
+				{
+					var serviceResult = await serviceResponse.Content.ReadAsStringAsync();
+					services = JsonConvert.DeserializeObject<List<Service>>(serviceResult);
+				}
+				return View(services);
+			}
 		}
 
 

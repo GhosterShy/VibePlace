@@ -9,6 +9,8 @@ using VibePlace.Models;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authorization;
 using System.Text.RegularExpressions;
+using System.Data;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace VibePlace.Controllers
 {
@@ -19,14 +21,16 @@ namespace VibePlace.Controllers
 		private SignInManager<AppUser> _singInManager;
 		private readonly UserManager<AppUser> _userManager;
 		private readonly ILogger<HomeController> _logger;
+		private readonly RoleManager<IdentityRole> _roleManager;
 
 
-		public AccountController(UserManager<AppUser> accountManager, SignInManager<AppUser> singInManager, UserManager<AppUser> userManager,  ILogger<HomeController> logger)
+		public AccountController(UserManager<AppUser> accountManager, SignInManager<AppUser> singInManager, UserManager<AppUser> userManager,  ILogger<HomeController> logger, RoleManager<IdentityRole> roleManager)
 		{
 			_accountManager = accountManager;
 			_singInManager = singInManager;
 			_userManager = userManager;
 			_logger = logger;
+			_roleManager = roleManager;
 		}
 
 
@@ -60,6 +64,7 @@ namespace VibePlace.Controllers
 
 		public IActionResult Register()
 		{
+			
 			return View();
 		}
 
@@ -68,11 +73,13 @@ namespace VibePlace.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var user = new AppUser { UserName = model.Name, Email = model.Email };
+				
+				var user = new AppUser { UserName = model.Name, Email = model.Email};
 				var result = await _accountManager.CreateAsync(user, model.Password);
 
 				if (result.Succeeded)
 				{
+					await _userManager.AddToRoleAsync(user, model.SelectedRole);
 					await _singInManager.SignInAsync(user, isPersistent: false);
 					return RedirectToAction("Index", "Home");
 				}

@@ -25,7 +25,7 @@ namespace VibePlace.Controllers
 
 		public async  Task<IActionResult> Create()
 		{
-			ViewBag.Categories = await _context.categories.ToListAsync();
+			
 			var model = new PlaceToService();
 
 

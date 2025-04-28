@@ -18,28 +18,46 @@
                     <div class="mb-10">
                         <h1 class="text-gray-900 text-center font-manrope text-3xl font-bold leading-10">Регистрация</h1>
                     </div>
-                    <input asp-for="Email" type="email" class="w-full h-10 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-xl border-gray-300 border focus:outline-none px-4 mb-2" placeholder="Email" required>
                     <input asp-for="Name" type="text" class="w-full h-10 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-xl border-gray-300 border focus:outline-none px-4 mb-2" placeholder="Имя пользователя">
-                    <input asp-for="Password" type="password" class="w-full h-10 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-xl border-gray-300 border focus:outline-none px-4 mb-2" placeholder="Пароль">
-                    <input asp-for="ConfirmPassword" type="password" class="w-full h-10 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-xl border-gray-300 border focus:outline-none px-4 mb-2" placeholder="Подтверждение пароля">
+                    <span asp-validation-for="Name" class="text-red-500 text-sm"></span>
+                    <input asp-for="Email" type="email" class="w-full h-10 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-xl border-gray-300 border focus:outline-none px-4 mb-2" placeholder="Email" required>
+                    <span asp-validation-for="Email" class="text-red-500 text-sm"></span>
+                    <input asp-for="Password" type="text" class="w-full h-10 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-xl border-gray-300 border focus:outline-none px-4 mb-2" placeholder="Пароль">
+                    <input asp-for="ConfirmPassword" type="text" class="w-full h-10 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-xl border-gray-300 border focus:outline-none px-4 mb-2" placeholder="Подтверждение пароля">
+                    <span asp-validation-for="Password" class="text-red-500 text-sm"></span>
+                    <span asp-validation-for="ConfirmPassword" class="text-red-500 text-sm"></span>
+
 
                     <div class="grid sm:grid-cols-2 gap-2 mb-4">
                         <div class="block">
-                            <input type="radio" name="radio-in-register" id="radio-in-register-1" class="hidden peer" checked>
-                            <label for="radio-in-register-1" class="flex px-4 py-1 w-full bg-white border border-gray-200 rounded-xl text-sm peer-checked:border-indigo-500 peer-checked:bg-indigo-100 peer-checked:text-gray-900">
-                                <h5 class="text-lg text-gray-500">Пользователь</h5>
+                            <input asp-for="SelectedRole" type="radio" value="User"
+                                   id="radio-user" class="hidden peer" checked>
+                            <label for="radio-user"
+                                   class="flex px-4 py-3 w-full bg-white border border-gray-200 rounded-xl text-sm peer-checked:border-indigo-500 peer-checked:bg-indigo-100 peer-checked:text-gray-900 cursor-pointer">
+                                <div class="m-auto text-center">
+                                    <h5 class="text-lg text-gray-500 peer-checked:text-gray-900">Пользователь</h5>
+                                    <p class="text-xs text-gray-400">Обычный аккаунт</p>
+                                </div>
                             </label>
                         </div>
+                        
                         <div class="block">
-                            <input type="radio" name="radio-in-register" id="radio-in-register-2" class="hidden peer">
-                            <label for="radio-in-register-2" class="flex px-4 py-1 w-full bg-white border border-gray-200 rounded-xl text-sm peer-checked:border-indigo-500 peer-checked:bg-indigo-100 peer-checked:text-gray-900">
-                                <h5 class="text-lg text-gray-500">Организатор</h5>
+                            <input asp-for="SelectedRole" type="radio" value="Organizator"
+                                   id="radio-organizer" class="hidden peer">
+                            <label for="radio-organizer"
+                                   class="flex px-4 py-3 w-full bg-white border border-gray-200 rounded-xl text-sm peer-checked:border-indigo-500 peer-checked:bg-indigo-100 peer-checked:text-gray-900 cursor-pointer">
+                                <div class="m-auto text-center">
+                                    <h5 class="text-lg text-gray-500 peer-checked:text-gray-900">Организатор</h5>
+                                    <p class="text-xs text-gray-400">Для мероприятий</p>
+                                </div>
                             </label>
                         </div>
                     </div>
 
 
-                        <button class="w-full h-12 text-white text-center text-base font-semibold leading-6 rounded-xl hover:bg-indigo-800 transition-all duration-700 bg-indigo-600 mb-2">Sign Up</button>
+                    <span asp-validation-for="SelectedRole" class="text-red-500 text-sm"></span>
+
+                        <button type="submit" class="w-full h-12 text-white text-center text-base font-semibold leading-6 rounded-xl hover:bg-indigo-800 transition-all duration-700 bg-indigo-600 mb-2">Sign Up</button>
                     <a href="@Url.Action("Index","Account")" class="flex justify-center text-gray-900 text-base font-medium leading-6">
                         Уже есть аккаунт? <span class="text-indigo-600 font-semibold pl-3">Login</span>
                     </a>

@@ -24,6 +24,7 @@ builder.Services.AddDbContext<AppIdentityDBContext>
 
 builder.Services.AddIdentity<AppUser, IdentityRole>()
 	.AddEntityFrameworkStores<AppIdentityDBContext>()
+	.AddRoles<IdentityRole>() 
 	.AddDefaultTokenProviders();
 
 
@@ -76,6 +77,12 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 builder.Services.AddScoped<PlaceService>();
 
 
+
+
+
+
+
+
 var app = builder.Build();
 
 
@@ -115,7 +122,25 @@ app.MapControllerRoute(
 
 
 
+#region UserRole
 
+//using (var scope = app.Services.CreateScope())
+//{
+//	var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+	
+//	string[] requiredRoles = { "Admin", "Organizator", "User" };
+
+//	foreach (var role in requiredRoles)
+//	{
+//		if (!await roleManager.RoleExistsAsync(role))
+//		{
+//			await roleManager.CreateAsync(new IdentityRole(role));
+//			Console.WriteLine($"Роль '{role}' создана");
+//		}
+//	}
+//}
+#endregion
 
 
 app.Run();
