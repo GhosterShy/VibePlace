@@ -14,11 +14,27 @@ namespace VibePlace.WebApi.Models
 		public DbSet<Service> services { get; set; }
 		public DbSet<ServiceToPlace> serviceToPlace { get; set; }
 		public DbSet<City> cities { get; set; }
+		public DbSet<UserService> userServices { get; set; }
 
 
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+
+
+
+			modelBuilder.Entity<UserService>()
+			   .HasOne(us => us.User)
+			   .WithMany(u => u.UserServices)
+			   .HasForeignKey(us => us.UserId);
+
+			modelBuilder.Entity<UserService>()
+				.HasOne(us => us.Service)
+				.WithMany(s => s.UserServices)
+				.HasForeignKey(us => us.ServiceId);
+
+
+
 			modelBuilder.Entity<Category>()
 				.HasMany(c => c.places)
 				.WithOne(p => p.Category)

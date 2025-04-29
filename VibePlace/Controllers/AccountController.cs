@@ -52,6 +52,10 @@ namespace VibePlace.Controllers
 				var result = await _singInManager.PasswordSignInAsync(appUser, account.Password, false, false);
 				if (result.Succeeded)
 				{
+					if (await _userManager.IsInRoleAsync(appUser, "Organizator"))
+					{
+						return RedirectToAction("Index", "Organizator");
+					}
 					return RedirectToAction("Index", "Home");
 				}
 			}
@@ -81,6 +85,12 @@ namespace VibePlace.Controllers
 				{
 					await _userManager.AddToRoleAsync(user, model.SelectedRole);
 					await _singInManager.SignInAsync(user, isPersistent: false);
+
+					if (model.SelectedRole == "Organizator")
+					{
+						return RedirectToAction("Index", "Organizator");
+					}
+
 					return RedirectToAction("Index", "Home");
 				}
 
@@ -94,7 +104,21 @@ namespace VibePlace.Controllers
 		}
 
 
-	
+
+
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Logout()
+		{
+			await _singInManager.SignOutAsync();
+			return RedirectToAction("Index", "Home");
+		}
+
+
+
+
+
 		/// <Google>
 		public async Task Login()
 		{
@@ -216,12 +240,12 @@ namespace VibePlace.Controllers
 
 
 
-
-
-		public IActionResult Logout()
-		{
-			return SignOut(new AuthenticationProperties { RedirectUri = "/" }, CookieAuthenticationDefaults.AuthenticationScheme);
-		}
+		
+		//[ValidateAntiForgeryToken]
+		//public IActionResult Logout()
+		//{
+		//	return SignOut(new AuthenticationProperties { RedirectUri = "/" }, CookieAuthenticationDefaults.AuthenticationScheme);
+		//}
 
 
 

@@ -1,4 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@using VibePlace.Data
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<AppUser> _userManager
+@inject SignInManager<AppUser> _signInManager
+
+
+@{
+    var currentUser = await _userManager.GetUserAsync(User);
+}
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,48 +23,48 @@
     <script src="https://api-maps.yandex.ru/2.1/?apikey=3cd5a066-de3d-4c35-862b-ab6b2fac082f&lang=ru_RU" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     @RenderSection("Map",required:false)
-    
 
-    
+
+
     <title>VibePlace / Home</title>
     <style>
         @@import url('https://fonts.googleapis.com/css2?family=Geologica:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@100..900&display=swap');
 
         body {
-            font-family: Geologica;
+        font-family: Geologica;
         }
         .no-copy {
-            -webkit-user-select: none; /* Safari */
-            -moz-user-select: none; /* Firefox */
-            -ms-user-select: none; /* IE 10+ */
-            user-select: none; /* Standard syntax */
+        -webkit-user-select: none; /* Safari */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* IE 10+ */
+        user-select: none; /* Standard syntax */
         }
 
         .pointer {
-            cursor: pointer;
+        cursor: pointer;
         }
         @@keyframes appear {
-            from
+        from
 
 
         {
-            opacity: 0;
-            transform: translateX(-100px);
-            /* scale: 0.5; */
+        opacity: 0;
+        transform: translateX(-100px);
+        /* scale: 0.5; */
         }
 
         to {
-            opacity: 1;
-            transform: translateX(0px);
-            /* scale: 1; */
+        opacity: 1;
+        transform: translateX(0px);
+        /* scale: 1; */
         }
 
         }
 
         .grid-item-home, .pagination-home, .new-org-home, .footer-vibeplace, .footer-ul {
-            animation: appear linear;
-            animation-timeline: view();
-            animation-range: entry 0% cover 40%;
+        animation: appear linear;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
         }
 
 
@@ -75,18 +86,35 @@
                     </button>
                 </div>
 
-                
+
                 <div class="hidden w-full lg:flex lg:pl-11 " id="navbar-default">
                     <ul class="lg:flex items-center flex-col mt-4 lg:mt-0 lg:flex-row lg:ml-auto">
-                        <li>
-                            <a href="@Url.Action("Index","Home")" class="nav-link mb-2 block lg:mr-6 md:mb-0 lg:text-left text-center">@localizer["Main"]<a>
-                        </li>
+
+                        @if (currentUser != null && await _userManager.IsInRoleAsync(currentUser, "Organizator"))
+                        {
+                            <li>
+                                <a href="@Url.Action("Index","Organizator")" class="nav-link mb-2 block lg:mr-6 md:mb-0 lg:text-left text-center">@localizer["Main"]<a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="@Url.Action("Index","Home")" class="nav-link mb-2 block lg:mr-6 md:mb-0 lg:text-left text-center">@localizer["Main"]<a>
+                            </li>
+                        }
                         <li>
                             <a href="@Url.Action("Service","Service")" class="nav-link mb-2 block lg:mr-6 md:mb-0 lg:text-left text-center">@localizer["Services"]</a>
                         </li>
                         <li>
                             <a href="@Url.Action("Contacts", "Contacts")" class="nav-link mb-2 block lg:mr-6 md:mb-0 lg:text-left text-center">@localizer["Contacts"]<a>
                         </li>
+
+                        @if (_signInManager.IsSignedIn(User) && await _userManager.IsInRoleAsync(await _userManager.GetUserAsync(User), "Organizator"))
+                        {
+                            <li>
+                                <a href="@Url.Action("Index", "Organizator")" class="nav-link mb-2 block lg:mr-6 md:mb-0 lg:text-left text-center">@localizer["MyPlace"]<a>
+                            </li>
+                        }
                     </ul>
                     <div class="flex items-center justify-center">
                         <div class="dropdown relative inline-flex z-10">
@@ -109,16 +137,22 @@
                                             <a class="block px-6 py-2 hover:bg-gray-100 text-gray-900 font-medium" href="@Url.Action("Register","Account")">Регистрация</a>
                                             <a class="block px-6 py-2 hover:bg-gray-100 text-gray-900 font-medium" href="@Url.Action("Index","Account")">Авторизация</a>
                                         }
-                                        
+
                                     </li>
-                                   
+
                                     <li>
                                         <a class="block px-6 py-2 hover:bg-gray-100 text-gray-900 font-medium" href="javascript:;"> Центр помощи </a>
                                     </li>
                                 </ul>
-                                <div class="py-2">
-                                    <a class="block px-6 py-2 hover:bg-gray-100 text-red-500 font-medium" href="javascript:;"> Log OUT </a>
-                                </div>
+                                @if(User.Identity.IsAuthenticated)
+                                {
+                                   <div class="py-2">
+                                    <form asp-controller="Account" asp-action="Logout" method="post" style="display:inline;">
+                                        <button type="submit" class="nav-link">Logout</button>
+                                    </form>
+                                   </div>
+                                }
+                               
                             </div>
                         </div>
                     </div>

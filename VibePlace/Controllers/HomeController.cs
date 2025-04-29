@@ -51,7 +51,7 @@ namespace VibePlace.Controllers
 					model.Places = JsonConvert.DeserializeObject <List<Places>>(result);
 				}
 
-				// Загружаем Categories
+		
 				using (var categoriesResponse = await client.GetAsync("http://localhost:5292/api/Category/category"))
 				{
 					var categoriesResult = await categoriesResponse.Content.ReadAsStringAsync();

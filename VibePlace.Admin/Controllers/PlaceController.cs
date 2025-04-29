@@ -30,5 +30,33 @@ namespace VibePlace.Admin.Controllers
 
 			return View(places);
 		}
+
+
+		[HttpGet]
+		public async Task<IActionResult> EditPlace(int id)
+		{
+			//var place = await _context.Places.FindAsync(id);
+
+			//if (place == null)
+			//{
+			//	return NotFound();
+			//}
+
+
+			return View(); 
+		}
+
+
+
+		public IActionResult UpdatePlace(Places place)
+		{
+
+			return View(place);
+		}
+
+
+
+
+
 	}
 }

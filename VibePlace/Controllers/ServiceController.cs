@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using VibePlace.Data;
 using VibePlace.Data.Models;
+using VibePlace.Models;
 
 namespace VibePlace.Controllers
 {
@@ -23,7 +24,7 @@ namespace VibePlace.Controllers
 		public async Task<IActionResult> Service()
 		{
 
-			var services = new List<Service>();
+			var services = new UserToService();
 
 			using (var client = new HttpClient())
 			{
@@ -36,10 +37,30 @@ namespace VibePlace.Controllers
 				using (var serviceResponse = await client.GetAsync("http://localhost:5292/api/Service/service"))
 				{
 					var serviceResult = await serviceResponse.Content.ReadAsStringAsync();
-					services = JsonConvert.DeserializeObject<List<Service>>(serviceResult);
+					services.Services = JsonConvert.DeserializeObject<List<Service>>(serviceResult);
 				}
+
+				using (var userService = await client.GetAsync("http://localhost:5292/api/UserService/userService"))
+				{
+					var serviceResult = await userService.Content.ReadAsStringAsync();
+					services.UsersServices = JsonConvert.DeserializeObject<List<UserService>>(serviceResult);
+				}
+
 				return View(services);
 			}
+
+
+
+
+
+		}
+
+
+
+		[HttpPost]
+		public IActionResult CreateUserService()
+		{
+			return View();
 		}
 
 

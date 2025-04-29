@@ -123,6 +123,9 @@
   <data name="Main" xml:space="preserve">
     <value>Home</value>
   </data>
+  <data name="MyPlace" xml:space="preserve">
+    <value>Places</value>
+  </data>
   <data name="Services" xml:space="preserve">
     <value>Services</value>
   </data>

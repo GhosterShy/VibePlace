@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using VibePlace.Data.Models;
-using VibePlace.Services;
 
-namespace VibePlace.Data
+namespace VibePlace.Admin.Models
 {
-	public class AppIdentityDBContext : IdentityDbContext<AppUser>
+	public class AppIdentityDbContext : IdentityDbContext<AppUser>
 	{
-		public AppIdentityDBContext(DbContextOptions<AppIdentityDBContext> options) : base(options){}
+
+		public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options) : base(options) { }
 
 		public DbSet<Places> places { get; set; }
 		public DbSet<Category> categories { get; set; }
@@ -17,28 +16,12 @@ namespace VibePlace.Data
 		public DbSet<Service> services { get; set; }
 		public DbSet<ServiceToPlace> serviceToPlace { get; set; }
 		public DbSet<City> cities { get; set; }
-		public DbSet<UserService> UserServices { get; set; }
 
 
 
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-
-			modelBuilder.Entity<UserService>()
-			   .HasOne(us => us.User)
-			   .WithMany(u => u.UserServices)
-			   .HasForeignKey(us => us.UserId);
-
-			modelBuilder.Entity<UserService>()
-				.HasOne(us => us.Service)
-				.WithMany(s => s.UserServices)
-				.HasForeignKey(us => us.ServiceId);
-
-
-
-
-
 			modelBuilder.Entity<Category>()
 				.HasMany(c => c.places)
 				.WithOne(p => p.Category)
@@ -65,7 +48,7 @@ namespace VibePlace.Data
 
 
 			modelBuilder.Entity<ReviewLike>()
-				.HasKey(ps => new { ps.UserId, ps.ReviewId});
+				.HasKey(ps => new { ps.UserId, ps.ReviewId });
 
 			modelBuilder.Entity<ReviewLike>()
 				.HasOne(c => c.User)
@@ -100,3 +83,4 @@ namespace VibePlace.Data
 		}
 	}
 }
+

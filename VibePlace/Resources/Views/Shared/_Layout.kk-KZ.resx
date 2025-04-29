@@ -123,6 +123,9 @@
   <data name="Main" xml:space="preserve">
     <value>Басты бет</value>
   </data>
+  <data name="MyPlace" xml:space="preserve">
+    <value>Сіздің орындарыңыз</value>
+  </data>
   <data name="Services" xml:space="preserve">
     <value>Сервистер</value>
   </data>

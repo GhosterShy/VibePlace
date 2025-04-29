@@ -6,5 +6,8 @@
 		public string Name { get; set; }
 
 		public ICollection<ServiceToPlace?> ServiceToPlaces { get; set; } = [];
+
+
+		public ICollection<UserService?> UserServices { get; set; } = [];
 	}
 }

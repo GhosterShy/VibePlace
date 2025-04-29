@@ -7,5 +7,8 @@
 
 		public ICollection<ServiceToPlace?> ServiceToPlaces { get; set; } = [];
 
+
+		public ICollection<UserService?> UserServices { get; set; } = [];
+
 	}
 }
