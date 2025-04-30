@@ -17,6 +17,8 @@ namespace VibePlace.Controllers
     public class AccountController : Controller
     {
 
+
+		private TokenService _tokenService;
 		private UserManager<AppUser> _accountManager;
 		private SignInManager<AppUser> _singInManager;
 		private readonly UserManager<AppUser> _userManager;
@@ -24,13 +26,14 @@ namespace VibePlace.Controllers
 		private readonly RoleManager<IdentityRole> _roleManager;
 
 
-		public AccountController(UserManager<AppUser> accountManager, SignInManager<AppUser> singInManager, UserManager<AppUser> userManager,  ILogger<HomeController> logger, RoleManager<IdentityRole> roleManager)
+		public AccountController(UserManager<AppUser> accountManager, SignInManager<AppUser> singInManager, UserManager<AppUser> userManager,  ILogger<HomeController> logger, RoleManager<IdentityRole> roleManager, TokenService tokenService)
 		{
 			_accountManager = accountManager;
 			_singInManager = singInManager;
 			_userManager = userManager;
 			_logger = logger;
 			_roleManager = roleManager;
+			_tokenService = tokenService;
 		}
 
 
@@ -52,6 +55,8 @@ namespace VibePlace.Controllers
 				var result = await _singInManager.PasswordSignInAsync(appUser, account.Password, false, false);
 				if (result.Succeeded)
 				{
+					var token = await _tokenService.GenerateAccessToken(appUser);
+					Response.Cookies.Append("token",token);
 					if (await _userManager.IsInRoleAsync(appUser, "Organizator"))
 					{
 						return RedirectToAction("Index", "Organizator");

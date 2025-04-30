@@ -46,14 +46,14 @@ namespace VibePlace.Controllers
 				
 
 
-				using (var serviceResponse = await client.GetAsync($"http://localhost:5292/api/Service/place_ser/{id}"))
+				using (var serviceResponse = await client.GetAsync($"http://api.mukha.satbayevproject.kz/api/Service/place_ser/{id}"))
 				{
 					var serviceResult = await serviceResponse.Content.ReadAsStringAsync();
 					model.services = JsonConvert.DeserializeObject<List<Service>>(serviceResult);
 				}
 
 			
-				using (var placesResponse = await client.GetAsync($"http://localhost:5292/api/Place/info/{id}"))
+				using (var placesResponse = await client.GetAsync($"http://api.mukha.satbayevproject.kz/api/Place/info/{id}"))
 				{
 					var placesResult = await placesResponse.Content.ReadAsStringAsync();
 					model.places = JsonConvert.DeserializeObject<Places>(placesResult);

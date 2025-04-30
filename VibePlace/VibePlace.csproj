@@ -23,6 +23,7 @@
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\img\Images_of_places\" />
     <Folder Include="wwwroot\img\UserAva\" />
+    <Folder Include="wwwroot\Icons\" />
   </ItemGroup>
 
 </Project>

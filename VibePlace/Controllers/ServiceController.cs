@@ -34,13 +34,13 @@ namespace VibePlace.Controllers
 					new AuthenticationHeaderValue("Bearer", token);
 
 
-				using (var serviceResponse = await client.GetAsync("http://localhost:5292/api/Service/service"))
+				using (var serviceResponse = await client.GetAsync("http://api.mukha.satbayevproject.kz/api/Service/service"))
 				{
 					var serviceResult = await serviceResponse.Content.ReadAsStringAsync();
 					services.Services = JsonConvert.DeserializeObject<List<Service>>(serviceResult);
 				}
 
-				using (var userService = await client.GetAsync("http://localhost:5292/api/UserService/userService"))
+				using (var userService = await client.GetAsync("http://api.mukha.satbayevproject.kz/api/UserService/userService"))
 				{
 					var serviceResult = await userService.Content.ReadAsStringAsync();
 					services.UsersServices = JsonConvert.DeserializeObject<List<UserService>>(serviceResult);

@@ -40,14 +40,14 @@ namespace VibePlace.Controllers
 				model.places = new Places();
 
 
-				using (var serviceResponse = await client.GetAsync("http://localhost:5292/api/Service/service"))
+				using (var serviceResponse = await client.GetAsync("http://api.mukha.satbayevproject.kz/api/Service/service"))
 				{
 					var serviceResult = await serviceResponse.Content.ReadAsStringAsync();
 					model.services = JsonConvert.DeserializeObject<List<Service>>(serviceResult);
 				}
 
 				// Загружаем Categories
-				using (var categoriesResponse = await client.GetAsync("http://localhost:5292/api/Category/category"))
+				using (var categoriesResponse = await client.GetAsync("http://api.mukha.satbayevproject.kz/api/Category/category"))
 				{
 					var categoriesResult = await categoriesResponse.Content.ReadAsStringAsync();
 					ViewBag.Categories = JsonConvert.DeserializeObject<List<Category>>(categoriesResult);
