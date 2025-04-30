@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using VibePlace.AppFilter;
 using VibePlace.Data;
 using VibePlace.Data.Models;
 using VibePlace.Models;
@@ -31,9 +32,9 @@ namespace VibePlace.Controllers
 			_logger = logger;
 		}
 
-		
 
 
+		[IEFilter]
 		public async Task<IActionResult> Index()
 		{
 			var model = new PlacesCategoryModel();

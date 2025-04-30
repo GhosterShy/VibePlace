@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using System;
 using System.Text;
 using VibePlace.WebApi.Models;
@@ -27,6 +28,20 @@ string conn = builder.Configuration
 
 builder.Services.AddDbContext<AppIdentityDBContext>(options =>
 options.UseSqlServer(conn));
+
+
+
+
+#region log
+Log.Logger = new LoggerConfiguration()
+	.WriteTo.Seq("http://localhost:5341")
+	.MinimumLevel.Debug()
+	.CreateLogger();
+
+builder.Host.UseSerilog();
+#endregion
+
+
 
 
 builder.Services.AddAuthentication(options =>
@@ -68,6 +83,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseAuthorization();
+builder.Services.AddLogging();
 
 app.MapControllers();
 

@@ -3,7 +3,11 @@ using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using Serilog.Sinks.MSSqlServer;
 using System.Globalization;
+using VibePlace.AppFilter;
+using VibePlace.AppMiddleWare;
 using VibePlace.Data;
 using VibePlace.Services;
 
@@ -44,6 +48,20 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
 
 
 #endregion
+
+
+
+
+#region log
+Log.Logger = new LoggerConfiguration()
+	.WriteTo.Seq("http://localhost:5341")
+	.MinimumLevel.Debug()
+	.CreateLogger();
+
+builder.Host.UseSerilog();
+#endregion
+
+
 
 
 
@@ -91,7 +109,11 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 
 builder.Services.AddScoped<PlaceService>();
 
-
+//Filter
+builder.Services.AddControllers(options =>
+{
+	options.Filters.Add<IEFilter>();
+});
 
 
 
@@ -129,7 +151,10 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 
+app.UseMiddleware<IEMiddleware>();
 
+
+builder.Services.AddLogging();
 
 app.MapControllerRoute(
     name: "default",
