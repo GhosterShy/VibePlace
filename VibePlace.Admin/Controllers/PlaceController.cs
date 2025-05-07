@@ -22,7 +22,7 @@ namespace VibePlace.Admin.Controllers
 		public async Task<IActionResult> Index()
 		{
 			List<Places> places = new List<Places>();
-			using (var responce = await client.GetAsync("http://localhost:5292/api/Place/places"))
+			using (var responce = await client.GetAsync("http://api.mukha.satbayevproject.kz/api/Place/places"))
 			{
 				var result = await responce.Content.ReadAsStringAsync();
 				places = JsonConvert.DeserializeObject<List<Places>>(result);

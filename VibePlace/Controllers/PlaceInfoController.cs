@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
@@ -6,7 +8,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using VibePlace.Data;
 using VibePlace.Data.Models;
-using VibePlace.Migrations;
+
 using VibePlace.Models;
 using VibePlace.Services;
 
@@ -16,11 +18,13 @@ namespace VibePlace.Controllers
     {
 		private PlaceService _placeService;
 		private readonly AppIdentityDBContext _context;
+		private readonly UserManager<AppUser> _userManager;
 
-		public PlaceInfoController(PlaceService placeService, AppIdentityDBContext context)
+		public PlaceInfoController(PlaceService placeService, AppIdentityDBContext context, UserManager<AppUser> userManager)
 		{
 			_placeService = placeService;
 			_context = context;
+			_userManager = userManager;
 		}
 
 
@@ -63,15 +67,82 @@ namespace VibePlace.Controllers
 			}
 
 
+
+
 			if (model.places == null)
 			{
 				return NotFound("Место с указанным ID не найдено.");
 			}
 
-			Console.WriteLine($"Отзывы загружены: {model.places.Reviews?.Count ?? 0}");
+			if (model.places.Ratings == null)
+			{
+				Console.WriteLine("Рейтинг не инициализирован");
+			}
+			else if (model.places.Ratings.Count == 0)
+			{
+				Console.WriteLine("Рейтинг загружен, но коллекция пуста");
+			}
+			else
+			{
+				Console.WriteLine($"Ретинг загружены: {model.places.Ratings.Count}");
+			}
 
 			return View(model);
         }
+
+
+
+
+
+		//Rating
+		[Authorize]
+		[HttpPost]
+		public async Task<IActionResult> Rate(int placeId, int rating)
+		{
+			var userId = _userManager.GetUserId(User);
+
+			var existingRating = await _context.ratings
+				.FirstOrDefaultAsync(r => r.UserId == userId && r.PlaceId == placeId);
+
+			if (existingRating != null)
+			{
+				existingRating.Rating = rating;
+			}
+			else
+			{
+				
+				var newRating = new RatingPlace
+				{
+					PlaceId = placeId,
+					UserId = userId,
+					Rating = rating
+				};
+
+				_context.ratings.Add(newRating);
+			}
+
+			await _context.SaveChangesAsync();
+			return RedirectToAction("PlaceInfo", "PlaceInfo", new { id = placeId });
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 		[HttpPost]
 		public async Task<IActionResult> AddReview(String Comment,int PlaceId)

@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using VibePlace.Data;
 using VibePlace.Data.Models;
-using VibePlace.Migrations;
+
 using VibePlace.Models;
 
 
@@ -27,6 +28,7 @@ namespace VibePlace.Controllers
 		{
 			
 			var model = new PlaceToService();
+			var city = new List<City>();
 
 
 
@@ -46,12 +48,26 @@ namespace VibePlace.Controllers
 					model.services = JsonConvert.DeserializeObject<List<Service>>(serviceResult);
 				}
 
-				// Загружаем Categories
+	
 				using (var categoriesResponse = await client.GetAsync("http://api.mukha.satbayevproject.kz/api/Category/category"))
 				{
 					var categoriesResult = await categoriesResponse.Content.ReadAsStringAsync();
 					ViewBag.Categories = JsonConvert.DeserializeObject<List<Category>>(categoriesResult);
 				}
+
+				using (var cityResponse = await client.GetAsync("http://api.mukha.satbayevproject.kz/api/City/cities"))
+				{
+					var cityResult = await cityResponse.Content.ReadAsStringAsync();
+					ViewBag.CityList = JsonConvert.DeserializeObject<List<City>>(cityResult);
+				}
+				
+				
+				
+				
+
+
+
+
 			}
 
 
@@ -85,20 +101,13 @@ namespace VibePlace.Controllers
 			if (ModelState.IsValid)
 			{
 
-				if (image != null)
+				if (image != null && image.Length > 0)
 				{
-
-					var fileName = Path.GetFileName(image.FileName);
-					var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", fileName);
-
-
-					using (var stream = new FileStream(filePath, FileMode.Create))
+					using (var ms = new MemoryStream())
 					{
-						await image.CopyToAsync(stream);
+						await image.CopyToAsync(ms);
+						placeToService.places.Image = ms.ToArray();
 					}
-
-
-					placeToService.places.Image = Path.Combine("img", fileName); 
 				}
 
 				placeToService.places.UserId = userId;
@@ -111,32 +120,29 @@ namespace VibePlace.Controllers
 				///Photos
 				foreach (var photo in photos)
 				{
-					if (photo.Length > 0)
+					if (photo != null && photo.Length > 0)
 					{
-						var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "Images_of_places", photo.FileName);
-
-						using (var stream = new FileStream(filePath, FileMode.Create))
+						
+						var placeImage = new PlaceImage();
+						
+						using (var ms = new MemoryStream())
 						{
-							await photo.CopyToAsync(stream);
+							await photo.CopyToAsync(ms);
+						
+							placeImage = new PlaceImage
+							{
+								PlaceId = placeToService.places.Id,
+								ImageUrl = ms.ToArray()
+
+							};
 						}
 
-						var placeImage = new PlaceImage
-						{
-							PlaceId = placeToService.places.Id,
-							ImageUrl = Path.Combine("img", "Images_of_places", photo.FileName)
-
-						};
 
 						_context.placeimage.Add(placeImage);
 						await _context.SaveChangesAsync();
 					}
 				}
 				
-
-
-
-
-
 
 				foreach (var serviceId in selectedServices)
 				{
@@ -155,6 +161,30 @@ namespace VibePlace.Controllers
 			return RedirectToAction("Index","Home");
 		}
 
+
+		[HttpGet]
+		public IActionResult GetImagePlace(int id)
+		{
+			var place = _context.places.Find(id);
+			if (place == null || place.Image == null)
+			{
+				return NotFound();
+			}
+
+			return File(place.Image, "image/jpeg");
+		}
+
+		[HttpGet]
+		public IActionResult GetImages(int id)
+		{
+			var images = _context.placeimage.Find(id);
+			if (images == null || images.ImageUrl == null)
+			{
+				return NotFound();
+			}
+
+			return File(images.ImageUrl, "image/jpeg");
+		}
 
 	}
 }

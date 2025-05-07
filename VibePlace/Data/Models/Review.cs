@@ -1,4 +1,4 @@
-﻿using VibePlace.Migrations;
+﻿
 
 namespace VibePlace.Data.Models
 {

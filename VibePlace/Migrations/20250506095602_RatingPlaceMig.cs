@@ -5,48 +5,46 @@
 namespace VibePlace.Migrations
 {
     /// <inheritdoc />
-    public partial class AddMigServiceUser : Migration
+    public partial class RatingPlaceMig : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "UserServices",
+                name: "RatingPlace",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ServiceId = table.Column<int>(type: "int", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<double>(type: "float", nullable: true)
+                    Rating = table.Column<int>(type: "int", nullable: false),
+                    PlaceId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserServices", x => x.Id);
+                    table.PrimaryKey("PK_RatingPlace", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserServices_AspNetUsers_UserId",
+                        name: "FK_RatingPlace_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserServices_services_ServiceId",
-                        column: x => x.ServiceId,
-                        principalTable: "services",
+                        name: "FK_RatingPlace_places_PlaceId",
+                        column: x => x.PlaceId,
+                        principalTable: "places",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserServices_ServiceId",
-                table: "UserServices",
-                column: "ServiceId");
+                name: "IX_RatingPlace_PlaceId",
+                table: "RatingPlace",
+                column: "PlaceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserServices_UserId",
-                table: "UserServices",
+                name: "IX_RatingPlace_UserId",
+                table: "RatingPlace",
                 column: "UserId");
         }
 
@@ -54,7 +52,7 @@ namespace VibePlace.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "UserServices");
+                name: "RatingPlace");
         }
     }
 }

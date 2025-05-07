@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -9,6 +10,8 @@ using System.Globalization;
 using VibePlace.AppFilter;
 using VibePlace.AppMiddleWare;
 using VibePlace.Data;
+using VibePlace.Models;
+using VibePlace.Models.Interfaces;
 using VibePlace.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,7 +36,7 @@ builder.Services.AddAuthentication(options =>
 #endregion
 
 
-
+builder.Services.AddScoped<IMassage, EmailSender>();
 #region DataBase
 
 builder.Services.AddDbContext<AppIdentityDBContext>
@@ -106,14 +109,16 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 
 #endregion
 
-
+builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<PlaceService>();
 
+
+
 //Filter
-builder.Services.AddControllers(options =>
-{
-	options.Filters.Add<IEFilter>();
-});
+//builder.Services.AddControllers(options =>
+//{
+//	options.Filters.Add<IEFilter>();
+//});
 
 
 
@@ -142,7 +147,7 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
 }
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -151,7 +156,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 
-app.UseMiddleware<IEMiddleware>();
+//app.UseMiddleware<IEMiddleware>();
 
 
 builder.Services.AddLogging();
@@ -164,22 +169,22 @@ app.MapControllerRoute(
 
 #region UserRole
 
-//using (var scope = app.Services.CreateScope())
-//{
-//	var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+using (var scope = app.Services.CreateScope())
+{
+	var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-	
-//	string[] requiredRoles = { "Admin", "Organizator", "User" };
+	string[] requiredRoles = { "Admin", "Organizator", "User", "Service" }; 
 
-//	foreach (var role in requiredRoles)
-//	{
-//		if (!await roleManager.RoleExistsAsync(role))
-//		{
-//			await roleManager.CreateAsync(new IdentityRole(role));
-//			Console.WriteLine($"Роль '{role}' создана");
-//		}
-//	}
-//}
+	foreach (var role in requiredRoles)
+	{
+		if (!await roleManager.RoleExistsAsync(role))
+		{
+			await roleManager.CreateAsync(new IdentityRole(role));
+			Console.WriteLine($"Роль '{role}' создана");
+		}
+	}
+}
+
 #endregion
 
 

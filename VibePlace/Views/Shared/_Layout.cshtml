@@ -138,7 +138,7 @@
                                             <a class="block px-6 py-2 hover:bg-gray-100 text-gray-900 font-medium" href="@Url.Action("profile","Account")">@User.Identity.Name</a>
                                         }
                                         else{
-                                            <a class="block px-6 py-2 hover:bg-gray-100 text-gray-900 font-medium" href="@Url.Action("Register","Account")">Регистрация</a>
+                                            <a class="block px-6 py-2 hover:bg-gray-100 text-gray-900 font-medium" href="@Url.Action("VerifyEmail","Account")">Регистрация</a>
                                             <a class="block px-6 py-2 hover:bg-gray-100 text-gray-900 font-medium" href="@Url.Action("Index","Account")">Авторизация</a>
                                         }
 
@@ -152,7 +152,7 @@
                                 {
                                    <div class="py-2">
                                     <form asp-controller="Account" asp-action="Logout" method="post" style="display:inline;">
-                                        <button type="submit" class="nav-link">Logout</button>
+                                        <button style="margin-right:10px" type="submit" class="nav-link">Logout</button>
                                     </form>
                                    </div>
                                 }

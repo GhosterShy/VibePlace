@@ -1138,33 +1138,35 @@ function selectFeedback(feedback) {
 // Fetch AI response for Assistant Bot
 async function getAIResponse(message) {
     try {
-        const response = await fetch('https://openrouter.ai/api/v1', {
+        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': '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',
+                'Authorization': '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',
+                'HTTP-Referer': 'https://your-site.com',  // Замените при необходимости
+                'X-Title': 'Your App Name'
             },
             body: JSON.stringify({
-                model: "meta-llama/llama-3.1-8b-instruct:free",
+                model: "deepseek/deepseek-prover-v2:free",
                 messages: [
                     { role: "user", content: message }
                 ],
-                max_tokens: 150,
-            }),
+                max_tokens: 150
+            })
         });
 
         if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            const errorText = await response.text();
+            throw new Error(`HTTP error! Status: ${response.status}, Body: ${errorText}`);
         }
 
         const data = await response.json();
-        return data.choices && data.choices[0] && data.choices[0].message
-            ? data.choices[0].message.content || 'Извини, что-то пошло не так!'
-            : 'Не удалось получить ответ от API.';
+        return data.choices?.[0]?.message?.content ?? 'Не удалось получить ответ от API.';
     } catch (error) {
         return 'Не удалось получить ответ от сервера: ' + error.message;
     }
 }
+
 
 // Start inactivity timer (10 minutes)
 function startInactivityTimer() {

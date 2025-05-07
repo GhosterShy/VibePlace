@@ -1,6 +1,12 @@
 ﻿@using VibePlace.Data.Models
 @model PlaceToService
 
+@{
+    var avgRating = Model.places.Ratings.Select(r => r.Rating).DefaultIfEmpty(0).Average();
+    var fullStars = (int)Math.Floor(avgRating);
+    var emptyStars = 5 - fullStars;
+}
+
 
 @section Style{
 .address-product {
@@ -90,7 +96,7 @@ animation-range: entry 0% cover 30%;
 
     <div class="grid grid-cols-2 md:grid-cols-4 gap-3 px-2 md:px-0">
         <div class="col-span-2 row-span-2">
-            <img class="w-full h-full object-cover rounded-lg" src="@Url.Content("~/" + @Model.places.Images.FirstOrDefault()?.ImageUrl)"></img>
+            <img class="w-full h-full object-cover rounded-lg" src="@Url.Action("GetImagePlace", "Place", new { Model.places.Id})" />
         </div>
 
 
@@ -100,11 +106,10 @@ animation-range: entry 0% cover 30%;
             @foreach (PlaceImage? images in @Model.places.Images)
             {
                 <div>
-                    <img class="h-auto max-w-full rounded-lg" src="@Url.Content("~/"+images?.ImageUrl)" alt="Gallery image" />
+                    <img class="h-auto max-w-full rounded-lg" src="@Url.Action("GetImages", "Place", new { id = images.Id })" alt="Gallery image" />
                 </div>
             }
         }
-
 
 
 
@@ -121,13 +126,11 @@ animation-range: entry 0% cover 30%;
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div class="">
                 <div class="flex flex-col sm:flex-row sm:items-center mb-3 bg-amber-200 rounded-2xl px-2 py-1 animation-product">
-                    <h6 class="font-manrope font-semibold text-2xl leading-9 text-gray-900 pr-5 sm:border-r border-gray-200 mr-5">
-                        $220
-                    </h6>
+
                     <div class="flex items-center gap-2">
                         <div class="flex items-center gap-1">
 
-                            @for (int i = 0; i < Model.places?.Rating; i++)
+                            @for (int i = 0; i < fullStars; i++)
                             {
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -143,9 +146,9 @@ animation-range: entry 0% cover 30%;
                                 </svg>
                             }
 
-                            @if (Model?.places?.Rating != null && Model.places.Rating < 5)
-                            {
-                                @for (int? i = 0; i < 5 - Model.places?.Rating; i++)
+                           
+                                            
+                                @for (int i = 0; i < emptyStars; i++)
                                 {
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -159,12 +162,11 @@ animation-range: entry 0% cover 30%;
                                             </clipPath>
                                         </defs>
                                     </svg>
-                                }
                             }
                            
                          
                         </div>
-                        <span class="pl-2 font-normal leading-7 text-gray-500 text-sm ">@Model.places.Reviews.Count() отзывов</span>
+                        <span class="pl-2 font-normal leading-7 text-gray-500 text-sm ">@Model.places.Ratings.Count() оценки</span>
                     </div>
                 </div>
                 <div class="flex items-center gap-3 bg-amber-200 rounded-3xl mb-3 animation-product">
@@ -226,8 +228,8 @@ animation-range: entry 0% cover 30%;
                     </div>
                     <div class="bg-amber-200 rounded-2xl flex flex-col justify-between p-2 relative animation-product">
                         <div class="py-1">
-                            <kbd class="px-4 py-2 text-xl font-semibold text-gray-900 bg-amber-100  rounded-xl">$5</kbd>
-                            <span class="text-ld">за 1 человек</span>
+                            <kbd class="px-4 py-2 text-xl font-semibold text-gray-900 bg-amber-100  rounded-xl">@Model.places.Price тг</kbd>
+                            <span class="text-ld">средняя услуга</span>
                         </div>
                        
                     </div>
@@ -241,51 +243,35 @@ animation-range: entry 0% cover 30%;
                 <h4>Как вы оцените это место?</h4>
                 <br />
 
-                <ul class="flex flex-col sm:flex-row">
-                    <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium bg-white border text-gray-600 -mt-px first:rounded-t-full first:mt-0 last:rounded-b-full sm:-ml-px sm:mt-0 sm:first:rounded-tr-none sm:first:rounded-bl-full sm:last:rounded-bl-none sm:last:rounded-tr-full ">
-                        <div class="flex items-center">
-                            <input id="horizontal-list-group-item-radio-1" type="radio" name="horizontal-list-group-item-radio" class="hidden checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100" checked="">
-                            <label for="horizontal-list-group-item-radio-1" class="flex items-center cursor-pointer text-gray-600 text-sm font-normal">
-                                <span class="border border-gray-300  rounded-full mr-2 w-4 h-4 "></span> очень плохо
+               
+                <form asp-action="Rate" asp-controller="PlaceInfo" method="post">
+                    <input type="hidden" name="placeId" value="@Model.places.Id" />
+                    <ul class="flex flex-col sm:flex-row">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        
+                     <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium bg-white border text-gray-600 -mt-px first:rounded-t-full first:mt-0 last:rounded-b-full sm:-ml-px sm:mt-0 sm:first:rounded-tr-none sm:first:rounded-bl-full sm:last:rounded-bl-none sm:last:rounded-tr-full ">
+                        <div class="flex items-center mb-1">
+                            <input type="radio" id="rating-@i" name="rating" value="@i" class="hidden peer" />
+                            <label for="rating-@i" class="cursor-pointer flex items-center text-gray-600 text-sm font-normal">
+                                <span class="w-4 h-4 border rounded-full mr-2 peer-checked:bg-indigo-500"></span>
+                                @(
+                                    i == 1 ? "Очень плохо" :
+                                    i == 2 ? "Плохо" :
+                                    i == 3 ? "Нормально" :
+                                    i == 4 ? "Хорошо" : "Очень хорошо"
+                                    )
                             </label>
                         </div>
-                    </li>
-                    <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium bg-white border text-gray-800 -mt-px first:rounded-t-full first:mt-0 last:rounded-b-full sm:-ml-px sm:mt-0 sm:first:rounded-tr-none sm:first:rounded-bl-full sm:last:rounded-bl-none sm:last:rounded-tr-full  ">
-                        <div class="flex items-center">
-                            <input id="horizontal-list-group-item-radio-2" type="radio" name="horizontal-list-group-item-radio" class="hidden checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100">
-                            <label for="horizontal-list-group-item-radio-2" class="flex items-center cursor-pointer text-gray-600 text-sm font-normal">
-                                <span class="border border-gray-300  rounded-full mr-2 w-4 h-4 "></span> плохо
-                            </label>
-                        </div>
-                    </li>
-                    <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium bg-white border text-gray-800 -mt-px first:rounded-t-full first:mt-0 last:rounded-b-full sm:-ml-px sm:mt-0 sm:first:rounded-tr-none sm:first:rounded-bl-full sm:last:rounded-bl-none sm:last:rounded-tr-full ">
-                        <div class="flex items-center">
-                            <input id="horizontal-list-group-item-radio-3" type="radio" name="horizontal-list-group-item-radio" class="hidden checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100">
-                            <label for="horizontal-list-group-item-radio-3" class="flex items-center cursor-pointer text-gray-600 text-sm font-normal">
-                                <span class="border border-gray-300  rounded-full mr-2 w-4 h-4 "></span> нормально
-                            </label>
-                        </div>
-                    </li>
-                    <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium bg-white border text-gray-800 -mt-px first:rounded-t-full first:mt-0 last:rounded-b-full sm:-ml-px sm:mt-0 sm:first:rounded-tr-none sm:first:rounded-bl-full sm:last:rounded-bl-none sm:last:rounded-tr-full ">
-                        <div class="flex items-center">
-                            <input id="horizontal-list-group-item-radio-4" type="radio" name="horizontal-list-group-item-radio" class="hidden checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100">
-                            <label for="horizontal-list-group-item-radio-4" class="flex items-center cursor-pointer text-gray-600 text-sm font-normal">
-                                <span class="border border-gray-300  rounded-full mr-2 w-4 h-4 "></span> Хорошо
-                            </label>
-                        </div>
-                    </li>
-                    <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium bg-white border text-gray-800 -mt-px first:rounded-t-full first:mt-0 last:rounded-b-full sm:-ml-px sm:mt-0 sm:first:rounded-tr-none sm:first:rounded-bl-full sm:last:rounded-bl-none sm:last:rounded-tr-full ">
-                        <div class="flex items-center">
-                            <input id="horizontal-list-group-item-radio-5" type="radio" name="horizontal-list-group-item-radio" class="hidden checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100">
-                            <label for="horizontal-list-group-item-radio-5" class="flex items-center cursor-pointer text-gray-600 text-sm font-normal">
-                                <span class="border border-gray-300  rounded-full mr-2 w-4 h-4 "></span> Очень хорошо
-                            </label>
-                        </div>
-                    </li>
-                </ul>
+                        </li>
+                    }
+                    </ul>
 
-            </div>
+                    <button type="submit" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded">Оценить</button>
+                </form>
+             
 
+                </div>
 
             <div class="animation-product-right">
                 <!-- <div class="bg-amber-200 rounded-2xl p-2 h-full relative address-product">
@@ -318,59 +304,27 @@ animation-range: entry 0% cover 30%;
                 </h2>
                 </div> -->
 
-               @section Map
-               {
-                    <script type="text/javascript">
-                        ymaps.ready(init);
-                        function init(){
-                            var myMap = new ymaps.Map("map", {
-                                center: [43.237163, 76.945645],
-                                zoom: 20
-                            });
+                @section Map {
+        <script type="text/javascript">
+            ymaps.ready(function () {
+                var coords = "@Model.places.AddressLink".split(',').map(parseFloat);
 
-                         
-                            var searchControl = new ymaps.control.SearchControl({
-                                options: {
-                                    provider: 'yandex#search',
-                                    noPlacemark: false 
-                                }
-                            });
+                var myMap = new ymaps.Map("map", {
+                    center: coords,
+                    zoom: 15
+                });
 
+                var placemark = new ymaps.Placemark(coords, {
+                    balloonContent: 'Выбранное место'
+                });
 
+                myMap.geoObjects.add(placemark);
 
-                           var placeCoordinates = [@Model.places.AddressLink];
-
-                            searchControl.search('@Model.places.Address').then(function () {
-                                var geoObjectsArray = searchControl.getResultsArray();
-                                if (geoObjectsArray.length) {
-                                    console.log(geoObjectsArray[0].properties.get('name'));
-                                }
-                            });
-
-
-                            searchControl.events.add('resultselect', function (e) {
-                                var index = e.get('index');
-                                searchControl.getResult(index).then(function (res) {
-                                    console.log('Вы выбрали:', res.properties.get('name'));
-                            });
-                        });
-
-
-
-                        myMap.controls.add(searchControl);
-                        myMap.setCenter(placeCoordinates);
-                        myMap.controls.add('zoomControl');
-                        myMap.controls.add('typeSelector');
-                        myMap.controls.add('fullscreenControl');
-
-
-                        }
-                        
-                    </script>
-
-
-                    
-               }
+                myMap.controls.add('zoomControl');
+                myMap.controls.add('fullscreenControl');
+            });
+        </script>
+}
 
                 <div id="map" style="width: 600px; height: 400px"></div>
                 @* <iframe class="w-full h-full rounded-2xl md:h-full" style="border:0" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAOVYRIgupAurZup5y1PRh8Ismb1A3lLao&q=@Model.places.Address,Seattle"></iframe> *@

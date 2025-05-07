@@ -1,0 +1,19 @@
+﻿@model City
+
+@{
+    ViewData["Title"] = "Добавить город";
+}
+
+<h2>Добавить город</h2>
+
+<form asp-action="CreateCity" method="post">
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>
+
+<a asp-action="Index">Назад к списку</a>

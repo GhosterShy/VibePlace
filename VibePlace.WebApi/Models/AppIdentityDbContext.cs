@@ -15,6 +15,7 @@ namespace VibePlace.WebApi.Models
 		public DbSet<ServiceToPlace> serviceToPlace { get; set; }
 		public DbSet<City> cities { get; set; }
 		public DbSet<UserService> userServices { get; set; }
+		public DbSet<RatingPlace> ratings { get; set; }
 
 
 
@@ -75,6 +76,19 @@ namespace VibePlace.WebApi.Models
 				.WithMany(p => p.ServiceToPlaces)
 				.HasForeignKey(p => p.ServisId)
 				.OnDelete(DeleteBehavior.Cascade);
+
+			//для Рейтинга
+			modelBuilder.Entity<RatingPlace>()
+			   .HasOne(r => r.place)
+			   .WithMany(p => p.Ratings)
+			   .HasForeignKey(r => r.PlaceId);
+
+
+			modelBuilder.Entity<RatingPlace>()
+			   .HasOne(r => r.user)
+			   .WithMany(u => u.Ratings)
+			   .HasForeignKey(r => r.UserId)
+			   .OnDelete(DeleteBehavior.Cascade);
 
 			base.OnModelCreating(modelBuilder);
 		}

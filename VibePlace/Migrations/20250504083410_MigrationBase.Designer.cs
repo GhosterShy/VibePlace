@@ -12,8 +12,8 @@ using VibePlace.Data;
 namespace VibePlace.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    [Migration("20250420171020_City_Base")]
-    partial class City_Base
+    [Migration("20250504083410_MigrationBase")]
+    partial class MigrationBase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -275,9 +275,8 @@ namespace VibePlace.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("ImageUrl")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<int>("PlaceId")
                         .HasColumnType("int");
@@ -317,8 +316,8 @@ namespace VibePlace.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -363,7 +362,7 @@ namespace VibePlace.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("Like")
+                    b.Property<int>("Like")
                         .HasColumnType("int");
 
                     b.Property<int>("PlaceId")
@@ -380,6 +379,21 @@ namespace VibePlace.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("review");
+                });
+
+            modelBuilder.Entity("VibePlace.Data.Models.ReviewLike", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ReviewId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "ReviewId");
+
+                    b.HasIndex("ReviewId");
+
+                    b.ToTable("reviewLike");
                 });
 
             modelBuilder.Entity("VibePlace.Data.Models.Service", b =>
@@ -412,6 +426,40 @@ namespace VibePlace.Migrations
                     b.HasIndex("ServisId");
 
                     b.ToTable("serviceToPlace");
+                });
+
+            modelBuilder.Entity("VibePlace.Data.Models.UserService", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ServiceId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserServices");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -519,6 +567,25 @@ namespace VibePlace.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("VibePlace.Data.Models.ReviewLike", b =>
+                {
+                    b.HasOne("VibePlace.Data.Models.Review", "Review")
+                        .WithMany("ReviewLikes")
+                        .HasForeignKey("ReviewId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("VibePlace.Data.AppUser", "User")
+                        .WithMany("ReviewLike")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Review");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("VibePlace.Data.Models.ServiceToPlace", b =>
                 {
                     b.HasOne("VibePlace.Data.Models.Places", "Place")
@@ -538,9 +605,32 @@ namespace VibePlace.Migrations
                     b.Navigation("Service");
                 });
 
+            modelBuilder.Entity("VibePlace.Data.Models.UserService", b =>
+                {
+                    b.HasOne("VibePlace.Data.Models.Service", "Service")
+                        .WithMany("UserServices")
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VibePlace.Data.AppUser", "User")
+                        .WithMany("UserServices")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Service");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("VibePlace.Data.AppUser", b =>
                 {
                     b.Navigation("Places");
+
+                    b.Navigation("ReviewLike");
+
+                    b.Navigation("UserServices");
                 });
 
             modelBuilder.Entity("VibePlace.Data.Models.Category", b =>
@@ -562,9 +652,16 @@ namespace VibePlace.Migrations
                     b.Navigation("ServiceToPlaces");
                 });
 
+            modelBuilder.Entity("VibePlace.Data.Models.Review", b =>
+                {
+                    b.Navigation("ReviewLikes");
+                });
+
             modelBuilder.Entity("VibePlace.Data.Models.Service", b =>
                 {
                     b.Navigation("ServiceToPlaces");
+
+                    b.Navigation("UserServices");
                 });
 #pragma warning restore 612, 618
         }

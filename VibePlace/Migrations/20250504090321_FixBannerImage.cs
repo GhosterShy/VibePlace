@@ -5,7 +5,7 @@
 namespace VibePlace.Migrations
 {
     /// <inheritdoc />
-    public partial class ErrorMigration : Migration
+    public partial class FixBannerImage : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

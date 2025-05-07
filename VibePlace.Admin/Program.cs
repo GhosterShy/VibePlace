@@ -1,7 +1,16 @@
+using Microsoft.EntityFrameworkCore;
+using VibePlace.Admin.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
+builder.Services.AddDbContext<AppIdentityDbContext>
+	(options => options.UseSqlServer(
+		builder.Configuration["ConnectionStrings:DefaultConnection"]));
+
 
 var app = builder.Build();
 

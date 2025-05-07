@@ -6,5 +6,6 @@ namespace VibePlace.Models
 	{
 		public Places places { get; set; }
 		public ICollection<Service?> services { get; set; }
+		public RatingPlace? rating { get; set; }
 	}
 }

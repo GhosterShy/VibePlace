@@ -7,6 +7,7 @@
 
 
 
+
 <!-- Main Start -->
 <main class="max-w-7xl mx-auto pb-6">
     <section class="py-24 relative">
@@ -40,6 +41,10 @@
                                 </label>
                                 <input type="text" class="w-full focus:outline-none text-gray-900 placeholder-gray-400 text-lg font-normal leading-relaxed px-5 py-3 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] border border-gray-200 justify-start items-center gap-2 inline-flex" placeholder="Smith">
                             </div> -->
+
+
+
+
                             <div class="w-full flex-col justify-start items-start gap-1.5 flex">
                                 <label for="" class="flex gap-1 items-center text-gray-600 text-base font-medium leading-relaxed">
                                     Адрес
@@ -50,6 +55,47 @@
                                 <input asp-for="places.Address" type="text" class="w-full focus:outline-none text-gray-900 placeholder-gray-400 text-lg font-normal leading-relaxed px-5 py-3 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] border border-gray-200 justify-start items-center gap-2 inline-flex" placeholder="396 Matilda Falls, New Theresiaboro 14897-2774">
                             </div>
                         </div>
+
+
+                            <div id="map" style="width: 100%; height: 400px;"></div>
+                            <input type="text" id="AddressLink" name="AddressLink" class="form-control" readonly />
+                            @section Map {
+                                <script type="text/javascript">
+                                    ymaps.ready(function () {
+                                        const defaultCoords = [43.237163, 76.945645]; // Центр Алматы
+
+                                        let myMap = new ymaps.Map("map", {
+                                            center: defaultCoords,
+                                            zoom: 15
+                                        });
+
+                                        let placemark;
+
+                                        myMap.events.add('click', function (e) {
+                                            const coords = e.get('coords');
+                                            document.getElementById('AddressLink').value = coords.join(',');
+
+                                            if (!placemark) {
+                                                placemark = new ymaps.Placemark(coords, {}, { draggable: true });
+                                                placemark.events.add('dragend', function () {
+                                                    const newCoords = placemark.geometry.getCoordinates();
+                                                    document.getElementById('AddressLink').value = newCoords.join(',');
+                                                });
+                                                myMap.geoObjects.add(placemark);
+                                            } else {
+                                                placemark.geometry.setCoordinates(coords);
+                                            }
+                                        });
+
+                                        myMap.controls.add('zoomControl');
+                                        myMap.controls.add('fullscreenControl');
+                                    });
+                                </script>
+                            }
+
+
+
+
                         <div class="w-full justify-start items-start gap-8 flex sm:flex-row flex-col">
                             <div class="w-full flex-col justify-start items-start gap-1.5 flex">
                                 <label for="" class="flex gap-1 items-center text-gray-600 text-base font-medium leading-relaxed">
@@ -60,15 +106,23 @@
                                 </label>
                                 <input asp-for="places.PhoneNumber" type="text" class="w-full focus:outline-none text-gray-900 placeholder-gray-400 text-lg font-normal leading-relaxed px-5 py-3 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] border border-gray-200 justify-start items-center gap-2 inline-flex" placeholder="+7 776 555 2536">
                             </div>
-                            <div class="w-full flex-col justify-start items-start gap-1.5 flex">
-                                <label for="" class="flex gap-1 items-center text-gray-600 text-base font-medium leading-relaxed">
-                                    Город
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="7" height="7" viewBox="0 0 7 7" fill="none">
-                                        <path d="M3.11222 6.04545L3.20668 3.94744L1.43679 5.08594L0.894886 4.14134L2.77415 3.18182L0.894886 2.2223L1.43679 1.2777L3.20668 2.41619L3.11222 0.318182H4.19105L4.09659 2.41619L5.86648 1.2777L6.40838 2.2223L4.52912 3.18182L6.40838 4.14134L5.86648 5.08594L4.09659 3.94744L4.19105 6.04545H3.11222Z" fill="#EF4444" />
-                                    </svg>
-                                </label>
-                                <input type="text" class="w-full focus:outline-none text-gray-900 placeholder-gray-400 text-lg font-normal leading-relaxed px-5 py-3 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] border border-gray-200 justify-start items-center gap-2 inline-flex" placeholder="Алматы">
-                            </div>
+
+
+
+                                <div class="w-full flex-col justify-start items-start gap-1.5 flex">
+
+                                    <div class="block w-full">
+                                        <label for="countries" class="block mb-2 text-sm font-medium text-gray-600 w-full">Город</label>
+
+                                        <select asp-for="@Model.places.CityId" asp-items="@(new SelectList(ViewBag.CityList, "Id", "Name"))" class="h-12 border border-gray-300 text-gray-600 text-base rounded-lg block w-full py-2.5 px-4 focus:outline-none">
+                                            <option value="">Выберите город</option>
+                                        </select>
+
+                                    </div>
+
+                                </div>
+
+
                             <!-- <div class="w-full flex-col justify-start items-start gap-1.5 flex">
                                 <label for="" class="flex gap-1 items-center text-gray-600 text-base font-medium leading-relaxed">Email
                                     <svg xmlns="http://www.w3.org/2000/svg" width="7" height="7" viewBox="0 0 7 7" fill="none">
@@ -89,6 +143,7 @@
                                 </label>
                                 <input asp-for="places.Capacity"  class="w-full focus:outline-none text-gray-900 placeholder-gray-400 text-lg font-normal leading-relaxed px-5 py-3 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] border border-gray-200 justify-start items-center gap-2 inline-flex" placeholder="5 собак">
                             </div>
+
                             <div class="w-full flex-col justify-start items-start gap-1.5 flex">
 
                                 <div class="block w-full">
@@ -102,6 +157,7 @@
 
                             </div>
                         </div>
+
                         <div class="w-full justify-start items-start gap-2 flex sm:flex-col flex-col">
                             <h2 class="pb-5 text-xl">Выберите сервисы</h2>
 

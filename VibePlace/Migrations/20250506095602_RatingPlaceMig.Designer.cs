@@ -12,8 +12,8 @@ using VibePlace.Data;
 namespace VibePlace.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    [Migration("20250430022846_ErrorMigration")]
-    partial class ErrorMigration
+    [Migration("20250506095602_RatingPlaceMig")]
+    partial class RatingPlaceMig
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -229,6 +229,26 @@ namespace VibePlace.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("VibePlace.Data.Models.Banners", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<byte?>("Image")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("banners");
+                });
+
             modelBuilder.Entity("VibePlace.Data.Models.Category", b =>
                 {
                     b.Property<int>("id")
@@ -275,9 +295,8 @@ namespace VibePlace.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("ImageUrl")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<int>("PlaceId")
                         .HasColumnType("int");
@@ -317,8 +336,8 @@ namespace VibePlace.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -346,6 +365,33 @@ namespace VibePlace.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("places");
+                });
+
+            modelBuilder.Entity("VibePlace.Data.Models.RatingPlace", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("PlaceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlaceId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RatingPlace");
                 });
 
             modelBuilder.Entity("VibePlace.Data.Models.Review", b =>
@@ -549,6 +595,25 @@ namespace VibePlace.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("VibePlace.Data.Models.RatingPlace", b =>
+                {
+                    b.HasOne("VibePlace.Data.Models.Places", "place")
+                        .WithMany("Ratings")
+                        .HasForeignKey("PlaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VibePlace.Data.AppUser", "user")
+                        .WithMany("Ratings")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("place");
+
+                    b.Navigation("user");
+                });
+
             modelBuilder.Entity("VibePlace.Data.Models.Review", b =>
                 {
                     b.HasOne("VibePlace.Data.Models.Places", "Place")
@@ -629,6 +694,8 @@ namespace VibePlace.Migrations
                 {
                     b.Navigation("Places");
 
+                    b.Navigation("Ratings");
+
                     b.Navigation("ReviewLike");
 
                     b.Navigation("UserServices");
@@ -647,6 +714,8 @@ namespace VibePlace.Migrations
             modelBuilder.Entity("VibePlace.Data.Models.Places", b =>
                 {
                     b.Navigation("Images");
+
+                    b.Navigation("Ratings");
 
                     b.Navigation("Reviews");
 

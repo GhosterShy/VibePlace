@@ -4,6 +4,8 @@
 
 
 
+
+
 @section Style
 {
     .swiper-wrapper {
@@ -149,7 +151,7 @@
             {
                 <div style="overflow:hidden" class="rounded-xl bg-white shadow-lg shadow-gray-300 overflow-hidden relative grid-item-home">
                     <a href="@Url.Action("placeinfo","PlaceInfo", new { id = place.Id })" class="absolute opacity-0 h-full w-full rounded-xl"></a>
-                    <img style="height: 225px; object-fit:cover; width:100%;" src="@Url.Content(place.Image)" alt="image">
+                    <img style="height: 225px; object-fit:cover; width:100%;" src="@Url.Action("GetImagePlace", "Place", new { id = place.Id })" alt="image">
                     <div class="flex items-center absolute gap-2 top-2 right-3">
                         <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g clip-path="url(#clip0_13866_9712)">
@@ -167,7 +169,7 @@
                                 </clipPath>
                             </defs>
                         </svg>
-                        <span class="text-sm font-medium text-white">@place.Rating</span>
+                        <span class="text-sm font-medium text-white">@place.Ratings.Select(r => r.Rating).DefaultIfEmpty(0).Average()</span>
                     </div>
                     <div class="w-full p-6 ">
                         <h5 class="text-xl font-semibold font-manrope text-gray-900 mb-4">@place.Name</h5>

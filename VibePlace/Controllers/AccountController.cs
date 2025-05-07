@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authorization;
 using System.Text.RegularExpressions;
 using System.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
+using VibePlace.Models.Interfaces;
 
 namespace VibePlace.Controllers
 {
@@ -24,9 +26,10 @@ namespace VibePlace.Controllers
 		private readonly UserManager<AppUser> _userManager;
 		private readonly ILogger<HomeController> _logger;
 		private readonly RoleManager<IdentityRole> _roleManager;
+		private readonly IMassage _emailSender;
 
 
-		public AccountController(UserManager<AppUser> accountManager, SignInManager<AppUser> singInManager, UserManager<AppUser> userManager,  ILogger<HomeController> logger, RoleManager<IdentityRole> roleManager, TokenService tokenService)
+		public AccountController(UserManager<AppUser> accountManager, SignInManager<AppUser> singInManager, UserManager<AppUser> userManager,  ILogger<HomeController> logger, RoleManager<IdentityRole> roleManager, TokenService tokenService,IMassage emailSender)
 		{
 			_accountManager = accountManager;
 			_singInManager = singInManager;
@@ -34,6 +37,7 @@ namespace VibePlace.Controllers
 			_logger = logger;
 			_roleManager = roleManager;
 			_tokenService = tokenService;
+			_emailSender = emailSender;
 		}
 
 
@@ -71,19 +75,94 @@ namespace VibePlace.Controllers
 		}
 
 
-		public IActionResult Register()
+
+		public IActionResult VerifyEmail()
 		{
-			
 			return View();
 		}
+
+
+		[HttpPost]
+		public async Task<IActionResult> VerifyEmail(EmailVerificationModel model)
+		{
+			if (!ModelState.IsValid)
+				return View(model);
+
+			var user = await _userManager.FindByEmailAsync(model.Email);
+			if (user != null && user.EmailConfirmed)
+			{
+				ModelState.AddModelError("Email", "Этот email уже используется.");
+				return View(model);
+			}
+
+			string code = new Random().Next(100000, 999999).ToString();
+			TempData["VerificationCode"] = code;
+			TempData["UserEmail"] = model.Email;
+
+			var subject = "Подтверждение Email";
+			var body = $"Ваш код подтверждения: {code}";
+
+			_emailSender.SendMessage(model.Email, subject, body);
+
+			return RedirectToAction("ConfirmCode");
+		}
+
+
+
+
+		public IActionResult ConfirmCode()
+		{
+			return View();
+		}
+
+
+
+		[HttpPost]
+		public IActionResult ConfirmCode(string code)
+		{
+			var expectedCode = TempData["VerificationCode"] as string;
+			var email = TempData["UserEmail"] as string;
+
+			if (code == expectedCode)
+			{
+				TempData["ConfirmedEmail"] = email;
+				return RedirectToAction("Register");
+			}
+
+			ViewBag.Error = "Неверный код.";
+			TempData["VerificationCode"] = expectedCode;
+			TempData["UserEmail"] = email;
+			return View();
+		}
+
+
+
+
+
+		public IActionResult Register()
+		{
+			if (TempData["ConfirmedEmail"] == null)
+				return RedirectToAction("VerifyEmail");
+
+			TempData.Keep("ConfirmedEmail");
+
+			return View();
+		}
+
+
 
 		[HttpPost]
 		public async Task<IActionResult> Register(RegisterModel model)
 		{
+			var email = TempData["ConfirmedEmail"] as string;
+			if (email == null)
+				return RedirectToAction("VerifyEmail");
+
+
 			if (ModelState.IsValid)
 			{
-				
-				var user = new AppUser { UserName = model.Name, Email = model.Email};
+
+				var user = new AppUser { UserName = model.Name, Email = email, EmailConfirmed = true };
 				var result = await _accountManager.CreateAsync(user, model.Password);
 
 				if (result.Succeeded)
@@ -95,8 +174,8 @@ namespace VibePlace.Controllers
 					{
 						return RedirectToAction("Index", "Organizator");
 					}
-
-					return RedirectToAction("Index", "Home");
+					else
+						return RedirectToAction("Index", "Home");
 				}
 
 				foreach (var error in result.Errors)
@@ -105,8 +184,20 @@ namespace VibePlace.Controllers
 				}
 			}
 
+			TempData.Keep("ConfirmedEmail");
 			return View(model);
 		}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

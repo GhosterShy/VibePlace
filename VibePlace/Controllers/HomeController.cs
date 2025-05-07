@@ -11,7 +11,7 @@ using VibePlace.AppFilter;
 using VibePlace.Data;
 using VibePlace.Data.Models;
 using VibePlace.Models;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+
 
 
 namespace VibePlace.Controllers
@@ -34,7 +34,7 @@ namespace VibePlace.Controllers
 
 
 
-		[IEFilter]
+
 		public async Task<IActionResult> Index()
 		{
 			var model = new PlacesCategoryModel();
@@ -132,10 +132,6 @@ namespace VibePlace.Controllers
 
 			return Json(culture);
 		}
-
-
-
-
 
 
 

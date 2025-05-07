@@ -10,7 +10,7 @@ namespace VibePlace.WebApi.Models
 		public ICollection<Places> Places { get; set; } = [];
 		public ICollection<ReviewLike> ReviewLike { get; set; } = [];
 
-
+		public ICollection<RatingPlace> Ratings { get; set; } = [];
 		public ICollection<UserService?> UserServices { get; set; } = [];
 	}
 }

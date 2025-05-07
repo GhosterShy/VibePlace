@@ -8,7 +8,7 @@
 
 
 
-<body class="font-inter overflow-hidden">
+<body style="overflow:auto" class="font-inter overflow-hidden">
     <section class="flex justify-center relative">
         <img src="https://pagedone.io/asset/uploads/1702362010.png" alt="gradient background image" class="w-full h-full object-cover fixed">
         <div class="mx-auto max-w-lg px-6 lg:px-8 absolute pt-20">
@@ -20,15 +20,14 @@
                     </div>
                     <input asp-for="Name" type="text" class="w-full h-10 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-xl border-gray-300 border focus:outline-none px-4 mb-2" placeholder="Имя пользователя">
                     <span asp-validation-for="Name" class="text-red-500 text-sm"></span>
-                    <input asp-for="Email" type="email" class="w-full h-10 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-xl border-gray-300 border focus:outline-none px-4 mb-2" placeholder="Email" required>
-                    <span asp-validation-for="Email" class="text-red-500 text-sm"></span>
+                    
                     <input asp-for="Password" type="text" class="w-full h-10 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-xl border-gray-300 border focus:outline-none px-4 mb-2" placeholder="Пароль">
                     <input asp-for="ConfirmPassword" type="text" class="w-full h-10 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-xl border-gray-300 border focus:outline-none px-4 mb-2" placeholder="Подтверждение пароля">
                     <span asp-validation-for="Password" class="text-red-500 text-sm"></span>
                     <span asp-validation-for="ConfirmPassword" class="text-red-500 text-sm"></span>
 
 
-                    <div class="grid sm:grid-cols-2 gap-2 mb-4">
+                    <div class="grid sm:grid-cols-1 gap-2 mb-4">
                         <div class="block">
                             <input asp-for="SelectedRole" type="radio" value="User"
                                    id="radio-user" class="hidden peer" checked>
@@ -52,26 +51,29 @@
                                 </div>
                             </label>
                         </div>
+
+                        <div class="block">
+                            <input asp-for="SelectedRole" type="radio" value="Service"
+                                   id="radio-service" class="hidden peer">
+                            <label for="radio-service"
+                                   class="flex px-4 py-3 w-full bg-white border border-gray-200 rounded-xl text-sm peer-checked:border-indigo-500 peer-checked:bg-indigo-100 peer-checked:text-gray-900 cursor-pointer">
+                                <div class="m-auto text-center">
+                                    <h5 class="text-lg text-gray-500 peer-checked:text-gray-900">Услуга</h5>
+                                    <p class="text-xs text-gray-400">Для услуги</p>
+                                </div>
+                            </label>
+                        </div>
                     </div>
 
 
                     <span asp-validation-for="SelectedRole" class="text-red-500 text-sm"></span>
 
                         <button type="submit" class="w-full h-12 text-white text-center text-base font-semibold leading-6 rounded-xl hover:bg-indigo-800 transition-all duration-700 bg-indigo-600 mb-2">Sign Up</button>
-                    <a href="@Url.Action("Index","Account")" class="flex justify-center text-gray-900 text-base font-medium leading-6">
-                        Уже есть аккаунт? <span class="text-indigo-600 font-semibold pl-3">Login</span>
-                    </a>
                 </form>
                 
-                <div class="flex items-center rounded-full mx-10 mb-2">
-                    <div class="flex-1 border-b border-gray-300"></div>
-                    <span class="text-black text-lg font-semibold px-2">Или</span>
-                    <div class="flex-1 border-b border-gray-300"></div>
-                </div>
+               
 
-                <div class="px-10 mx-auto">
-                    <button href="@Url.Action("Login","Account")" class="w-full h-10 text-white text-center text-base font-semibold leading-6 rounded-xl hover:bg-indigo-800 transition-all duration-700 bg-indigo-600"><i class="fa-brands fa-google"></i>&nbsp; Войти через Google</button>
-                </div>
+               
             </div>
         </div>
     </section>
