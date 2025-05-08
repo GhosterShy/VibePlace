@@ -165,7 +165,7 @@
                                 </clipPath>
                             </defs>
                         </svg>
-                        <span class="text-sm font-medium text-white">@place.Rating</span>
+                        <span class="text-sm font-medium text-white">@place.Ratings.Select(r => r.Rating).DefaultIfEmpty(0).Average()</span>
                     </div>
                     <div class="w-full p-6 ">
                         <h5 class="text-xl font-semibold font-manrope text-gray-900 mb-4">@place.Name</h5>

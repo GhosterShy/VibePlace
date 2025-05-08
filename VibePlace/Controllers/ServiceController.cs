@@ -40,13 +40,13 @@ namespace VibePlace.Controllers
 					services.Services = JsonConvert.DeserializeObject<List<Service>>(serviceResult);
 				}
 
-				//using (var userService = await client.GetAsync("http://api.mukha.satbayevproject.kz/api/UserService/userService"))
-				//{
-				//	var serviceResult = await userService.Content.ReadAsStringAsync();
-				//	services.UsersServices = JsonConvert.DeserializeObject<List<UserService>>(serviceResult);
-				//}
+				using (var userService = await client.GetAsync("http://localhost:5292/api/UserService/userService"))
+				{
+					var serviceResult = await userService.Content.ReadAsStringAsync();
+					services.UsersServices = JsonConvert.DeserializeObject<List<UserService>>(serviceResult);
+				}
 
-				services.UsersServices = _context.UserServices.Include(u => u.User).Include(s => s.Service).ToList();
+				//services.UsersServices = _context.UserServices.Include(u => u.User).Include(s => s.Service).ToList();
 
 				return View(services);
 			}
@@ -59,11 +59,46 @@ namespace VibePlace.Controllers
 
 
 
-		[HttpPost]
-		public IActionResult CreateUserService()
+
+		public async Task<IActionResult> FilterService(int serviceId)
 		{
-			return View();
+
+			var services = new List<UserService>();
+
+			using (var client = new HttpClient())
+			{
+				var token = Request.Cookies["token"];
+
+				client.DefaultRequestHeaders.Authorization =
+					new AuthenticationHeaderValue("Bearer", token);
+
+
+				if (serviceId == 0000)
+				{
+					using (var userService = await client.GetAsync("http://localhost:5292/api/UserService/UserService"))
+					{
+						var serviceResult = await userService.Content.ReadAsStringAsync();
+						services = JsonConvert.DeserializeObject<List<UserService>>(serviceResult);
+					}
+				}
+				else
+				{
+					using (var userService = await client.GetAsync($"http://localhost:5292/api/UserService/FilterService/" + serviceId))
+					{
+						var serviceResult = await userService.Content.ReadAsStringAsync();
+						services = JsonConvert.DeserializeObject<List<UserService>>(serviceResult);
+					}
+				}
+
+			}
+
+
+				return PartialView("_ServicesPartial", services);
 		}
+
+
+
+		
 
 
 

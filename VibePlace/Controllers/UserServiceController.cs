@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using VibePlace.Data;
@@ -79,7 +81,25 @@ namespace VibePlace.Controllers
 		[Route("Service/{id:int}")]
 		public async Task<IActionResult> UserService(int id)
 		{
-			var service = await _context.UserServices.Include(s => s.Service).Include(u => u.User).Include(r => r.Reviews).ThenInclude(u => u.User).FirstOrDefaultAsync(i => i.Id == id);
+			var service = new UserService();
+			using (var client = new HttpClient())
+			{
+				var token = Request.Cookies["token"];
+
+				client.DefaultRequestHeaders.Authorization =
+					new AuthenticationHeaderValue("Bearer", token);
+
+				using (var responce = await client.GetAsync($"http://localhost:5292/api/UserService/Service/" + id))
+				{
+					var result = await responce.Content.ReadAsStringAsync();
+					service = JsonConvert.DeserializeObject<UserService>(result);
+				}
+
+			}
+
+
+
+			 //await _context.UserServices.Include(s => s.Service).Include(u => u.User).Include(r => r.Reviews).ThenInclude(u => u.User).FirstOrDefaultAsync(i => i.Id == id);
 			return View(service);
 		}
 

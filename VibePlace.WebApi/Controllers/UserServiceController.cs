@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 using VibePlace.WebApi.Models;
 
 namespace VibePlace.WebApi.Controllers
@@ -33,6 +34,28 @@ namespace VibePlace.WebApi.Controllers
 				.Include(us => us.Service)  
 				.ToListAsync();
 			return Ok(userServices);
+		}
+
+		[HttpGet]
+		[Route("Service/{id:int}")]
+		public async Task<ActionResult> UserServiceInfo(int id)
+		{
+			var service = await _context.userServices.Include(s => s.Service).Include(u => u.User).Include(r => r.Reviews).ThenInclude(u => u.User).AsSplitQuery().FirstOrDefaultAsync(i => i.Id == id);
+			return Ok(service);
+		}
+
+
+
+
+		[HttpGet]
+		[Route("FilterService/{id:int}")]
+		public async Task<ActionResult> FilterService(int id)
+		{
+			var services = await _context.userServices
+				.Where(s  => s.ServiceId == id)
+				.Include(s => s.User)
+				.ToListAsync();
+			return Ok(services);
 		}
 	}
 }

@@ -31,7 +31,7 @@ namespace VibePlace.WebApi.Controllers
 		public async Task<ActionResult<Places>> GetPlacesWithCategories()
 		{
 
-			var places = await _context.places.ToListAsync();
+			var places = await _context.places.Include(r => r.Ratings).ToListAsync();
 			
 
 			return Ok(places);
@@ -90,7 +90,39 @@ namespace VibePlace.WebApi.Controllers
 
 
 
+		}
 
+
+		[HttpGet]
+		[Route("Organizator/{userId}")]
+		public async Task<IActionResult> OrganizatorPlace(string userId)
+		{
+			var myPlaces = await _context.places
+			   .Where(p => p.UserId == userId)
+			   .Include(r => r.Ratings)
+			   .ToListAsync();
+
+
+			return Ok(myPlaces);
+		}
+
+
+
+		[HttpGet]
+		[Route("SearchPlaces/{query}")]
+		public async Task<ActionResult> SearchPlaces( string query)
+		{
+			if (string.IsNullOrWhiteSpace(query))
+				return BadRequest("Search query is empty.");
+
+			var places = await _context.places
+				.Where(p => p.Name.ToLower().Contains(query.ToLower())
+				|| p.Description.Contains(query)
+				|| p.Category.categoryName.ToLower().Contains(query.ToLower())
+				|| p.Address.ToLower().Contains(query.ToLower()))
+				.ToListAsync();
+
+			return Ok(places);
 		}
 
 
@@ -99,7 +131,8 @@ namespace VibePlace.WebApi.Controllers
 
 
 
-		
+
+
 
 
 

@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using VibePlace.Data;
+using VibePlace.Data.Models;
 
 namespace VibePlace.Controllers
 {
@@ -21,7 +24,7 @@ namespace VibePlace.Controllers
 		[Authorize(Roles = "Organizator")]
 		public async Task<IActionResult> Index()
 		{
-
+			var myPlaces = new List<Places>();
 			var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
 
 			if (userId == null)
@@ -29,12 +32,37 @@ namespace VibePlace.Controllers
 				return RedirectToAction("Login", "Account");
 			}
 
-			var myPlaces = await _context.places
-			   .Where(p => p.UserId == userId)
-			   .ToListAsync();
+			//var myPlaces = await _context.places
+			//   .Where(p => p.UserId == userId)
+			//   .ToListAsync();
 
 
-			return View(myPlaces);
+
+			using (var client = new HttpClient())
+			{
+				var token = Request.Cookies["token"];
+
+				client.DefaultRequestHeaders.Authorization =
+					new AuthenticationHeaderValue("Bearer", token);
+
+
+				using (var PlaceResponse = await client.GetAsync($"http://localhost:5292/api/Place/Organizator/" + userId))
+				{
+					var serviceResult = await PlaceResponse.Content.ReadAsStringAsync();
+					myPlaces = JsonConvert.DeserializeObject<List<Places>>(serviceResult);
+				}
+			}
+
+				return View(myPlaces);
 		}
+
+
+
+
+
+
+
+
+
 	}
 }

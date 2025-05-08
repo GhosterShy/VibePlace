@@ -204,9 +204,9 @@ animation-range: entry 0% cover 30%;
                                <div class="w-full flex-col justify-start items-start gap-3.5 flex"> 
                                    <div class="w-full justify-between items-center inline-flex"> 
                                        <div class="justify-start items-center gap-2.5 flex"> 
-                                           <div class="w-10 h-10 bg-stone-300 rounded-full justify-start items-start gap-2.5 flex"> 
-                                               <img class="rounded-full object-cover" src="~/img/UserAva/UserImage.jpg" 
-                                               alt="John smith image" /> 
+                                           <div class="w-10 h-10 bg-stone-300 rounded-full justify-start items-start gap-2.5 flex">
+                                                <img class="rounded-full object-cover" src="@Url.Action("GetAva","Account", new {userId = review.User.Id})"
+                                                     alt="John smith image" /> 
                                            </div> 
                                            <div class="flex-col justify-start items-start gap-1 inline-flex"> 
                                                <h5 class="text-gray-900 text-sm font-semibold leading-snug">@review.User.UserName</h5> 

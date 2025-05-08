@@ -46,29 +46,29 @@ namespace VibePlace.Controllers
 				
 
 
-				using (var serviceResponse = await client.GetAsync($"http://api.mukha.satbayevproject.kz/api/Service/place_ser/{id}"))
+				using (var serviceResponse = await client.GetAsync($"http://localhost:5292/api/Service/place_ser/{id}"))
 				{
 					var serviceResult = await serviceResponse.Content.ReadAsStringAsync();
 					model.services = JsonConvert.DeserializeObject<List<Service>>(serviceResult);
 				}
 
 
-				//using (var placesResponse = await client.GetAsync($"http://api.mukha.satbayevproject.kz/api/Place/info/{id}"))
-				//{
-				//	var placesResult = await placesResponse.Content.ReadAsStringAsync();
-				//	model.places = JsonConvert.DeserializeObject<Places>(placesResult);
-				//}
+				using (var placesResponse = await client.GetAsync($"http://localhost:5292/api/Place/info/{id}"))
+				{
+					var placesResult = await placesResponse.Content.ReadAsStringAsync();
+					model.places = JsonConvert.DeserializeObject<Places>(placesResult);
+				}
 
-				model.places = await _context.places
-				.Include(p => p.Images)
-				.Include(u => u.User)
-				.Include(r => r.Reviews)
-					.ThenInclude(u => u.User)
-				.Include(c => c.Category)
-				.Include(w => w.Ratings)
-				.Include(s => s.ServiceToPlaces)
-				.AsSplitQuery()
-				.FirstOrDefaultAsync(i => i.Id == id);
+				//model.places = await _context.places
+				//.Include(p => p.Images)
+				//.Include(u => u.User)
+				//.Include(r => r.Reviews)
+				//	.ThenInclude(u => u.User)
+				//.Include(c => c.Category)
+				//.Include(w => w.Ratings)
+				//.Include(s => s.ServiceToPlaces)
+				//.AsSplitQuery()
+				//.FirstOrDefaultAsync(i => i.Id == id);
 
 
 

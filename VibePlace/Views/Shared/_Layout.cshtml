@@ -88,11 +88,17 @@
                             <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                         </svg>
                     </button>
+
+
                 </div>
+
+
 
 
                 <div class="hidden w-full lg:flex lg:pl-11 " id="navbar-default">
                     <ul class="lg:flex items-center flex-col mt-4 lg:mt-0 lg:flex-row lg:ml-auto">
+
+                    
 
                         @if (currentUser != null && await _userManager.IsInRoleAsync(currentUser, "Organizator"))
                         {
@@ -119,6 +125,28 @@
                                 <a href="@Url.Action("Index", "Organizator")" class="nav-link mb-2 block lg:mr-6 md:mb-0 lg:text-left text-center">@localizer["MyPlace"]<a>
                             </li>
                         }
+
+
+
+                        <!--Search-->
+                      <div  class="hidden w-full lg:flex mt-8 lg:mt-0 item-center justify-end lg:pl-11 " id="navbar-with-form">
+                          <form asp-action="SearchPlace" asp-controller="Place" class="flex items-center max-lg:justify-center gap-0">
+                              <div class="relative">
+                                  <input name="query" type="search" id="default-search"
+                                      class="block w-full max-w-xs px-4 py-2 text-sm font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none leading-relaxed"
+                                      placeholder="search " required="">
+                              </div>
+                              <button class="p-1 px-2" type="submit">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                      <path
+                                          d="M21 21L18.5 18.5M19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C13.2006 19 15.1937 18.1115 16.6401 16.6736C18.0976 15.2246 19 13.2177 19 11Z"
+                                          stroke="black" stroke-width="1.6" stroke-linecap="round"></path>
+                                  </svg>
+                              </button>
+                          </form>
+                      </div>
+
+
                     </ul>
                     <div class="flex items-center justify-center">
                         <div class="dropdown relative inline-flex z-10">
