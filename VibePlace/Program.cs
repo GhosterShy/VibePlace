@@ -169,21 +169,21 @@ app.MapControllerRoute(
 
 #region UserRole
 
-using (var scope = app.Services.CreateScope())
-{
-	var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+//using (var scope = app.Services.CreateScope())
+//{
+//	var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-	string[] requiredRoles = { "Admin", "Organizator", "User", "Service" }; 
+//	string[] requiredRoles = { "Admin", "Organizator", "User", "Service" }; 
 
-	foreach (var role in requiredRoles)
-	{
-		if (!await roleManager.RoleExistsAsync(role))
-		{
-			await roleManager.CreateAsync(new IdentityRole(role));
-			Console.WriteLine($"Роль '{role}' создана");
-		}
-	}
-}
+//	foreach (var role in requiredRoles)
+//	{
+//		if (!await roleManager.RoleExistsAsync(role))
+//		{
+//			await roleManager.CreateAsync(new IdentityRole(role));
+//			Console.WriteLine($"Роль '{role}' создана");
+//		}
+//	}
+//}
 
 #endregion
 

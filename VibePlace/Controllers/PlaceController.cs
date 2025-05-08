@@ -63,9 +63,7 @@ namespace VibePlace.Controllers
 				
 				
 				
-				
-
-
+		
 
 
 			}
@@ -81,15 +79,55 @@ namespace VibePlace.Controllers
 
 
 		[HttpPost]
-		public async Task<IActionResult> Create(PlaceToService placeToService, IFormFile image, List<int> selectedServices, List<IFormFile> photos)
+		public async Task<IActionResult> Create(PlaceToService placeToService, IFormFile image, List<int> selectedServices, List<IFormFile> photos,string AddressLink)
 		//public async Task<IActionResult> Create(Places place)
 		{
 
+			var model = new PlaceToService();
+			var city = new List<City>();
+
 			if (selectedServices == null || selectedServices.Count == 0)
 			{
+
+				
+
+				using (var client = new HttpClient())
+				{
+					var token = Request.Cookies["token"];
+
+					client.DefaultRequestHeaders.Authorization =
+						new AuthenticationHeaderValue("Bearer", token);
+
+					model.places = new Places();
+
+
+					using (var serviceResponse = await client.GetAsync("http://api.mukha.satbayevproject.kz/api/Service/service"))
+					{
+						var serviceResult = await serviceResponse.Content.ReadAsStringAsync();
+						model.services = JsonConvert.DeserializeObject<List<Service>>(serviceResult);
+					}
+
+					using (var categoriesResponse = await client.GetAsync("http://api.mukha.satbayevproject.kz/api/Category/category"))
+					{
+						var categoriesResult = await categoriesResponse.Content.ReadAsStringAsync();
+						ViewBag.Categories = JsonConvert.DeserializeObject<List<Category>>(categoriesResult);
+					}
+
+					using (var cityResponse = await client.GetAsync("http://api.mukha.satbayevproject.kz/api/City/cities"))
+					{
+						var cityResult = await cityResponse.Content.ReadAsStringAsync();
+						ViewBag.CityList = JsonConvert.DeserializeObject<List<City>>(cityResult);
+					}
+
+				}
+
+
+
 				ModelState.AddModelError("", "Заполните все поля и выберите хотя бы один сервис.");
-				return View();
+				return View(model);
 			}
+
+
 			if (ModelState.ContainsKey("services"))
 			{
 				ModelState.Remove("services");  
@@ -109,7 +147,7 @@ namespace VibePlace.Controllers
 						placeToService.places.Image = ms.ToArray();
 					}
 				}
-
+				placeToService.places.AddressLink = AddressLink;
 				placeToService.places.UserId = userId;
 				placeToService.places.Rating = 4;
 				_context.places.Add(placeToService.places);
@@ -158,7 +196,42 @@ namespace VibePlace.Controllers
 				return RedirectToAction("Index", "Home"); 
 			}
 
-			return RedirectToAction("Index","Home");
+
+			//else
+
+
+
+			using (var client = new HttpClient())
+			{
+				var token = Request.Cookies["token"];
+
+				client.DefaultRequestHeaders.Authorization =
+					new AuthenticationHeaderValue("Bearer", token);
+
+				model.places = new Places();
+
+
+				using (var serviceResponse = await client.GetAsync("http://api.mukha.satbayevproject.kz/api/Service/service"))
+				{
+					var serviceResult = await serviceResponse.Content.ReadAsStringAsync();
+					model.services = JsonConvert.DeserializeObject<List<Service>>(serviceResult);
+				}
+
+				using (var categoriesResponse = await client.GetAsync("http://api.mukha.satbayevproject.kz/api/Category/category"))
+				{
+					var categoriesResult = await categoriesResponse.Content.ReadAsStringAsync();
+					ViewBag.Categories = JsonConvert.DeserializeObject<List<Category>>(categoriesResult);
+				}
+
+				using (var cityResponse = await client.GetAsync("http://api.mukha.satbayevproject.kz/api/City/cities"))
+				{
+					var cityResult = await cityResponse.Content.ReadAsStringAsync();
+					ViewBag.CityList = JsonConvert.DeserializeObject<List<City>>(cityResult);
+				}
+
+			}
+
+			return View(model);
 		}
 
 

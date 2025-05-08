@@ -32,10 +32,6 @@ namespace VibePlace.Controllers
 		[Route("place/{id:int}")]
 		public async Task<IActionResult> PlaceInfo(int id)
 		{
-			
-
-			
-
 			var model = new PlaceToService();
 			
 
@@ -56,12 +52,25 @@ namespace VibePlace.Controllers
 					model.services = JsonConvert.DeserializeObject<List<Service>>(serviceResult);
 				}
 
-			
-				using (var placesResponse = await client.GetAsync($"http://api.mukha.satbayevproject.kz/api/Place/info/{id}"))
-				{
-					var placesResult = await placesResponse.Content.ReadAsStringAsync();
-					model.places = JsonConvert.DeserializeObject<Places>(placesResult);
-				}
+
+				//using (var placesResponse = await client.GetAsync($"http://api.mukha.satbayevproject.kz/api/Place/info/{id}"))
+				//{
+				//	var placesResult = await placesResponse.Content.ReadAsStringAsync();
+				//	model.places = JsonConvert.DeserializeObject<Places>(placesResult);
+				//}
+
+				model.places = await _context.places
+				.Include(p => p.Images)
+				.Include(u => u.User)
+				.Include(r => r.Reviews)
+					.ThenInclude(u => u.User)
+				.Include(c => c.Category)
+				.Include(w => w.Ratings)
+				.Include(s => s.ServiceToPlaces)
+				.AsSplitQuery()
+				.FirstOrDefaultAsync(i => i.Id == id);
+
+
 
 
 			}

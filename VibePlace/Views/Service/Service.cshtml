@@ -43,11 +43,11 @@
 
 
 
-                @foreach(UserService userService in Model.UsersServices)
+                @foreach(UserService? userService in Model.UsersServices)
                 {
 							<div class="rounded-xl bg-white shadow-lg shadow-gray-300 overflow-hidden relative grid-item-home">
-								<a href="product.html" class="absolute opacity-0 h-full w-full rounded-xl"></a>
-                                <img src="@Url.Content("~/" + userService.Image)" alt="image">
+								<a href="@Url.Action("UserService","UserService",new {id = userService.Id})" class="absolute opacity-0 h-full w-full rounded-xl"></a>
+                                <img src="@Url.Action("GetImageService","UserService",new {userService.Id})" alt="image">
 								<div class="flex items-center absolute gap-2 top-2 right-3">
 									<svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<g clip-path="url(#clip0_13866_9712)">
@@ -68,8 +68,8 @@
 									
 								</div>
 								<div class="w-full p-6 ">
-									<h5 class="text-xl font-semibold font-manrope text-gray-900 mb-4">@userService?.User.UserName</h5>
-									<p class="text-sm font-medium text-gray-600">@userService.Description </p>
+									<h5 class="text-xl font-semibold font-manrope text-gray-900 mb-4">@userService.User?.UserName</h5>
+									<p class="text-sm font-medium text-gray-600">@userService.Service?.Name </p>
 								</div>
 							</div>
 						}

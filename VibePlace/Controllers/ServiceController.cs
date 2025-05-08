@@ -40,11 +40,13 @@ namespace VibePlace.Controllers
 					services.Services = JsonConvert.DeserializeObject<List<Service>>(serviceResult);
 				}
 
-				using (var userService = await client.GetAsync("http://api.mukha.satbayevproject.kz/api/UserService/userService"))
-				{
-					var serviceResult = await userService.Content.ReadAsStringAsync();
-					services.UsersServices = JsonConvert.DeserializeObject<List<UserService>>(serviceResult);
-				}
+				//using (var userService = await client.GetAsync("http://api.mukha.satbayevproject.kz/api/UserService/userService"))
+				//{
+				//	var serviceResult = await userService.Content.ReadAsStringAsync();
+				//	services.UsersServices = JsonConvert.DeserializeObject<List<UserService>>(serviceResult);
+				//}
+
+				services.UsersServices = _context.UserServices.Include(u => u.User).Include(s => s.Service).ToList();
 
 				return View(services);
 			}

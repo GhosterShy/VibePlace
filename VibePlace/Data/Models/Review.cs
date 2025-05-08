@@ -8,8 +8,11 @@ namespace VibePlace.Data.Models
 		public string Comment { get; set; }
 		public int Like { get; set; } = 0;
 
-		public int PlaceId { get; set; }
-		public Places Place { get; set; }
+		public int? PlaceId { get; set; }
+		public Places? Place { get; set; }
+
+		public int? UserServiceId {  get; set; }
+		public UserService? UserService { get; set; }
 
 		public string UserId { get; set; }
 		public AppUser User { get; set; }

@@ -1,4 +1,5 @@
-﻿@using VibePlace.Data.Models
+﻿@using System.Security.Claims
+@using VibePlace.Data.Models
 @model PlaceToService
 
 @{
@@ -170,7 +171,7 @@ animation-range: entry 0% cover 30%;
                     </div>
                 </div>
                 <div class="flex items-center gap-3 bg-amber-200 rounded-3xl mb-3 animation-product">
-                    <img src="~/img/UserAva/UserImage.jpg" alt="Hailey image" class="w-12 h-12">
+                    <img src="@Url.Action("GetAva","Account", new {userId = Model?.places?.User.Id})" alt="Hailey image" class="w-12 h-12">
                     <div>
                         <h2 class="text-gray-500 text-sm font-medium leading-snug pb-0.5">
                             Хозяин:
@@ -359,7 +360,7 @@ animation-range: entry 0% cover 30%;
                                     <div class="w-full justify-between items-center inline-flex">
                                         <div class="justify-start items-center gap-2.5 flex">
                                             <div class="w-10 h-10 bg-stone-300 rounded-full justify-start items-start gap-2.5 flex">
-                                                <img class="rounded-full object-cover" src="~/img/UserAva/UserImage.jpg"
+                                                    <img class="rounded-full object-cover" src="@Url.Action("GetAva","Account", new {userId = review.User.Id})"
                                                 alt="John smith image" />
                                             </div>
                                             <div class="flex-col justify-start items-start gap-1 inline-flex">

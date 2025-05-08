@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VibePlace.Data;
 
@@ -11,9 +12,11 @@ using VibePlace.Data;
 namespace VibePlace.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    partial class AppIdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250507065338_UserServiceUpdate3")]
+    partial class UserServiceUpdate3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -180,9 +183,6 @@ namespace VibePlace.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<byte[]>("Logo")
-                        .HasColumnType("varbinary(max)");
-
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -205,6 +205,9 @@ namespace VibePlace.Migrations
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
+
+                    b.Property<string>("UserImage")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
@@ -409,23 +412,18 @@ namespace VibePlace.Migrations
                     b.Property<int>("Like")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PlaceId")
+                    b.Property<int>("PlaceId")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("UserServiceId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("PlaceId");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("UserServiceId");
 
                     b.ToTable("review");
                 });
@@ -624,7 +622,8 @@ namespace VibePlace.Migrations
                     b.HasOne("VibePlace.Data.Models.Places", "Place")
                         .WithMany("Reviews")
                         .HasForeignKey("PlaceId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("VibePlace.Data.AppUser", "User")
                         .WithMany()
@@ -632,15 +631,9 @@ namespace VibePlace.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("VibePlace.Data.Models.UserService", "UserService")
-                        .WithMany("Reviews")
-                        .HasForeignKey("UserServiceId");
-
                     b.Navigation("Place");
 
                     b.Navigation("User");
-
-                    b.Navigation("UserService");
                 });
 
             modelBuilder.Entity("VibePlace.Data.Models.ReviewLike", b =>
@@ -740,11 +733,6 @@ namespace VibePlace.Migrations
                     b.Navigation("ServiceToPlaces");
 
                     b.Navigation("UserServices");
-                });
-
-            modelBuilder.Entity("VibePlace.Data.Models.UserService", b =>
-                {
-                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }

@@ -13,6 +13,9 @@ using System.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using VibePlace.Models.Interfaces;
+using Microsoft.AspNetCore.SignalR;
+using static System.Net.Mime.MediaTypeNames;
+using Microsoft.EntityFrameworkCore;
 
 namespace VibePlace.Controllers
 {
@@ -27,9 +30,10 @@ namespace VibePlace.Controllers
 		private readonly ILogger<HomeController> _logger;
 		private readonly RoleManager<IdentityRole> _roleManager;
 		private readonly IMassage _emailSender;
+		private readonly AppIdentityDBContext _context;
 
 
-		public AccountController(UserManager<AppUser> accountManager, SignInManager<AppUser> singInManager, UserManager<AppUser> userManager,  ILogger<HomeController> logger, RoleManager<IdentityRole> roleManager, TokenService tokenService,IMassage emailSender)
+		public AccountController(UserManager<AppUser> accountManager, SignInManager<AppUser> singInManager, UserManager<AppUser> userManager,  ILogger<HomeController> logger, RoleManager<IdentityRole> roleManager, TokenService tokenService,IMassage emailSender,AppIdentityDBContext context)
 		{
 			_accountManager = accountManager;
 			_singInManager = singInManager;
@@ -38,7 +42,55 @@ namespace VibePlace.Controllers
 			_roleManager = roleManager;
 			_tokenService = tokenService;
 			_emailSender = emailSender;
+			_context = context;
 		}
+
+
+
+		[HttpPost]
+		public async Task<IActionResult> UpdateAva(IFormFile Image,string userId)
+		{
+
+			var user = await _userManager.FindByIdAsync(userId);
+			if (user == null)
+			{
+				return RedirectToAction("VerifyEmail", "Account");
+			}
+
+			try
+			{
+				if (Image != null && Image.Length > 0)
+				{
+					using (var ms = new MemoryStream())
+					{
+						await Image.CopyToAsync(ms);
+						user.Logo = ms.ToArray();
+					}
+
+					await _context.SaveChangesAsync();
+				}
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(ex);
+			}
+			return RedirectToAction("Profile","Account");
+		}
+
+
+		[HttpGet]
+		public async Task<IActionResult> GetAva()
+		{
+			var user = await _userManager.GetUserAsync(User);
+			if (user == null || user.Logo == null)
+			{
+				return NotFound();
+			}
+
+			return File(user.Logo, "image/jpeg");
+		}
+
+
 
 
 
@@ -173,6 +225,10 @@ namespace VibePlace.Controllers
 					if (model.SelectedRole == "Organizator")
 					{
 						return RedirectToAction("Index", "Organizator");
+					}
+					if(model.SelectedRole == "Service")
+					{
+						return RedirectToAction("CreateServiceUser", "UserService");
 					}
 					else
 						return RedirectToAction("Index", "Home");

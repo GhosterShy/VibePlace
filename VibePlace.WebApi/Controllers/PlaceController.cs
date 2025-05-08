@@ -62,6 +62,7 @@ namespace VibePlace.WebApi.Controllers
 		{
 			var place = await _context.places
 				.Include(p => p.Images)
+				.Include(u => u.User)
 				.Include(r => r.Reviews)
 					.ThenInclude(u => u.User)
 				.Include(c => c.Category)
