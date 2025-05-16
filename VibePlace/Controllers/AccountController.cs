@@ -48,10 +48,10 @@ namespace VibePlace.Controllers
 
 
 		[HttpPost]
-		public async Task<IActionResult> UpdateAva(IFormFile Image,string userId)
+		public async Task<IActionResult> UpdateAva(IFormFile Image)
 		{
 
-			var user = await _userManager.FindByIdAsync(userId);
+			var user = await _userManager.GetUserAsync(User);
 			if (user == null)
 			{
 				return RedirectToAction("VerifyEmail", "Account");
@@ -79,9 +79,9 @@ namespace VibePlace.Controllers
 
 
 		[HttpGet]
-		public async Task<IActionResult> GetAva()
+		public async Task<IActionResult> GetAva(string userId)
 		{
-			var user = await _userManager.GetUserAsync(User);
+			var user = await _userManager.FindByIdAsync(userId);
 			if (user == null || user.Logo == null)
 			{
 				return NotFound();

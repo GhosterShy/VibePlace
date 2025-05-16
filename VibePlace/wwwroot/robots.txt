@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /Account/
+Disallow: /Contacts/Register/
+Disallow: /Contacts/profile/
+Disallow: /Contacts/Index/
+Allow: /
+
+Sitemap: http://vibeplace.satbayevproject.kz/sitemap.xml

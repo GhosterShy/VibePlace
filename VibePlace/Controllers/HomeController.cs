@@ -46,14 +46,14 @@ namespace VibePlace.Controllers
 				client.DefaultRequestHeaders.Authorization =
 					new AuthenticationHeaderValue("Bearer", token);
 
-				using (var responce = await client.GetAsync("http://localhost:5292/api/Place/places"))
+				using (var responce = await client.GetAsync("http://api.mukha.satbayevproject.kz/api/Place/places"))
 				{
 					var result = await responce.Content.ReadAsStringAsync();
 					model.Places = JsonConvert.DeserializeObject <List<Places>>(result);
 				}
 
 		
-				using (var categoriesResponse = await client.GetAsync("http://localhost:5292/api/Category/category"))
+				using (var categoriesResponse = await client.GetAsync("http://api.mukha.satbayevproject.kz/api/Category/category"))
 				{
 					var categoriesResult = await categoriesResponse.Content.ReadAsStringAsync();
 					model.Categories = JsonConvert.DeserializeObject<List<Category>>(categoriesResult);
@@ -98,7 +98,7 @@ namespace VibePlace.Controllers
 
 				if (categoryId == 0000)
 				{
-					using (var responce = await client.GetAsync("http://localhost:5292/api/Place/places"))
+					using (var responce = await client.GetAsync("http://api.mukha.satbayevproject.kz/api/Place/places"))
 					{
 						var placeresult = await responce.Content.ReadAsStringAsync();
 						places = JsonConvert.DeserializeObject<List<Places>>(placeresult);
@@ -106,7 +106,7 @@ namespace VibePlace.Controllers
 					}
 				}
 
-				using (var responce = await client.GetAsync($"http://localhost:5292/api/Place/FilterPlace/{categoryId}"))
+				using (var responce = await client.GetAsync($"http://api.mukha.satbayevproject.kz/api/Place/FilterPlace/{categoryId}"))
 				{
 					var result = await responce.Content.ReadAsStringAsync();
 					places = JsonConvert.DeserializeObject<List<Places>>(result);

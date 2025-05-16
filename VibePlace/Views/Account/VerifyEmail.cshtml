@@ -16,19 +16,19 @@
             <span style="color:red;" asp-validation-for="Email"></span>
             <br />
             <br />
-            <a href="@Url.Action("Index","Account")" class="text-indigo-600 text-base font-medium leading-6">Уже есть аккаунт?</a>
+            <a href="@Url.Action("Index","Account")" class="text-indigo-600 text-base font-medium leading-6">@localizer["alreadyAcc"]?</a>
    
     <div class="flex mt-7 mb-5">
-        <button type="submit" class="w-full h-12 bg-indigo-600 hover:bg-indigo-900 transition-all duration-700 rounded-full shadow-xs text-white text-base font-semibold leading-6">Отправить код</button>
+        <button type="submit" class="w-full h-12 bg-indigo-600 hover:bg-indigo-900 transition-all duration-700 rounded-full shadow-xs text-white text-base font-semibold leading-6">@localizer["sendCode"]</button>
     </div>
     <div class="flex w-full items-center space-x-4 mt-10 mb-10">
         <div class="flex-1 border-b border-gray-200"></div>
         <span class="flex items-center justify-center text-gray-400 text-lg font-normal leading-7 px-5">OR</span>
         <div class="flex-1 border-b border-gray-200"></div>
     </div>
-    <p class="text-gray-900 text-center text-base font-medium leading-6 mb-3">Регистрация через другие сервисы</p>
+    <p class="text-gray-900 text-center text-base font-medium leading-6 mb-3">@localizer["RegisterGoogle"]</p>
             <div style="display:flex;justify-content:center;align-items:center">
-                <a style="padding-top:7px" href="@Url.Action("Login","Account")" class="w-full h-10 text-white text-center text-base font-semibold leading-6 rounded-xl hover:bg-indigo-800 transition-all duration-700 bg-indigo-600">&nbsp; Войти через Google</a>
+                <a style="padding-top:7px" href="@Url.Action("Login","Account")" class="w-full h-10 text-white text-center text-base font-semibold leading-6 rounded-xl hover:bg-indigo-800 transition-all duration-700 bg-indigo-600">&nbsp; @localizer["LoginWithGoogle"]</a>
             </div>
            
 </form>

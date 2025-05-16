@@ -59,7 +59,7 @@
                     <li>
                         <a hx-get="@Url.Action("FilterService", "Service", new { serviceid = item.Id })" hx-target="#services_container" hx-swap="innerHTML"
                            class="filter inline-block py-3 px-6 text-gray-500 hover:text-gray-800 font-medium"
-                           data-tab="tabs-with-rounded-light-@item.Name">@item.Name</a>
+                           data-tab="tabs-with-rounded-light-@item.Name">@localizer[$"{@item.Name}"]</a>
                     </li>
                 }
                 

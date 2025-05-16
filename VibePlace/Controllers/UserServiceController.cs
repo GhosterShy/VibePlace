@@ -89,7 +89,7 @@ namespace VibePlace.Controllers
 				client.DefaultRequestHeaders.Authorization =
 					new AuthenticationHeaderValue("Bearer", token);
 
-				using (var responce = await client.GetAsync($"http://localhost:5292/api/UserService/Service/" + id))
+				using (var responce = await client.GetAsync($"http://api.mukha.satbayevproject.kz/api/UserService/Service/" + id))
 				{
 					var result = await responce.Content.ReadAsStringAsync();
 					service = JsonConvert.DeserializeObject<UserService>(result);

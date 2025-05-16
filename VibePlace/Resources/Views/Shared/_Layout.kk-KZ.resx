@@ -126,7 +126,19 @@
   <data name="MyPlace" xml:space="preserve">
     <value>Сіздің орындарыңыз</value>
   </data>
+  <data name="Registration" xml:space="preserve">
+    <value>Регистрация</value>
+  </data>
   <data name="Services" xml:space="preserve">
     <value>Сервистер</value>
+  </data>
+  <data name="Authorization" xml:space="preserve">
+    <value>Авторизация</value>
+  </data>
+  <data name="Help Center" xml:space="preserve">
+    <value>Көмек орталығы</value>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>Іздеу</value>
   </data>
 </root>

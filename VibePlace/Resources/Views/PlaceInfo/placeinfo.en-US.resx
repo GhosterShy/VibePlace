@@ -117,28 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Contacts" xml:space="preserve">
-    <value>Contacts</value>
+  <data name="AddReview" xml:space="preserve">
+    <value>Write a review</value>
   </data>
-  <data name="Main" xml:space="preserve">
-    <value>Home</value>
+  <data name="Capacity" xml:space="preserve">
+    <value>Capacity</value>
   </data>
-  <data name="MyPlace" xml:space="preserve">
-    <value>Places</value>
+  <data name="Estimate" xml:space="preserve">
+    <value>Estimate</value>
   </data>
-  <data name="Registration" xml:space="preserve">
-    <value>Registration</value>
+  <data name="estimates" xml:space="preserve">
+    <value>users were rated</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="Owner" xml:space="preserve">
+    <value>Owner</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Average price</value>
+  </data>
+  <data name="RatingAsk" xml:space="preserve">
+    <value>How would you rate this place</value>
+  </data>
+  <data name="Reviews" xml:space="preserve">
+    <value>Reviews</value>
   </data>
   <data name="Services" xml:space="preserve">
     <value>Services</value>
   </data>
-  <data name="Authorization" xml:space="preserve">
-    <value>Authorization</value>
-  </data>
-  <data name="Help Center" xml:space="preserve">
-    <value>Help Center</value>
-  </data>
-  <data name="search" xml:space="preserve">
-    <value>Search</value>
+  <data name="Tel.Number" xml:space="preserve">
+    <value>Tel.Number</value>
   </data>
 </root>

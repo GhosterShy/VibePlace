@@ -117,28 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Contacts" xml:space="preserve">
-    <value>Contacts</value>
+  <data name="codeFromEmail" xml:space="preserve">
+    <value>Введите код из email</value>
   </data>
-  <data name="Main" xml:space="preserve">
-    <value>Home</value>
-  </data>
-  <data name="MyPlace" xml:space="preserve">
-    <value>Places</value>
-  </data>
-  <data name="Registration" xml:space="preserve">
-    <value>Registration</value>
-  </data>
-  <data name="Services" xml:space="preserve">
-    <value>Services</value>
-  </data>
-  <data name="Authorization" xml:space="preserve">
-    <value>Authorization</value>
-  </data>
-  <data name="Help Center" xml:space="preserve">
-    <value>Help Center</value>
-  </data>
-  <data name="search" xml:space="preserve">
-    <value>Search</value>
+  <data name="CheckСode" xml:space="preserve">
+    <value>Проверить код</value>
   </data>
 </root>

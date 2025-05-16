@@ -46,7 +46,7 @@ namespace VibePlace.Controllers
 					new AuthenticationHeaderValue("Bearer", token);
 
 
-				using (var PlaceResponse = await client.GetAsync($"http://localhost:5292/api/Place/Organizator/" + userId))
+				using (var PlaceResponse = await client.GetAsync($"http://api.mukha.satbayevproject.kz/api/Place/Organizator/" + userId))
 				{
 					var serviceResult = await PlaceResponse.Content.ReadAsStringAsync();
 					myPlaces = JsonConvert.DeserializeObject<List<Places>>(serviceResult);

@@ -211,19 +211,19 @@ namespace VibePlace.Controllers
 				model.places = new Places();
 
 
-				using (var serviceResponse = await client.GetAsync("http://localhost:5292/api/Service/service"))
+				using (var serviceResponse = await client.GetAsync("http://api.mukha.satbayevproject.kz/api/Service/service"))
 				{
 					var serviceResult = await serviceResponse.Content.ReadAsStringAsync();
 					model.services = JsonConvert.DeserializeObject<List<Service>>(serviceResult);
 				}
 
-				using (var categoriesResponse = await client.GetAsync("http://localhost:5292/api/Category/category"))
+				using (var categoriesResponse = await client.GetAsync("http://api.mukha.satbayevproject.kz/api/Category/category"))
 				{
 					var categoriesResult = await categoriesResponse.Content.ReadAsStringAsync();
 					ViewBag.Categories = JsonConvert.DeserializeObject<List<Category>>(categoriesResult);
 				}
 
-				using (var cityResponse = await client.GetAsync("http://localhost:5292/api/City/cities"))
+				using (var cityResponse = await client.GetAsync("http://api.mukha.satbayevproject.kz/api/City/cities"))
 				{
 					var cityResult = await cityResponse.Content.ReadAsStringAsync();
 					ViewBag.CityList = JsonConvert.DeserializeObject<List<City>>(cityResult);
@@ -277,7 +277,7 @@ namespace VibePlace.Controllers
 				
 
 
-				using (var serviceResponse = await client.GetAsync($"http://localhost:5292/api/Place/SearchPlaces/{query}"))
+				using (var serviceResponse = await client.GetAsync($"http://api.mukha.satbayevproject.kz/api/Place/SearchPlaces/{query}"))
 				{
 					var serviceResult = await serviceResponse.Content.ReadAsStringAsync();
 					places = JsonConvert.DeserializeObject<List<Places>>(serviceResult);

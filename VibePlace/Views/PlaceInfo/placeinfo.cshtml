@@ -3,9 +3,11 @@
 @model PlaceToService
 
 @{
-    var avgRating = Model.places.Ratings.Select(r => r.Rating).DefaultIfEmpty(0).Average();
-    var fullStars = (int)Math.Floor(avgRating);
-    var emptyStars = 5 - fullStars;
+    double averageRating = Model.places.Ratings.Any()
+       ? Model.places.Ratings.Average(r => r.Rating)
+       : 0;
+    int fullStars = (int)Math.Floor(averageRating);
+    int emptyStars = 5 - fullStars;
 }
 
 
@@ -131,24 +133,23 @@ animation-range: entry 0% cover 30%;
                     <div class="flex items-center gap-2">
                         <div class="flex items-center gap-1">
 
-                            @for (int i = 0; i < fullStars; i++)
-                            {
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                    <g clip-path="url(#clip0_12029_1640)">
-                                        <path d="M9.10326 2.31699C9.47008 1.57374 10.5299 1.57374 10.8967 2.31699L12.7063 5.98347C12.8519 6.27862 13.1335 6.48319 13.4592 6.53051L17.5054 7.11846C18.3256 7.23765 18.6531 8.24562 18.0596 8.82416L15.1318 11.6781C14.8961 11.9079 14.7885 12.2389 14.8442 12.5632L15.5353 16.5931C15.6754 17.41 14.818 18.033 14.0844 17.6473L10.4653 15.7446C10.174 15.5915 9.82598 15.5915 9.53466 15.7446L5.91562 17.6473C5.18199 18.033 4.32456 17.41 4.46467 16.5931L5.15585 12.5632C5.21148 12.2389 5.10393 11.9079 4.86825 11.6781L1.94038 8.82416C1.34687 8.24562 1.67438 7.23765 2.4946 7.11846L6.54081 6.53051C6.86652 6.48319 7.14808 6.27862 7.29374 5.98347L9.10326 2.31699Z"
-                                        fill="#FBBF24" />
-                                    </g>
-                                    <defs>
-                                        <clipPath id="clip0_12029_1640">
-                                            <rect width="20" height="20" fill="white" />
-                                        </clipPath>
-                                    </defs>
-                                </svg>
-                            }
+                            
+                                @for (int i = 0; i < fullStars; i++)
+                                {
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_12029_1640)">
+                                            <path d="M9.10326 2.31699C9.47008 1.57374 10.5299 1.57374 10.8967 2.31699L12.7063 5.98347C12.8519 6.27862 13.1335 6.48319 13.4592 6.53051L17.5054 7.11846C18.3256 7.23765 18.6531 8.24562 18.0596 8.82416L15.1318 11.6781C14.8961 11.9079 14.7885 12.2389 14.8442 12.5632L15.5353 16.5931C15.6754 17.41 14.818 18.033 14.0844 17.6473L10.4653 15.7446C10.174 15.5915 9.82598 15.5915 9.53466 15.7446L5.91562 17.6473C5.18199 18.033 4.32456 17.41 4.46467 16.5931L5.15585 12.5632C5.21148 12.2389 5.10393 11.9079 4.86825 11.6781L1.94038 8.82416C1.34687 8.24562 1.67438 7.23765 2.4946 7.11846L6.54081 6.53051C6.86652 6.48319 7.14808 6.27862 7.29374 5.98347L9.10326 2.31699Z"
+                                            fill="#FBBF24" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_12029_1640">
+                                                <rect width="20" height="20" fill="white" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                }
 
-                           
-                                            
                                 @for (int i = 0; i < emptyStars; i++)
                                 {
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
@@ -163,18 +164,19 @@ animation-range: entry 0% cover 30%;
                                             </clipPath>
                                         </defs>
                                     </svg>
-                            }
+                                }
+                            
                            
-                         
+
                         </div>
-                        <span class="pl-2 font-normal leading-7 text-gray-500 text-sm ">@Model.places.Ratings.Count() оценки</span>
+                        <span class="pl-2 font-normal leading-7 text-gray-500 text-sm ">@Model.places.Ratings.Count() @localizer["estimates"]</span>
                     </div>
                 </div>
                 <div class="flex items-center gap-3 bg-amber-200 rounded-3xl mb-3 animation-product">
                     <img src="@Url.Action("GetAva","Account", new {userId = Model?.places?.User.Id})" alt="Hailey image" class="w-12 h-12">
                     <div>
                         <h2 class="text-gray-500 text-sm font-medium leading-snug pb-0.5">
-                            Хозяин:
+                            @localizer["Owner"]:
                             <span class="text-gray-900">@Model.places.User?.UserName</span>
                         </h2>
                         <h3 class="text-gray-500 text-xs font-normal leading-4">Новичок - @Model.places.User?.addDate</h3>
@@ -184,13 +186,13 @@ animation-range: entry 0% cover 30%;
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-2 animation-product">
                     <div class="bg-amber-200 rounded-2xl p-2">
                         <h2 class="text-gray-500 text-sm font-medium leading-snug pb-0.5">
-                            Вместимость:
+                            @localizer["Capacity"]:
                             <span class="text-gray-900">@Model.places.Capacity Человек</span>
                         </h2>
                     </div>
                     <div class="bg-amber-200 rounded-2xl p-2 animation-product">
                         <h2 class="text-gray-500 text-sm font-medium leading-snug pb-0.5">
-                            Услуги:
+                            @localizer["Services"]:
                             @foreach(var service in Model.services)
                             {
                                 <span class="text-gray-900">@service?.Name</span>
@@ -200,7 +202,7 @@ animation-range: entry 0% cover 30%;
                     <div class="bg-amber-200 rounded-2xl p-2 h-full relative address-product animation-product">
                         <a href="@Model.places.Address" class="absolute top-0 left-0 opacity-0 h-full w-full"></a>
                         <h2 class="text-gray-500 text-sm font-medium leading-snug pb-0.5 grid gap-1">
-                            Местоположение
+                            @localizer["Location"]:
                             <span class="flex items-center">
                                 <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M8 7C8 5.11438 8 4.17157 8.58579 3.58579C9.17157 3 10.1144 3 12 3C13.8856 3 14.8284 3 15.4142 3.58579C16 4.17157 16 5.11438 16 7V17C16 18.8856 16 19.8284 15.4142 20.4142C14.8284 21 13.8856 21 12 21C10.1144 21 9.17157 21 8.58579 20.4142C8 19.8284 8 18.8856 8 17V7Z" stroke="black" stroke-width="1.7" class="my-path"></path>
@@ -229,8 +231,12 @@ animation-range: entry 0% cover 30%;
                     </div>
                     <div class="bg-amber-200 rounded-2xl flex flex-col justify-between p-2 relative animation-product">
                         <div class="py-1">
+							<span class="text-ld">@localizer["Price"]</span>
                             <kbd class="px-4 py-2 text-xl font-semibold text-gray-900 bg-amber-100  rounded-xl">@Model.places.Price тг</kbd>
-                            <span class="text-ld">средняя услуга</span>
+                        </div>
+                        <div class="py-1">
+							<span class="text-ld">@localizer["Tel.Number"]</span> 
+                            <kbd class="px-4 py-2 text-xl font-semibold text-gray-900 bg-amber-100  rounded-xl">@Model.places.PhoneNumber</kbd>
                         </div>
                        
                     </div>
@@ -241,7 +247,7 @@ animation-range: entry 0% cover 30%;
                 <!--Rating-->
              
                 <br />
-                <h4>Как вы оцените это место?</h4>
+                <h4>@localizer["RatingAsk"]?</h4>
                 <br />
 
                
@@ -268,7 +274,7 @@ animation-range: entry 0% cover 30%;
                     }
                     </ul>
 
-                    <button type="submit" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded">Оценить</button>
+                    <button type="submit" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded">@localizer["Estimate"]</button>
                 </form>
              
 
@@ -334,7 +340,7 @@ animation-range: entry 0% cover 30%;
 
         <div class="flex w-full items-center rounded-full animation-product-scale">
             <div class="flex-1 border-b border-gray-300"></div>
-            <span class="text-black text-2xl font-semibold leading-8 px-4 py-10">Отзывы</span>
+            <span class="text-black text-2xl font-semibold leading-8 px-4 py-10">@localizer["Reviews"]</span>
             <div class="flex-1 border-b border-gray-300"></div>
         </div>
 
@@ -401,7 +407,7 @@ animation-range: entry 0% cover 30%;
                             <form style="width:100%" asp-action="AddReview" method="post">
                                 <input name="Comment" type="text"
                                    class="w-full py-3 px-5 rounded-lg border border-gray-300 bg-white shadow-[0px_1px_2px_0px_rgba(16,_24,_40,_0.05)] focus:outline-none text-gray-900 placeholder-gray-400 text-lg font-normal leading-relaxed"
-                                   placeholder="Leave a constructive comment...">
+                                   placeholder="@localizer["AddReview"]">
                                 <input type="hidden" name="PlaceId" value="@Model.places.Id">
                             <button type="submit" href="" class="absolute right-6 top-3.5">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"

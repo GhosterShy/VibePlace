@@ -117,28 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Contacts" xml:space="preserve">
-    <value>Contacts</value>
+  <data name="Аниматор" xml:space="preserve">
+    <value>Аниматор</value>
   </data>
-  <data name="Main" xml:space="preserve">
-    <value>Home</value>
+  <data name="Видеограф" xml:space="preserve">
+    <value>Видеограф</value>
   </data>
-  <data name="MyPlace" xml:space="preserve">
-    <value>Places</value>
+  <data name="Доставка еды" xml:space="preserve">
+    <value>Тамақ жеткізу</value>
   </data>
-  <data name="Registration" xml:space="preserve">
-    <value>Registration</value>
+  <data name="Живые музыканты" xml:space="preserve">
+    <value>Жанды музыкалар</value>
   </data>
-  <data name="Services" xml:space="preserve">
-    <value>Services</value>
+  <data name="Тамада" xml:space="preserve">
+    <value>Тамада</value>
   </data>
-  <data name="Authorization" xml:space="preserve">
-    <value>Authorization</value>
+  <data name="Танцоры" xml:space="preserve">
+    <value>Бишілер</value>
   </data>
-  <data name="Help Center" xml:space="preserve">
-    <value>Help Center</value>
+  <data name="Фотограф" xml:space="preserve">
+    <value>Фотограф</value>
   </data>
-  <data name="search" xml:space="preserve">
-    <value>Search</value>
+  <data name="Фотозона" xml:space="preserve">
+    <value>Фотозона</value>
   </data>
 </root>

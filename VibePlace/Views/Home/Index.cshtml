@@ -82,7 +82,7 @@
 
 
     <!--HTML CODE-->
-    <div class="w-full relative">
+    <div class="banner w-full relative">
         <div class="swiper progress-slide-carousel swiper-container relative">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
@@ -134,7 +134,7 @@
                     <li>
                         <a hx-get="@Url.Action("FilterPlaces","Home",new {id = category.id})" hx-target="#places-container" hx-swap="innerHTML"
                            class="tablink inline-block py-3 px-6 text-gray-500 hover:text-gray-800 font-medium"
-                           data-tab="tabs-with-rounded-light-@category.categoryName">@category.categoryName</a>
+                           data-tab="tabs-with-rounded-light-@category.categoryName">@localizer[$"{@category.categoryName}"]</a>
                     </li>
         }
             </ul>
